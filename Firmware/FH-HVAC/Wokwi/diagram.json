@@ -1,0 +1,212 @@
+{
+  "version": 1,
+  "author": "CyberUIW - FH-HVAC (Phase A0)",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht1",
+      "top": -100,
+      "left": 150,
+      "attrs": {
+        "temperature": "24",
+        "humidity": "50"
+      }
+    },
+    {
+      "type": "wokwi-relay-module",
+      "id": "relay1",
+      "top": 120,
+      "left": 200,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_fan",
+      "top": 150,
+      "left": 330,
+      "attrs": {
+        "color": "cyan",
+        "label": "Fan motor"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rFAN",
+      "top": 200,
+      "left": 320,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "txtFan",
+      "top": 250,
+      "left": 290,
+      "attrs": {
+        "text": "Cyan LED = DC fan motor stand-in. Bench: motor on its own supply + flyback diode."
+      }
+    },
+    {
+      "type": "wokwi-rgb-led",
+      "id": "rgb1",
+      "top": -60,
+      "left": -120,
+      "attrs": {
+        "common": "cathode"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rR",
+      "top": -20,
+      "left": -200,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rG",
+      "top": 0,
+      "left": -200,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rB",
+      "top": 20,
+      "left": -200,
+      "attrs": {
+        "value": "220"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "esp:TX",
+      "$serialMonitor:RX",
+      "",
+      []
+    ],
+    [
+      "esp:RX",
+      "$serialMonitor:TX",
+      "",
+      []
+    ],
+    [
+      "dht1:VCC",
+      "esp:3V3",
+      "red",
+      []
+    ],
+    [
+      "dht1:SDA",
+      "esp:4",
+      "green",
+      []
+    ],
+    [
+      "dht1:GND",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "relay1:VCC",
+      "esp:5V",
+      "red",
+      []
+    ],
+    [
+      "relay1:GND",
+      "esp:GND.3",
+      "black",
+      []
+    ],
+    [
+      "relay1:IN",
+      "esp:26",
+      "orange",
+      []
+    ],
+    [
+      "relay1:COM",
+      "esp:5V",
+      "red",
+      []
+    ],
+    [
+      "relay1:NO",
+      "rFAN:1",
+      "cyan",
+      []
+    ],
+    [
+      "rFAN:2",
+      "led_fan:A",
+      "cyan",
+      []
+    ],
+    [
+      "led_fan:C",
+      "esp:GND.3",
+      "black",
+      []
+    ],
+    [
+      "esp:16",
+      "rR:2",
+      "red",
+      []
+    ],
+    [
+      "rR:1",
+      "rgb1:R",
+      "red",
+      []
+    ],
+    [
+      "esp:17",
+      "rG:2",
+      "green",
+      []
+    ],
+    [
+      "rG:1",
+      "rgb1:G",
+      "green",
+      []
+    ],
+    [
+      "esp:18",
+      "rB:2",
+      "blue",
+      []
+    ],
+    [
+      "rB:1",
+      "rgb1:B",
+      "blue",
+      []
+    ],
+    [
+      "rgb1:COM",
+      "esp:GND.1",
+      "black",
+      []
+    ]
+  ],
+  "dependencies": {}
+}

@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "author": "CyberUIW - BSH-BackupPower (Phase A0)",
+  "editor": "wokwi",
+  "parts": [
+    {"type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {}},
+    {"type": "wokwi-slide-switch", "id": "utility1", "top": 170, "left": 170, "attrs": {"value": "1"}},
+    {"type": "wokwi-relay-module", "id": "relayAts", "top": -110, "left": -260, "attrs": {}},
+    {"type": "wokwi-led", "id": "ledLoad", "top": -170, "left": -330, "attrs": {"color": "green", "label": "Demo load"}},
+    {"type": "wokwi-resistor", "id": "rLoad", "top": -140, "left": -330, "attrs": {"value": "220"}},
+    {"type": "wokwi-potentiometer", "id": "potBatt", "top": 100, "left": -230, "attrs": {}},
+    {"type": "wokwi-potentiometer", "id": "potCurr", "top": 190, "left": -230, "attrs": {}}
+  ],
+  "connections": [
+    ["esp:TX", "$serialMonitor:RX", "", []],
+    ["esp:RX", "$serialMonitor:TX", "", []],
+    ["utility1:2", "esp:26", "orange", []],
+    ["utility1:1", "esp:GND.3", "black", []],
+    ["esp:27", "relayAts:IN", "yellow", []],
+    ["relayAts:VCC", "esp:5V", "red", []],
+    ["relayAts:GND", "esp:GND.1", "black", []],
+    ["esp:5V", "relayAts:COM", "red", []],
+    ["relayAts:NO", "ledLoad:A", "green", []],
+    ["ledLoad:C", "rLoad:1", "green", []],
+    ["rLoad:2", "esp:GND.2", "black", []],
+    ["potBatt:VCC", "esp:3V3", "red", []],
+    ["potBatt:GND", "esp:GND.1", "black", []],
+    ["potBatt:SIG", "esp:34", "blue", []],
+    ["potCurr:VCC", "esp:3V3", "red", []],
+    ["potCurr:GND", "esp:GND.1", "black", []],
+    ["potCurr:SIG", "esp:35", "purple", []]
+  ],
+  "dependencies": {}
+}

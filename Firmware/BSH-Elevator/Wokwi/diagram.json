@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "author": "CyberUIW — BSH-Elevator (Phase A0)",
+  "editor": "wokwi",
+  "parts": [
+    {"type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {}},
+    {"type": "wokwi-pushbutton", "id": "btn1", "top": -80, "left": 150, "attrs": {"color": "blue", "label": "Floor 1"}},
+    {"type": "wokwi-pushbutton", "id": "btn2", "top": -80, "left": 210, "attrs": {"color": "blue", "label": "Floor 2"}},
+    {"type": "wokwi-pushbutton", "id": "btn3", "top": -80, "left": 270, "attrs": {"color": "blue", "label": "Floor 3"}},
+    {"type": "wokwi-lcd1602", "id": "lcd1", "top": -170, "left": -280, "attrs": {"pins": "i2c"}},
+    {"type": "wokwi-led", "id": "led_dira", "top": 70, "left": 150, "attrs": {"color": "green"}},
+    {"type": "wokwi-resistor", "id": "rDIRA", "top": 100, "left": 125, "attrs": {"value": "220"}},
+    {"type": "wokwi-led", "id": "led_dirb", "top": 70, "left": 210, "attrs": {"color": "red"}},
+    {"type": "wokwi-resistor", "id": "rDIRB", "top": 100, "left": 185, "attrs": {"value": "220"}},
+    {"type": "wokwi-led", "id": "led_en", "top": 70, "left": 270, "attrs": {"color": "yellow"}},
+    {"type": "wokwi-resistor", "id": "rEN", "top": 100, "left": 245, "attrs": {"value": "220"}}
+  ],
+  "connections": [
+    ["esp:TX", "$serialMonitor:RX", "", []],
+    ["esp:RX", "$serialMonitor:TX", "", []],
+
+    ["btn1:1.l", "esp:4", "yellow", []],
+    ["btn1:2.l", "esp:GND.1", "black", []],
+    ["btn2:1.l", "esp:16", "yellow", []],
+    ["btn2:2.l", "esp:GND.1", "black", []],
+    ["btn3:1.l", "esp:17", "yellow", []],
+    ["btn3:2.l", "esp:GND.1", "black", []],
+
+    ["lcd1:SDA", "esp:21", "green", []],
+    ["lcd1:SCL", "esp:22", "blue", []],
+    ["lcd1:VCC", "esp:5V", "red", []],
+    ["lcd1:GND", "esp:GND.2", "black", []],
+
+    ["esp:19", "rDIRA:2", "green", []],
+    ["rDIRA:1", "led_dira:A", "green", []],
+    ["led_dira:C", "esp:GND.3", "black", []],
+
+    ["esp:5", "rDIRB:2", "red", []],
+    ["rDIRB:1", "led_dirb:A", "red", []],
+    ["led_dirb:C", "esp:GND.3", "black", []],
+
+    ["esp:18", "rEN:2", "orange", []],
+    ["rEN:1", "led_en:A", "orange", []],
+    ["led_en:C", "esp:GND.3", "black", []]
+  ],
+  "dependencies": {}
+}

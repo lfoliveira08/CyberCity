@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BSH-PowerBox Wiring Reference</title>
+<style>
+:root{
+  --bg:#eef2f7; --surface:#ffffff; --surface-2:#e3e9f1; --fg:#111927; --muted:#5b6b82;
+  --line:#c7d2e0; --accent:#b5652a;
+  --power:#c0392b; --ground:#3d4652; --sig-lights:#1f6fb2; --sig-fan:#7a3fa0;
+  --sig-btn1:#1f8a5f; --sig-btn2:#c17a1f;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0c1b2e; --surface:#12243b; --surface-2:#1a3352; --fg:#e6edf6; --muted:#93a6bf;
+    --line:#2c476b; --accent:#e29a5c;
+    --power:#ef6a5a; --ground:#9fb0c6; --sig-lights:#6fb3ef; --sig-fan:#c298e6;
+    --sig-btn1:#6fd8a8; --sig-btn2:#f0b15c;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"IBM Plex Sans",system-ui,sans-serif;padding:0 16px;padding-block:32px}
+.wrap{max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+
+h1{font-family:"IBM Plex Mono",monospace;font-size:clamp(22px,4vw,30px);font-weight:600;letter-spacing:-.01em;margin:0 0 4px;text-wrap:balance}
+.subtitle{color:var(--muted);font-size:15px;margin:0 0 18px;max-width:68ch}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;min-width:0}
+h2{font-family:"IBM Plex Mono",monospace;font-size:16px;font-weight:600;margin:0 0 14px;display:flex;align-items:center;gap:8px}
+h2 .n{color:var(--accent)}
+
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.mono, th.mono{font-family:"IBM Plex Mono",monospace}
+tr:last-child td{border-bottom:none}
+.tbl-wrap{overflow-x:auto}
+
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600}
+.pill.power{background:rgba(192,57,43,.15);color:var(--power)}
+.pill.ground{background:rgba(61,70,82,.15);color:var(--ground)}
+.pill.lights{background:rgba(31,111,178,.15);color:var(--sig-lights)}
+.pill.fan{background:rgba(122,63,160,.15);color:var(--sig-fan)}
+.pill.btn1{background:rgba(31,138,95,.15);color:var(--sig-btn1)}
+.pill.btn2{background:rgba(193,122,31,.15);color:var(--sig-btn2)}
+
+.diagram-scroll{overflow-x:auto;background:var(--surface-2);border-radius:8px;padding:10px}
+svg{display:block;min-width:900px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:16px;height:3px;border-radius:2px;display:inline-block}
+
+.notes{display:flex;flex-direction:column;gap:10px}
+.note{display:flex;gap:10px;font-size:14px;line-height:1.5;color:var(--muted)}
+.note .dot{flex:none;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:7px}
+.note b{color:var(--fg)}
+
+.badge{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;padding:2px 8px;border-radius:5px;background:rgba(181,101,42,.15);color:var(--accent);margin-left:6px}
+
+footer{color:var(--muted);font-size:12px;text-align:center;padding-top:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <div class="eyebrow">CyberUIW — BSH-PowerBox — Phase A</div>
+    <h1>Wiring Reference <span class="badge">Updated Sep 30</span></h1>
+    <p class="subtitle">Full parts list and connection diagram for the bench build: two separate 1-channel relay modules (lights, fan), 3 floor LEDs, a DC-motor fan, and 2 local override buttons. Reflects the Sep 30, 2026 switch away from a single 2-channel relay module — each relay now has its own VCC/GND and its own independent polarity.</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">01</span> Parts List</h2>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Qty</th><th>Part</th><th>Notes</th></tr>
+      <tr><td class="mono">1</td><td>ESP32 DevKit board</td><td>Any common DevKitC/DOIT-style board</td></tr>
+      <tr><td class="mono">2</td><td>1-channel relay module</td><td>One per channel — lights, fan. Two separate boards, each with its own VCC/GND. Not guaranteed to share a polarity with each other</td></tr>
+      <tr><td class="mono">3</td><td>LED</td><td>One per floor — all 3 wired in parallel on the lights channel</td></tr>
+      <tr><td class="mono">3</td><td>Resistor, ~220Ω</td><td>One per LED — never share a resistor across parallel LEDs</td></tr>
+      <tr><td class="mono">1</td><td>Small DC motor + fan blade</td><td>On the fan relay channel. Use a separate 5V supply if it draws more than a trickle</td></tr>
+      <tr><td class="mono">2</td><td>Momentary push button</td><td>Local lights/fan override switches</td></tr>
+      <tr><td class="mono">1</td><td>Breadboard + jumper wires</td><td></td></tr>
+      <tr><td class="mono">1</td><td>USB cable, with data wires</td><td>Some cables are power-only — confirm it can flash/program</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">02</span> Schematic</h2>
+    <div class="diagram-scroll">
+      <svg viewBox="0 0 1000 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wiring schematic: ESP32 connected to two separate 1-channel relay modules, one driving 3 parallel LEDs and one driving a fan, plus two push buttons, with shared 5V and GND buses">
+        <!-- 5V bus -->
+        <line x1="170" y1="40" x2="900" y2="40" stroke="var(--power)" stroke-width="3"/>
+        <text x="908" y="45" font-family="IBM Plex Mono" font-size="13" fill="var(--power)">5V bus</text>
+
+        <!-- GND bus -->
+        <line x1="20" y1="678" x2="900" y2="678" stroke="var(--ground)" stroke-width="3"/>
+        <text x="908" y="683" font-family="IBM Plex Mono" font-size="13" fill="var(--ground)">GND bus</text>
+
+        <!-- ESP32 box -->
+        <rect x="20" y="90" width="140" height="440" rx="8" fill="var(--surface)" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="90" y="75" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="600" fill="var(--fg)">ESP32 DevKit</text>
+
+        <!-- 5V / GND -->
+        <line x1="160" y1="120" x2="175" y2="120" stroke="var(--power)" stroke-width="2.5"/>
+        <line x1="175" y1="120" x2="175" y2="40" stroke="var(--power)" stroke-width="2.5"/>
+        <text x="150" y="116" text-anchor="end" font-family="IBM Plex Mono" font-size="12" fill="var(--fg)">5V</text>
+
+        <line x1="160" y1="155" x2="190" y2="155" stroke="var(--ground)" stroke-width="2.5"/>
+        <line x1="190" y1="155" x2="190" y2="678" stroke="var(--ground)" stroke-width="2.5"/>
+        <text x="150" y="151" text-anchor="end" font-family="IBM Plex Mono" font-size="12" fill="var(--fg)">GND</text>
+
+        <!-- GPIO13 -> Lights relay IN -->
+        <line x1="160" y1="230" x2="260" y2="230" stroke="var(--sig-lights)" stroke-width="2.5"/>
+        <text x="150" y="226" text-anchor="end" font-family="IBM Plex Mono" font-size="12" fill="var(--fg)">GPIO 13</text>
+
+        <!-- GPIO4 -> lights button -->
+        <line x1="160" y1="280" x2="210" y2="280" stroke="var(--sig-btn1)" stroke-width="2.5"/>
+        <text x="150" y="276" text-anchor="end" font-family="IBM Plex Mono" font-size="12" fill="var(--fg)">GPIO 4</text>
+        <rect x="210" y="265" width="120" height="30" rx="6" fill="var(--surface)" stroke="var(--sig-btn1)" stroke-width="1.5"/>
+        <text x="270" y="284" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--fg)">Lights button</text>
+        <line x1="330" y1="280" x2="380" y2="280" stroke="var(--sig-btn1)" stroke-width="2"/>
+        <line x1="380" y1="280" x2="380" y2="678" stroke="var(--sig-btn1)" stroke-width="2"/>
+
+        <!-- GPIO15 -> Fan relay IN -->
+        <line x1="160" y1="440" x2="260" y2="440" stroke="var(--sig-fan)" stroke-width="2.5"/>
+        <text x="150" y="436" text-anchor="end" font-family="IBM Plex Mono" font-size="12" fill="var(--fg)">GPIO 15</text>
+
+        <!-- GPIO16 -> fan button -->
+        <line x1="160" y1="490" x2="210" y2="490" stroke="var(--sig-btn2)" stroke-width="2.5"/>
+        <text x="150" y="486" text-anchor="end" font-family="IBM Plex Mono" font-size="12" fill="var(--fg)">GPIO 16</text>
+        <rect x="210" y="475" width="120" height="30" rx="6" fill="var(--surface)" stroke="var(--sig-btn2)" stroke-width="1.5"/>
+        <text x="270" y="494" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--fg)">Fan button</text>
+        <line x1="330" y1="490" x2="400" y2="490" stroke="var(--sig-btn2)" stroke-width="2"/>
+        <line x1="400" y1="490" x2="400" y2="678" stroke="var(--sig-btn2)" stroke-width="2"/>
+
+        <!-- Lights Relay box (own 1-ch board) -->
+        <rect x="260" y="180" width="170" height="130" rx="8" fill="var(--surface)" stroke="var(--sig-lights)" stroke-width="1.5"/>
+        <text x="345" y="165" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" font-weight="600" fill="var(--fg)">Lights Relay (1-Ch)</text>
+
+        <line x1="300" y1="180" x2="300" y2="40" stroke="var(--power)" stroke-width="2.5"/>
+        <text x="300" y="198" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--fg)">VCC</text>
+
+        <line x1="380" y1="180" x2="380" y2="140" stroke="var(--ground)" stroke-width="2.5" stroke-dasharray="4 3"/>
+        <line x1="380" y1="140" x2="190" y2="140" stroke="var(--ground)" stroke-width="2.5" stroke-dasharray="4 3"/>
+        <text x="380" y="198" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--fg)">GND</text>
+
+        <text x="272" y="235" font-family="IBM Plex Mono" font-size="11" fill="var(--fg)">IN</text>
+
+        <text x="418" y="230" text-anchor="end" font-family="IBM Plex Mono" font-size="11" fill="var(--fg)">COM</text>
+        <line x1="420" y1="225" x2="470" y2="225" stroke="var(--power)" stroke-width="2"/>
+        <line x1="470" y1="225" x2="470" y2="40" stroke="var(--power)" stroke-width="2"/>
+
+        <text x="418" y="265" text-anchor="end" font-family="IBM Plex Mono" font-size="11" fill="var(--fg)">NO</text>
+        <line x1="420" y1="260" x2="500" y2="260" stroke="var(--sig-lights)" stroke-width="2.5"/>
+
+        <!-- Lights bus splitting to 3 LED branches -->
+        <line x1="500" y1="260" x2="500" y2="230" stroke="var(--sig-lights)" stroke-width="2.5"/>
+        <line x1="500" y1="230" x2="780" y2="230" stroke="var(--sig-lights)" stroke-width="2.5"/>
+        <line x1="620" y1="230" x2="620" y2="260" stroke="var(--sig-lights)" stroke-width="2.5"/>
+        <line x1="700" y1="230" x2="700" y2="260" stroke="var(--sig-lights)" stroke-width="2.5"/>
+        <line x1="780" y1="230" x2="780" y2="260" stroke="var(--sig-lights)" stroke-width="2.5"/>
+
+        <g>
+          <line x1="500" y1="260" x2="500" y2="290" stroke="var(--sig-lights)" stroke-width="2"/>
+          <polygon points="490,290 510,290 500,310" fill="none" stroke="var(--sig-lights)" stroke-width="2"/>
+          <line x1="500" y1="310" x2="500" y2="340" stroke="var(--sig-lights)" stroke-width="2"/>
+          <rect x="488" y="340" width="24" height="14" fill="none" stroke="var(--sig-lights)" stroke-width="2"/>
+          <line x1="500" y1="354" x2="500" y2="678" stroke="var(--sig-lights)" stroke-width="2"/>
+          <text x="500" y="378" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">LED1</text>
+          <text x="500" y="603" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">R1</text>
+        </g>
+        <g>
+          <line x1="620" y1="260" x2="620" y2="290" stroke="var(--sig-lights)" stroke-width="2"/>
+          <polygon points="610,290 630,290 620,310" fill="none" stroke="var(--sig-lights)" stroke-width="2"/>
+          <line x1="620" y1="310" x2="620" y2="340" stroke="var(--sig-lights)" stroke-width="2"/>
+          <rect x="608" y="340" width="24" height="14" fill="none" stroke="var(--sig-lights)" stroke-width="2"/>
+          <line x1="620" y1="354" x2="620" y2="678" stroke="var(--sig-lights)" stroke-width="2"/>
+          <text x="620" y="378" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">LED2</text>
+          <text x="620" y="603" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">R2</text>
+        </g>
+        <g>
+          <line x1="700" y1="260" x2="700" y2="290" stroke="var(--sig-lights)" stroke-width="2"/>
+          <polygon points="690,290 710,290 700,310" fill="none" stroke="var(--sig-lights)" stroke-width="2"/>
+          <line x1="700" y1="310" x2="700" y2="340" stroke="var(--sig-lights)" stroke-width="2"/>
+          <rect x="688" y="340" width="24" height="14" fill="none" stroke="var(--sig-lights)" stroke-width="2"/>
+          <line x1="700" y1="354" x2="700" y2="678" stroke="var(--sig-lights)" stroke-width="2"/>
+          <text x="700" y="378" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">LED3</text>
+          <text x="700" y="603" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--muted)">R3</text>
+        </g>
+        <text x="640" y="200" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="var(--muted)">3 LEDs in parallel, one per floor — each on its own resistor</text>
+
+        <!-- Fan Relay box (own 1-ch board) -->
+        <rect x="260" y="400" width="170" height="130" rx="8" fill="var(--surface)" stroke="var(--sig-fan)" stroke-width="1.5"/>
+        <text x="345" y="385" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" font-weight="600" fill="var(--fg)">Fan Relay (1-Ch)</text>
+
+        <line x1="300" y1="400" x2="300" y2="40" stroke="var(--power)" stroke-width="2.5"/>
+        <text x="300" y="418" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--fg)">VCC</text>
+
+        <line x1="380" y1="400" x2="380" y2="360" stroke="var(--ground)" stroke-width="2.5" stroke-dasharray="4 3"/>
+        <line x1="380" y1="360" x2="190" y2="360" stroke="var(--ground)" stroke-width="2.5" stroke-dasharray="4 3"/>
+        <text x="380" y="418" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--fg)">GND</text>
+
+        <text x="272" y="445" font-family="IBM Plex Mono" font-size="11" fill="var(--fg)">IN</text>
+
+        <text x="418" y="450" text-anchor="end" font-family="IBM Plex Mono" font-size="11" fill="var(--fg)">COM</text>
+        <line x1="420" y1="445" x2="850" y2="445" stroke="var(--power)" stroke-width="2" stroke-dasharray="4 3"/>
+        <line x1="850" y1="445" x2="850" y2="40" stroke="var(--power)" stroke-width="2" stroke-dasharray="4 3"/>
+
+        <text x="418" y="480" text-anchor="end" font-family="IBM Plex Mono" font-size="11" fill="var(--fg)">NO</text>
+        <line x1="420" y1="475" x2="500" y2="475" stroke="var(--sig-fan)" stroke-width="2.5"/>
+
+        <rect x="500" y="460" width="90" height="30" rx="15" fill="var(--surface)" stroke="var(--sig-fan)" stroke-width="1.8"/>
+        <text x="545" y="479" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--fg)">Fan</text>
+        <line x1="545" y1="490" x2="545" y2="678" stroke="var(--sig-fan)" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--power)"></i>5V / power</span>
+      <span><i style="background:var(--ground)"></i>GND</span>
+      <span><i style="background:var(--sig-lights)"></i>Lights channel (GPIO13)</span>
+      <span><i style="background:var(--sig-fan)"></i>Fan channel (GPIO15)</span>
+      <span><i style="background:var(--sig-btn1)"></i>Lights button (GPIO4)</span>
+      <span><i style="background:var(--sig-btn2)"></i>Fan button (GPIO16)</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">03</span> Connection Reference</h2>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>From</th><th>To</th><th>Bus</th></tr>
+      <tr><td class="mono">ESP32 5V</td><td class="mono">Lights Relay VCC</td><td><span class="pill power">5V</span></td></tr>
+      <tr><td class="mono">ESP32 5V</td><td class="mono">Fan Relay VCC</td><td><span class="pill power">5V</span></td></tr>
+      <tr><td class="mono">ESP32 GND</td><td class="mono">Lights Relay GND, shared GND rail</td><td><span class="pill ground">GND</span></td></tr>
+      <tr><td class="mono">ESP32 GND</td><td class="mono">Fan Relay GND, shared GND rail</td><td><span class="pill ground">GND</span></td></tr>
+      <tr><td class="mono">ESP32 GPIO 13</td><td class="mono">Lights Relay IN</td><td><span class="pill lights">Lights</span></td></tr>
+      <tr><td class="mono">ESP32 GPIO 15</td><td class="mono">Fan Relay IN</td><td><span class="pill fan">Fan</span></td></tr>
+      <tr><td class="mono">Lights Relay COM</td><td class="mono">5V bus</td><td><span class="pill power">5V</span></td></tr>
+      <tr><td class="mono">Lights Relay NO</td><td class="mono">LED1, LED2, LED3 anodes (parallel)</td><td><span class="pill lights">Lights</span></td></tr>
+      <tr><td class="mono">LED1/2/3 cathode</td><td class="mono">its own resistor (R1/R2/R3) → GND</td><td><span class="pill ground">GND</span></td></tr>
+      <tr><td class="mono">Fan Relay COM</td><td class="mono">5V bus (or separate supply if the fan draws more than a trickle)</td><td><span class="pill power">5V</span></td></tr>
+      <tr><td class="mono">Fan Relay NO</td><td class="mono">Fan +</td><td><span class="pill fan">Fan</span></td></tr>
+      <tr><td class="mono">Fan &#8211;</td><td class="mono">GND bus</td><td><span class="pill ground">GND</span></td></tr>
+      <tr><td class="mono">ESP32 GPIO 4</td><td class="mono">Lights button, pin A</td><td><span class="pill btn1">Btn 1</span></td></tr>
+      <tr><td class="mono">Lights button, pin B</td><td class="mono">GND bus</td><td><span class="pill ground">GND</span></td></tr>
+      <tr><td class="mono">ESP32 GPIO 16</td><td class="mono">Fan button, pin A</td><td><span class="pill btn2">Btn 2</span></td></tr>
+      <tr><td class="mono">Fan button, pin B</td><td class="mono">GND bus</td><td><span class="pill ground">GND</span></td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">04</span> Before You Power On</h2>
+    <div class="notes">
+      <div class="note"><span class="dot"></span><span><b>Two separate relay boards now, as of Sep 30, 2026.</b> They are not guaranteed to share a polarity — verify each one independently with the Phase A bench-test sketches before trusting either.</span></div>
+      <div class="note"><span class="dot"></span><span><b>The fan relay's earlier active-HIGH finding does not carry over.</b> That result was on the original 2-channel module, which has been replaced. Re-run Step 1 (fan alone) on the new 1-channel board starting from the firmware's default <code>RELAY_FAN_ACTIVE_LOW = true</code>.</span></div>
+      <div class="note"><span class="dot"></span><span><b>Each LED gets its own resistor.</b> Never wire all 3 LEDs off one shared resistor — their forward voltages aren't identical, and current won't split evenly.</span></div>
+      <div class="note"><span class="dot"></span><span><b>Buttons need no external resistor.</b> Firmware uses <code>INPUT_PULLUP</code> — wire each button straight from its GPIO pin to GND.</span></div>
+      <div class="note"><span class="dot"></span><span><b>Keep the fan on its own rail if it draws real current.</b> A small DC motor + blade is usually fine off the ESP32's 5V pin for a bench test; anything bigger should get a separate supply sharing only GND with the ESP32.</span></div>
+      <div class="note"><span class="dot"></span><span><b>Full docs:</b> <code>Firmware/BSH-PowerBox/Lights_Relay/Wiring.md</code>, <code>Fan_Relay/Wiring.md</code>, <code>BSH_Sensors/09_Relay_Module.md</code>, and <code>BSH_Sensors/02_Push_Button.md</code> in the project folder.</span></div>
+    </div>
+  </div>
+
+  <footer>CyberUIW — BSH-PowerBox — generated Sep 30, 2026</footer>
+</div>
+</body>
+</html>

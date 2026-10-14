@@ -46,6 +46,14 @@ The Proxmox storage layout was **kept as-is** -- the "erase the 500 GB drive and
 3. **Settle the remaining open questions** in `PLC_Logic/README.md` and `PLC_Logic/Setup/README.md`: slave-device address convention, Modbus slave ID, FH-HVAC comms-loss direction. (Persistence and `--privileged` are settled, see above.)
 4. Tailscale subnet router later. Install Ignition when licensed.
 
+## Backups (added Oct 14, 2026)
+
+- **GitHub backup:** this whole folder is pushed to a private repo, `https://github.com/lfoliveira08/CyberCity` (first push Oct 14, 2026, 318 files, history starts there; the PDFs in `References/` are included). The git data lives outside OneDrive at `C:\Users\lfoli\git-data\cybercity.git` (the folder holds only a small `.git` pointer file), so OneDrive sync cannot corrupt it.
+- **It is a snapshot, not automatic.** After a work session, in the folder's terminal: `git add .`, `git commit -m "what changed"`, `git push`. To restore on another computer: `git clone https://github.com/lfoliveira08/CyberCity.git`.
+- **Keep the repo private.** The firmware `.ino` files and two `SYSTEM_REPORT.md` files contain the lab Wi-Fi name and password, and the commit history carries a personal email address (the GitHub setting that blocks pushing a private email was turned off to allow the push). Clean both before ever making it public. Also remove the book PDFs in `References/` first.
+- **Other protection:** OneDrive version history on this folder.
+- **Not covered yet:** the Proxmox VMs (OpenPLC Docker VM and the containers' data volumes). Back up VM 100 with Proxmox's built-in backup to `Big_Storage` once the containers are configured, and do the same for the SCADA VM.
+
 ## Cleanup pending
 
 - **Detach the install ISO from VM 100** (Proxmox: VM 100 -> Hardware -> CD/DVD Drive -> Edit -> Do not use any media) so a future reboot never boots the installer. It booted from disk fine this time, so low priority.

@@ -29,7 +29,7 @@ An alternate design explored BACnet/IP (Elevator, Fire Alarm) and MQTT (Air Qual
 |---|---|---|---|---|---|---|
 | Proxmox server (`pve`, Proxmox VE 9.2.2) | - | - | 192.168.50.143 (host, Web UI :8006) | - | - |
 | OpenPLC Docker VM (on Proxmox; hosts all 8 containers) | - | - | 192.168.50.10 (VM host) | - | - |
-| SCADA/HMI VM (on Proxmox; Ignition) | - | - | TBD (to be assigned) | - | - |
+| SCADA/HMI VM (on Proxmox; Ignition) | - | - | TBD (VM 101 `scada-hmi` built Oct 14; planned 192.168.50.30, not set yet) | - | - |
 | BSH-Elevator | 192.168.50.11 | Modbus TCP | OpenPLC-BSH-Elevator | 192.168.50.111 | 8080 | 502 |
 | BSH-FireAlarm | 192.168.50.12 | Modbus TCP | OpenPLC-BSH-FireAlarm | 192.168.50.112 | 8080 | 502 |
 | BSH-Door | 192.168.50.13 | Modbus TCP | OpenPLC-BSH-Door | 192.168.50.113 | 8080 | 502 |

@@ -48,6 +48,22 @@ Run on VM 100 (`OpenPLC-Docker`, 192.168.50.10) over SSH from the laptop. `sudo`
 - Detail: `docker ps` listed `OpenPLC-BSH-FireAlarm` as "Up Less than a second" with a `StartedAt` a few minutes in the future, while its log shows a single continuous run since 19:59:38 UTC and no crash. Likely a VM clock step after a reboot. Worth a `date -u` / `uptime -s` check on the VM; the Wireshark evidence in `Security_Capture/` depends on accurate clocks.
 
 ### Not done yet (next session)
-- Build the SCADA/HMI VM (VM 2) next.
+- Build the SCADA/HMI VM (VM 2) next. (Done later on Oct 14: VM 101, see the next section.)
 - Then configure each container in its web UI: add its ESP32 slave device, upload its `Program.st`, start the PLC, verify (start with BSH-FireAlarm, see `PLC_Logic/BSH-FireAlarm/Build_Log.md`).
 - Detach the install ISO from VM 100 (cleanup).
+
+## Oct 14, 2026 (evening) -- pve DNS fix, Ubuntu 24.04 ISO, VM 101 `scada-hmi`
+
+### pve DNS fix
+- `pve` DNS (Node > System > DNS) pointed at `192.168.100.1`, which is not on this lab network (192.168.50.0/24), so "Download from URL" failed with "Temporary failure in name resolution". Changed DNS server 1 to `192.168.50.1` and added `8.8.8.8` (search domain `CyberCampus` unchanged). Only `pve` itself is affected by this setting; the VMs and the Modbus traffic use their own settings and IP addresses.
+
+### Ubuntu 24.04 ISO
+- Downloaded to `Big_Storage` with Download from URL after the DNS fix: `ubuntu-24.04.5.1-desktop-amd64.iso` (5.82 GiB, from `https://releases.ubuntu.com/24.04/`). `Big_Storage` now holds 5 ISOs (the 4 listed on Oct 13 plus this one).
+- Why 24.04 and not the 26.04.1 ISO already there: Ignition's docs name Ubuntu but no release, and 24.04 LTS is the Ubuntu release most Ignition users run, so it removes one unknown. Windows Server was considered and not chosen (no license, 50-60 GB disk would not fit on `local-lvm`, extra VirtIO driver setup, nothing in the design needs OPC-DA/DCOM). The Win10/Win11 ISOs were not used (Win10 22H2 is out of support, Win11 needs about 64 GB and a TPM).
+
+### VM 101 `scada-hmi` (SCADA/HMI host, second architecture VM)
+- Created with the Create VM wizard: VMID 101, name `scada-hmi`; OS type Linux (`7.x - 2.6 Kernel` label on this Proxmox); ISO `ubuntu-24.04.5.1-desktop-amd64.iso`; QEMU agent on (agent=1); SCSI disk **25 GB on `local-lvm`** (iothread on, `virtio-scsi-single`); CPU 1 socket / 2 cores / type `host`; **8192 MB** RAM; net VirtIO on `vmbr0`, **firewall off**.
+- Ubuntu 24.04.5.1 LTS **desktop** installed with Erase disk (no LVM, no encryption), no third-party software. Hostname **`SCADA-HMI`**, user **`scada`** (password known to Luis, not recorded here). Install finished and the VM rebooted from its disk.
+- Install ISO **detached** (CD/DVD drive set to "Do not use any media"), so it will not boot the installer again.
+- **Not done yet on VM 101:** static IP (it is still on DHCP; plan 192.168.50.30, gw 192.168.50.1, DNS 192.168.50.1 + 8.8.8.8; ping it from the laptop first), `qemu-guest-agent`, SSH, an internet/DNS check, and the SCADA software itself.
+- Disk budget: `local-lvm` is 68.5 GB; VM 100 uses 40 GB and VM 101 25 GB, so about 3 GB is left unallocated on the SSD pool (thin provisioning, but do not plan more VM disks there).

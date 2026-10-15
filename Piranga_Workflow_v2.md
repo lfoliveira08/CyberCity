@@ -115,7 +115,7 @@ This is a narrower slice of real-world protocol diversity than initially planned
 |---|---|---|---|---|---|
 | Proxmox server (`pve`, Proxmox VE 9.2.2) | - | - | 192.168.50.143 (host, Web UI :8006) | - | - |
 | OpenPLC Docker VM (on Proxmox; hosts all 8 containers) | - | - | 192.168.50.10 (VM host) | - | - |
-| SCADA/HMI VM (on Proxmox; Ignition) | - | - | TBD (to be assigned) | - | - |
+| SCADA/HMI VM (on Proxmox; Ignition) | - | - | TBD (VM 101 `scada-hmi` built Oct 14; planned 192.168.50.30, not set yet) | - | - |
 | BSH-Elevator | 192.168.50.11 | OpenPLC-BSH-Elevator | 192.168.50.111 | 8080 | 502 |
 | BSH-FireAlarm | 192.168.50.12 | OpenPLC-BSH-FireAlarm | 192.168.50.112 | 8080 | 502 |
 | BSH-Door | 192.168.50.13 | OpenPLC-BSH-Door | 192.168.50.113 | 8080 | 502 |
@@ -138,7 +138,7 @@ The "hub" is no longer a single physical machine. It is a **Proxmox VE server**,
 | Proxmox VM | Role | IP |
 |---|---|---|
 | OpenPLC Docker VM | Docker host for the 8 OpenPLC containers (macvlan, `.111`-`.124`) | 192.168.50.10 |
-| SCADA/HMI VM | Ignition SCADA layer (Maker Edition, company license pending), HMI, event log, cascade rules | TBD |
+| SCADA/HMI VM | Ignition SCADA layer (Maker Edition, company license pending), HMI, event log, cascade rules | TBD (VM 101 `scada-hmi` built Oct 14; planned 192.168.50.30) |
 | Further VMs (optional) | e.g. attacker/analysis VM for Section 11 scenarios | TBD |
 
 The containers-not-VMs decision of Sep 22 still stands for the PLCs themselves (one container per OpenPLC, not one VM per PLC). Proxmox adds VMs one level above that: a VM for the Docker host and a separate VM for SCADA/HMI. Keeping SCADA in its own VM also avoids the macvlan limitation that a Docker host cannot reach its own macvlan containers.
@@ -280,7 +280,7 @@ Options are kept here so nobody re-evaluates them. Sources and licence notes are
 | ScadaBR / Scada-LTS | GPL | ScadaBR's last release was 2021 (Java 8) | Not chosen |
 | Node-RED | Apache 2.0 | The earlier plan; not what plants run as SCADA | Replaced by Ignition. Last-resort option only |
 
-Fallback rule: if the license has not arrived by **Oct 14, 2026**, start on FUXA or Rapid SCADA in the SCADA VM and switch to Ignition only once it is licensed. Ignition normally has a time-limited trial mode (confirm the current terms before relying on it).
+Fallback rule: if the license has not arrived by **Oct 21, 2026** (checkpoint moved from Oct 14 on Oct 14, 2026), start on FUXA or Rapid SCADA in the SCADA VM and switch to Ignition only once it is licensed. Ignition normally has a time-limited trial mode (confirm the current terms before relying on it).
 
 **pfSense (firewall, segmentation, intrusion detection)**
 
@@ -308,7 +308,7 @@ Rules: never expose the Proxmox web UI (port 8006) to the internet, reach it onl
 
 | Dates | Goal |
 |---|---|
-| Oct 12-15 | Proxmox VMs; first OpenPLC container (BSH-FireAlarm); verify the address convention. Oct 14: license checkpoint |
+| Oct 12-15 | Proxmox VMs; first OpenPLC container (BSH-FireAlarm); verify the address convention. license checkpoint moved to Oct 21 |
 | Oct 16-19 | Remaining 7 containers and program tests; install the SCADA gateway |
 | Oct 20-23 | Tags for all 8 nodes, status colors, heartbeat, event log, campus map |
 | Oct 24-27 | Cascade rules, within each building then cross-building |
@@ -398,7 +398,7 @@ The original 12-week milestone table (Aug 24 – Dec 11) still applies as the ov
 | # | Deliverable | Status | Notes |
 |---|---|---|---|
 | 1 | Functional 3D-printed smart campus model | ⬜ Not started | BSH + FH buildings |
-| 2 | 8 ESP32 nodes (firmware + wiring), 4 per building | 🟩 Firmware complete and bench-confirmed through Phase B on all 8 nodes (Oct 6-9, 2026): BSH Elevator, Fire Alarm, Door, PowerBox and FH HVAC, Fire Alarm, Door, PowerBox, each a Modbus TCP slave with heartbeat and reconnect counters, verified from a laptop. Phase C (OpenPLC and SCADA) started Oct 13, 2026: OpenPLC Docker VM, image, macvlan network and all 8 containers are running (Oct 14), no program loaded yet, SCADA VM not built | See Section 9 |
+| 2 | 8 ESP32 nodes (firmware + wiring), 4 per building | 🟩 Firmware complete and bench-confirmed through Phase B on all 8 nodes (Oct 6-9, 2026): BSH Elevator, Fire Alarm, Door, PowerBox and FH HVAC, Fire Alarm, Door, PowerBox, each a Modbus TCP slave with heartbeat and reconnect counters, verified from a laptop. Phase C (OpenPLC and SCADA) started Oct 13, 2026: OpenPLC Docker VM, image, macvlan network and all 8 containers are running (Oct 14), no program loaded yet, SCADA VM (VM 101) built Oct 14 but no SCADA software yet | See Section 9 |
 | 3 | 8 OpenPLC instances configured in the Proxmox OpenPLC Docker VM | ⬜ Not started | See Section 10 |
 | 4 | Ladder logic programs for all 8 OpenPLC instances | 🟨 Drafted, untested (Oct 11, 2026) | Safe-state behavior + SCADA-coil pass-through, see Section 10. Files in `PLC_Logic/` (one folder per system) |
 | 5 | SCADA dashboard with cross-system cascade rules | ⬜ Not started | Ignition (Maker Edition; professor approved Oct 12, 2026, company license pending). See Sections 7 and 10 |
@@ -486,6 +486,7 @@ The original 12-week milestone table (Aug 24 – Dec 11) still applies as the ov
 | Oct 12, 2026 | Four decisions. (1) **SCADA/HMI = Ignition (Maker Edition)**, replacing Node-RED: the professor approved it and submitted the license application; the company's response is pending. Fallbacks: Rapid SCADA, then FUXA; start a fallback on Oct 14 if no license. (2) **pfSense = stretch goal** after the core works (about Nov 16-29), with five prep rules so it can be added later. (3) **VPN = Tailscale first** (subnet router on Proxmox), because SCT5 cannot forward ports; a pfSense VPN is optional later. (4) **Accelerated target**: core system working by Oct 31, final demo still Dec 11 | Luis's partner suggested pfSense and Ignition/ScadaBR for industry realism; Luis asked the professor, who approved Ignition. Options and the schedule are in Section 10 ("Platform decisions and options"). Next-session handoff: `Next_Steps.md` |
 | Oct 13, 2026 | **Phase C started.** Built the OpenPLC Docker VM (VM 100, 192.168.50.10) and, the same evening, the `openplc:v3` image (local build from github.com/thiagoralves/OpenPLC_v3), the macvlan network `cybercity_lan` (parent `ens18`) and the first container, `OpenPLC-BSH-FireAlarm` at 192.168.50.112, reachable from the laptop on port 8080 (Blank Program, stopped). Each container keeps its programs and settings in its own named Docker volume on `/docker_persistent` and runs without `--privileged`. The default OpenPLC login is kept on every container (decision: not changed) | The OpenPLC_v3 Dockerfile keeps its database, uploaded programs and settings under `/docker_persistent` (declared as a volume), so a named volume per container survives a container rebuild. The repo README uses `--privileged` only in a generic example; the container started and served the web UI without it. Ubuntu 26.04's `sudo` ignores `-E`, so scripts take variables as `sudo env VAR=value ...`. Still open: slave-device address convention, Modbus slave ID, FH-HVAC comms-loss direction. Infrastructure detail is in `Proxmox_Build_Log.md` |
 | Oct 14, 2026 | **All 8 OpenPLC containers running.** The 7 remaining containers (.111, .113, .114, .121-.124) were started on the OpenPLC Docker VM with `run_containers.sh`; all 8 web UIs (port 8080) answer HTTP 200 from the laptop. Each has its own named volume on `/docker_persistent`, no `--privileged`, default OpenPLC login, and a blank program. Order for the rest of the day: containers first, then the SCADA/HMI VM | The script was fixed to skip existing containers and use a volume per container before running. The VM keeps its own copy of `Setup/`, so re-copy it after any change. Still open: ESP32 slave device and `Program.st` in each container, slave-device address convention, Modbus slave ID, FH-HVAC comms-loss direction. Detail in `Proxmox_Build_Log.md` |
+| Oct 14, 2026 | **Ignition license checkpoint moved from Oct 14 to Oct 21.** The rule is otherwise unchanged: if the license has not arrived by Oct 21, start on a fallback (Rapid SCADA, then FUXA) and switch to Ignition once it is licensed. The professor's application is with Inductive Automation (Educational Engagement Program); a follow-up goes out if there is no reply | Luis extended the wait by a week. Effect: the SCADA tag and HMI work (Oct 20-23 in the schedule) starts on the license, or on a fallback, only from Oct 21; the OpenPLC and infrastructure work continues meanwhile |
 
 > **Instructions carried over from v1:** Update this section throughout the project — not just at the end. Document any issues encountered and how they were resolved.
 

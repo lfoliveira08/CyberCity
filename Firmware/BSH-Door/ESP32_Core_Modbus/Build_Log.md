@@ -1,5 +1,7 @@
 # ESP32 Board + WiFi + Modbus TCP — Build Log (BSH-Door)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 Board bring-up and Modbus TCP verification (Phase B) — not tied to one
 component, tracked separately from the five sensor/actuator folders.
 

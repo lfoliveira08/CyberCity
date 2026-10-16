@@ -1,5 +1,7 @@
 # BSH-PowerBox -- PLC build log
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 Status: **container running, program not loaded yet** (files drafted Oct 11, 2026; container started Oct 14, 2026).
 
 ## Phase C steps

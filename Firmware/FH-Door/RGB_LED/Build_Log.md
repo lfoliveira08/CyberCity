@@ -1,5 +1,7 @@
 # RGB LED — Build Log (FH-Door)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 > **Phase 2 — written ahead of its turn.** This log was created on Oct 9, 2026 as a
 > mirror of `Firmware/BSH-Door/RGB_LED/Build_Log.md`. FH systems normally begin after
 > all BSH systems are complete (`Firmware/WORKFLOW.md` Section 1); the Door code

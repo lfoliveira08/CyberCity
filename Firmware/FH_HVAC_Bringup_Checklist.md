@@ -1,5 +1,7 @@
 # FH-HVAC — Bring-Up Checklist
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 **Purpose:** Founder's Hall slot 1 — an HVAC zone unit, adopted Sep 26, 2026 in
 place of the retired FH-Elevator. Second FH system per `Firmware/WORKFLOW.md`'s
 Phase 2 order, which only begins once all five BSH systems are complete.

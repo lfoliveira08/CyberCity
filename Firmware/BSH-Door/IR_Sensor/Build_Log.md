@@ -1,5 +1,7 @@
 # IR Sensor — Build Log (BSH-Door)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 ## Status
 - [x] Simulated in Wokwi first (Phase A0 — see `../Wokwi/README.md`) — date: 2026-10-09 (Luis ran it, looked fine)
 - [ ] Component in hand

@@ -1,5 +1,7 @@
 # DHT11 -- Build Log (FH-HVAC)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 ## Status
 - [ ] Simulated in Wokwi first (Phase A0 -- see `../Wokwi/README.md`)
 - [x] Component in hand: DHT11, 3-pin module (pull-up already on the module)

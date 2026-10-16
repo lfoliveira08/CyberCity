@@ -1,5 +1,7 @@
 # Relay Module -- Build Log (FH-HVAC)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 ## Status
 - [ ] Simulated in Wokwi first (Phase A0)
 - [ ] Component in hand

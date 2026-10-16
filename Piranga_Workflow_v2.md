@@ -115,7 +115,7 @@ This is a narrower slice of real-world protocol diversity than initially planned
 |---|---|---|---|---|---|
 | Proxmox server (`pve`, Proxmox VE 9.2.2) | - | - | 192.168.50.143 (host, Web UI :8006) | - | - |
 | OpenPLC Docker VM (on Proxmox; hosts all 8 containers) | - | - | 192.168.50.10 (VM host) | - | - |
-| SCADA/HMI VM (on Proxmox; Ignition) | - | - | TBD (VM 101 `scada-hmi` built Oct 14; planned 192.168.50.30, not set yet) | - | - |
+| SCADA/HMI VM (on Proxmox; Ignition) | - | - | 192.168.50.30 (VM 101 `scada-hmi`, built Oct 14, static IP set Oct 15) | - | - |
 | BSH-Elevator | 192.168.50.11 | OpenPLC-BSH-Elevator | 192.168.50.111 | 8080 | 502 |
 | BSH-FireAlarm | 192.168.50.12 | OpenPLC-BSH-FireAlarm | 192.168.50.112 | 8080 | 502 |
 | BSH-Door | 192.168.50.13 | OpenPLC-BSH-Door | 192.168.50.113 | 8080 | 502 |
@@ -138,7 +138,7 @@ The "hub" is no longer a single physical machine. It is a **Proxmox VE server**,
 | Proxmox VM | Role | IP |
 |---|---|---|
 | OpenPLC Docker VM | Docker host for the 8 OpenPLC containers (macvlan, `.111`-`.124`) | 192.168.50.10 |
-| SCADA/HMI VM | Ignition SCADA layer (Maker Edition, company license pending), HMI, event log, cascade rules | TBD (VM 101 `scada-hmi` built Oct 14; planned 192.168.50.30) |
+| SCADA/HMI VM | Ignition SCADA layer (Maker Edition, company license pending), HMI, event log, cascade rules | 192.168.50.30 (VM 101) |
 | Further VMs (optional) | e.g. attacker/analysis VM for Section 11 scenarios | TBD |
 
 The containers-not-VMs decision of Sep 22 still stands for the PLCs themselves (one container per OpenPLC, not one VM per PLC). Proxmox adds VMs one level above that: a VM for the Docker host and a separate VM for SCADA/HMI. Keeping SCADA in its own VM also avoids the macvlan limitation that a Docker host cannot reach its own macvlan containers.
@@ -412,6 +412,8 @@ The original 12-week milestone table (Aug 24 – Dec 11) still applies as the ov
 
 ## 14. Lessons Learned & Decisions Log
 
+> **Frozen as history on Oct 15, 2026 (last entry: Oct 14, 2026).** New decisions and lessons live in `Logs/`, one file per day (`Logs/YYYY-MM-DD.md`, index in `Logs/INDEX.md`, rules in `Logs/README.md`). The rows below are not moved or edited, because many documents cite them as "Section 14, Oct 6 entry".
+
 | Date | Decision | Rationale |
 |---|---|---|
 | Sep 2, 2026 | Use two protocols: BSH = Modbus TCP, FH = MQTT | Enables side-by-side protocol comparison (superseded below) |
@@ -487,6 +489,7 @@ The original 12-week milestone table (Aug 24 – Dec 11) still applies as the ov
 | Oct 13, 2026 | **Phase C started.** Built the OpenPLC Docker VM (VM 100, 192.168.50.10) and, the same evening, the `openplc:v3` image (local build from github.com/thiagoralves/OpenPLC_v3), the macvlan network `cybercity_lan` (parent `ens18`) and the first container, `OpenPLC-BSH-FireAlarm` at 192.168.50.112, reachable from the laptop on port 8080 (Blank Program, stopped). Each container keeps its programs and settings in its own named Docker volume on `/docker_persistent` and runs without `--privileged`. The default OpenPLC login is kept on every container (decision: not changed) | The OpenPLC_v3 Dockerfile keeps its database, uploaded programs and settings under `/docker_persistent` (declared as a volume), so a named volume per container survives a container rebuild. The repo README uses `--privileged` only in a generic example; the container started and served the web UI without it. Ubuntu 26.04's `sudo` ignores `-E`, so scripts take variables as `sudo env VAR=value ...`. Still open: slave-device address convention, Modbus slave ID, FH-HVAC comms-loss direction. Infrastructure detail is in `Proxmox_Build_Log.md` |
 | Oct 14, 2026 | **All 8 OpenPLC containers running.** The 7 remaining containers (.111, .113, .114, .121-.124) were started on the OpenPLC Docker VM with `run_containers.sh`; all 8 web UIs (port 8080) answer HTTP 200 from the laptop. Each has its own named volume on `/docker_persistent`, no `--privileged`, default OpenPLC login, and a blank program. Order for the rest of the day: containers first, then the SCADA/HMI VM | The script was fixed to skip existing containers and use a volume per container before running. The VM keeps its own copy of `Setup/`, so re-copy it after any change. Still open: ESP32 slave device and `Program.st` in each container, slave-device address convention, Modbus slave ID, FH-HVAC comms-loss direction. Detail in `Proxmox_Build_Log.md` |
 | Oct 14, 2026 | **Ignition license checkpoint moved from Oct 14 to Oct 21.** The rule is otherwise unchanged: if the license has not arrived by Oct 21, start on a fallback (Rapid SCADA, then FUXA) and switch to Ignition once it is licensed. The professor's application is with Inductive Automation (Educational Engagement Program); a follow-up goes out if there is no reply | Luis extended the wait by a week. Effect: the SCADA tag and HMI work (Oct 20-23 in the schedule) starts on the license, or on a fallback, only from Oct 21; the OpenPLC and infrastructure work continues meanwhile |
+| Oct 14, 2026 | **SCADA/HMI VM built: VM 101 `scada-hmi`.** Three decisions. (1) **OS = Ubuntu 24.04.5.1 LTS desktop**, not Windows Server 2022, not the Win10/Win11 ISOs, and not the 26.04.1 ISO already on `Big_Storage`. (2) **Specs:** 2 vCPU type `host`, 8 GB RAM, 25 GB disk on `local-lvm`, VirtIO NIC on `vmbr0` with the firewall off, QEMU agent on, hostname `SCADA-HMI`, user `scada-hmi`. (3) **Static IP 192.168.50.30** (set Oct 15; the VM was on DHCP 192.168.50.237 until then), outside the .10-.24 and .111-.124 ranges. Also fixed `pve`'s DNS (it pointed at `192.168.100.1`; now `192.168.50.1` + `8.8.8.8`) so the ISO could be downloaded. Ignition itself is not installed yet (license pending, checkpoint Oct 21) | Ubuntu LTS is the common Linux platform for Ignition and matches the Linux VM 100; Ignition's docs name Ubuntu but no release, and 24.04 is the release most Ignition users run, so it removes one unknown. Not a published support statement for the standalone installer; the Ignition 8.3.0 release notes do say Cloud Edition and the Docker image are based on Ubuntu 24.04 LTS (re-check before installing). Windows Server would need a license, 50-60 GB (does not fit the 28 GB left on `local-lvm`) and VirtIO driver setup, and nothing in the design needs OPC-DA/DCOM; Win10 22H2 is out of support and Win11 needs about 64 GB and a TPM. Desktop edition keeps the plan to show the HMI on-screen. Real plants still mostly run Windows Server for SCADA, so a Windows VM may be added later as a victim/HMI-client machine for Section 11, on `Big_Storage`. 24.04 differs from VM 100's 26.04 on purpose. Full record: `Proxmox_Build_Log.md`. |
 
 > **Instructions carried over from v1:** Update this section throughout the project — not just at the end. Document any issues encountered and how they were resolved.
 

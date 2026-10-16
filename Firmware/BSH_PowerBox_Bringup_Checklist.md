@@ -1,5 +1,7 @@
 # BSH-PowerBox — Bring-Up Checklist
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 **Purpose:** fourth BSH system in the build order (after Fire Alarm,
 Elevator, and Door — see `Firmware/WORKFLOW.md`). No longer flagged
 higher-risk than Fire Alarm — DALI was dropped Sep 28, 2026 in favor of a

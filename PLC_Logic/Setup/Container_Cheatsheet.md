@@ -34,7 +34,7 @@ If a container does not exist at all, create it with `cd ~/Setup && sudo ./run_c
 
 - Each container uses Web UI port 8080 and Modbus port 502 on its own IP. Systems are told apart by IP, not by port.
 - Default OpenPLC login on every container: `openplc` / `openplc` (kept on purpose, decided Oct 13, 2026).
-- The Docker host is the VM `openplc-docker` (192.168.50.10, user `plc`). The SCADA/HMI VM is `scada-hmi` (VM 101, built Oct 14; its static IP is not assigned yet, so it is not in this table).
+- The Docker host is the VM `openplc-docker` (192.168.50.10, user `plc`). The SCADA/HMI VM is `scada-hmi` (VM 101, built Oct 14, static IP 192.168.50.30; it hosts no container, so it is not in this table).
 
 ## 2. Where to run what
 

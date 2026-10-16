@@ -1,5 +1,7 @@
 # Active Buzzer — Build Log (FH-FireAlarm)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 > **Phase 2 — not started.** FH systems begin only after all five BSH systems
 > are complete (`Firmware/WORKFLOW.md` Section 1). This log was created empty on
 > Sep 26, 2026 when FH-FireAlarm was given a proper system folder; every box

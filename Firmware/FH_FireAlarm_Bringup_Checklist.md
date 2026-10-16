@@ -1,5 +1,7 @@
 # FH-FireAlarm — Bring-Up Checklist
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 **Purpose:** Founder's Hall mirror of BSH-FireAlarm — first FH system,
 built only after all five BSH systems are complete (Phase 2 of
 `Firmware/WORKFLOW.md`). Identical hardware, wiring, and logic to

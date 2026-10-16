@@ -43,8 +43,8 @@ PLC_Logic/
 
 ## Open questions to settle on the first real container
 
-1. Where slave-device data appears (`%IX100.0`, `%QX100.0`, `%IW100`, `%QW100`): confirmed convention or not.
-2. Which Modbus slave ID the ESP32 firmware answers to.
+1. ~~Where slave-device data appears (`%IX100.0`, `%QX100.0`, `%IW100`, `%QW100`).~~ SETTLED Oct 15: confirmed on BSH-FireAlarm's container -- the Slave Devices page states "attached to address 100 onward" and listed this device at exactly those addresses. Per-system ranges still verify on each system's own container.
+2. Which Modbus slave ID the ESP32 firmware answers to. Oct 15: **slave ID 0** entered on BSH-FireAlarm (form accepted it); confirm by live polling (HEARTBEAT ticking). If it fails, retry ID 1.
 3. ~~The exact Docker image to use for OpenPLC.~~ Settled Oct 13: built locally as `openplc:v3` from the OpenPLC_v3 repo (see `Setup/README.md`).
 4. FH-HVAC: the comms-loss direction for `HVAC_ENABLE`.
 

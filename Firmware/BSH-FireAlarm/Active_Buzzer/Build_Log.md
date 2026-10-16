@@ -1,5 +1,7 @@
 # Active Buzzer — Build Log (BSH-FireAlarm)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 Use this to track your actual build, separate from the general wiring
 reference in `Wiring.md`. Update as you go, not just at the end.
 

@@ -1,5 +1,7 @@
 # RFID Reader (MFRC522/RC522) — Build Log (BSH-Door)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 > Replaces `Wiegand_Card_Reader/Build_Log.md` — see this folder's
 > `Wiring.md` for the swap rationale.
 

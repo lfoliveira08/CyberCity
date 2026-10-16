@@ -1,5 +1,7 @@
 # ESP32 Board + WiFi + Modbus TCP — Build Log (FH-Door)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 > **Phase B bench-confirmed 2026-10-09** at 192.168.50.23. Mirror of `Firmware/BSH-Door/ESP32_Core_Modbus/Build_Log.md`.
 
 Board bring-up and Modbus TCP verification (Phase B) — not tied to one

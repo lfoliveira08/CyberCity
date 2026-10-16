@@ -91,7 +91,7 @@ Backup Power / ATS Monitor system (dropped without a replacement on Oct 5,
 
 Phase B (WiFi + Modbus) is done on every node (bench-confirmed Oct 6-9, 2026). The phases are
 A0 Wokwi simulation → A bench hardware → B WiFi + Modbus → C OpenPLC + SCADA.
-**Phase B is done on all eight nodes. Phase C (OpenPLC + SCADA) started Oct 13, 2026** with the infrastructure: the OpenPLC Docker VM (`openplc-docker`, 192.168.50.10, Ubuntu 26.04 desktop) is built and running Docker (verified Oct 13, 2026). Later that evening the `openplc:v3` image was built, the macvlan network `cybercity_lan` was created, and the first container (`OpenPLC-BSH-FireAlarm`, 192.168.50.112) started. On Oct 14 the other 7 containers were started with `run_containers.sh`; all 8 are running and their web UIs answer from the laptop. No program or ESP32 slave device is loaded in any of them yet, and the SCADA/HMI VM (VM 101 `scada-hmi`, Ubuntu 24.04 LTS desktop) was built on Oct 14 but has no static IP, no guest agent and no SCADA software yet; the ladder programs are drafted in `PLC_Logic/` but have not been compiled or run. See `Next_Steps.md` and `Proxmox_Build_Log.md`.
+**Phase B is done on all eight nodes. Phase C (OpenPLC + SCADA) started Oct 13, 2026** with the infrastructure: the OpenPLC Docker VM (`openplc-docker`, 192.168.50.10, Ubuntu 26.04 desktop) is built and running Docker (verified Oct 13, 2026). Later that evening the `openplc:v3` image was built, the macvlan network `cybercity_lan` was created, and the first container (`OpenPLC-BSH-FireAlarm`, 192.168.50.112) started. On Oct 14 the other 7 containers were started with `run_containers.sh`; all 8 are running and their web UIs answer from the laptop. No program or ESP32 slave device is loaded in any of them yet, and the SCADA/HMI VM (VM 101 `scada-hmi`, Ubuntu 24.04 LTS desktop) was built on Oct 14 and has static IP 192.168.50.30 (set Oct 15); it has no SCADA software yet; the ladder programs are drafted in `PLC_Logic/` but have not been compiled or run. See `Next_Steps.md` and `Proxmox_Build_Log.md`.
 
 | System | State |
 |---|---|
@@ -162,3 +162,9 @@ log -- lives in `Security_Capture/`. See `Security_Capture/README.md` first.
 - **One home per file, no duplicate sketches.** `Firmware/WORKFLOW.md` Section 8
   is the map. A superseded variant goes to `Archive/` with a stated reason, never
   beside the live file under a name like `..._Node-1.ino`.
+
+## 9. Daily log (added Oct 15, 2026)
+
+`Logs/` holds the decision log and lessons learned, one file per working day (`Logs/YYYY-MM-DD.md`), with `Logs/INDEX.md` listing the days and `Logs/README.md` holding the rules and the template. It continues `Piranga_Workflow_v2.md` Section 14, which is frozen as history up to Oct 14, 2026.
+
+**Standing instruction for every session:** before ending a session that changed anything, write or update today's file in `Logs/` (done, decisions with rationale, lessons with resolution, open items) and add the day to `Logs/INDEX.md`. Never rewrite an old entry; add a new one that supersedes it. Read the latest `Logs/` file after `Next_Steps.md` to see what happened most recently.

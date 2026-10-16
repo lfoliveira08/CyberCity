@@ -1,5 +1,7 @@
 # Lights Relay — Build Log (BSH-PowerBox)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 Formerly `DALI_LED_Driver/Build_Log.md` — this channel now drives a plain
 relay instead of a DALI ballast (design change, Sep 28, 2026; see
 `claude/BSH_Systems/04_BSH-PowerBox.md` Notes). As of Sep 30, 2026, this

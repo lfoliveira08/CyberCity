@@ -1,5 +1,7 @@
 # ESP32 Board + WiFi + Modbus TCP — Build Log (BSH-FireAlarm)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 This one isn't a single sensor — it's the ESP32 board itself joining the
 project WiFi and standing up as a Modbus TCP slave. This is
 `BSH_FireAlarm_PILOT_Bringup.md` **Phase B**, tracked here so it has the

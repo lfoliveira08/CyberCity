@@ -1,5 +1,7 @@
 # I2C LCD Display — Build Log (BSH-Elevator)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 **Hardware substitution:** this bench build uses a 128x64 I2C SSD1306 OLED
 instead of the documented 16x2 character LCD — folder/reference name kept
 as-is for now since it's still "the I2C status display" component, but see

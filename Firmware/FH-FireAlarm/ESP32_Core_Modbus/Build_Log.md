@@ -1,5 +1,7 @@
 # ESP32 Core + WiFi/Modbus — Build Log (FH-FireAlarm)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 > **Phase B complete, bench-confirmed Oct 6, 2026.** This folder covers the
 > board itself joining WiFi and answering as a Modbus TCP slave, not any one
 > sensor. Done ahead of the build order at Luis's request; mirrors

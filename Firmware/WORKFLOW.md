@@ -118,6 +118,8 @@ original deferral text below is historical.
 
 **PLC LOGIC (Oct 11, 2026):** the OpenPLC side of each system lives in `PLC_Logic/<Bldg>-<System>/` (ladder diagram, register map, `Program.st`, build log), not in the bring-up checklists. All 8 are drafted and untested. Phase C started Oct 13, 2026; a node's `Build_Log.md` there is filled in as its container is built.
 
+**OPENPLC EDITOR PROJECTS (Oct 15, 2026):** when a system's ladder logic is built in the OpenPLC Editor (the v4 desktop app), the Editor project is saved as a subfolder of that system's PLC_Logic folder, named `<Bldg>-<System>-ESP32` (e.g. `PLC_Logic/BSH-FireAlarm/BSH-FireAlarm-ESP32/`). One per system. The Editor stores the program in `pous/programs/main.ld` plus `project.json` and `devices/`; its `build/` subfolder is regenerable compiled output and is git-ignored (see `.gitignore` at the folder root). The authoritative, human-readable `Program.st` still lives at `PLC_Logic/<Bldg>-<System>/Program.st` and is what gets uploaded to the v3 container; the Editor project is the visual source and learning record. Note: the v4 Editor compiles ST to C++ for its target and does not export a loose `.st` for the v3 web UI, so the hand-written `Program.st` is the v3 deploy artifact.
+
 **Standard registers on every node (Oct 6, 2026):** every Modbus node exposes `HEARTBEAT` (once-a-second counter) and `RECONNECT_COUNT` as its last two Input Registers, so SCADA can detect a dropped ESP32. A node's firmware, system doc, bring-up checklist and OpenPLC Input Register count must all agree on this -- update all four together or none. Source of truth for the numbers: the node's `BSH_Systems/` or `FH_Systems/` doc.
 
 ### Original deferral (Phase B for Door/FH, and Phase C for all)
@@ -215,6 +217,7 @@ gets flashed by mistake. There is one home for each kind of file:*
 | Component reference sheet | `BSH_Sensors/` or `FH_Sensors/` | One per building, mirrored |
 | Retired files | `Archive/` | Never build from these; see `Archive/README.md` |
 | Wireshark/pcap evidence for the Section 11 attack scenarios | `Security_Capture/` | One home for this activity (added Oct 14, 2026): `README.md`, `Capture_Setup.md`, `Scenario_Capture_Plan.md`, `Capture_Log_Template.md`, `Captures/` |
+| Daily decisions and lessons learned | `Logs/` | One file per working day, `YYYY-MM-DD.md`, plus `INDEX.md` and `README.md` (the rules). Added Oct 15, 2026; continues `Piranga_Workflow_v2.md` Section 14, which is frozen as history up to Oct 14, 2026 |
 
 Rules that follow from the table:
 
@@ -225,6 +228,7 @@ Rules that follow from the table:
   (an alternate pin mapping, an older approach), it goes in `Archive/` with a
   row in `Archive/README.md` saying why — not beside the live file under a
   name like `..._Node-1.ino`.
+- **Every change gets logged the same day.** Any new file, retired file, decision, bench result or lesson is recorded in that day's file in `Logs/` (rules in `Logs/README.md`), in addition to the component `Build_Log.md` where it applies. Added Oct 15, 2026.
 - **The firmware path is stable across phases.** Do not add `_PhaseA`,
   `_v2`, or `_final` to a sketch name; the file is the current one by
   definition, and `SYSTEM_REPORT.md` records what it was at completion.

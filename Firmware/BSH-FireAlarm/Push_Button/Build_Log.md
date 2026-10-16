@@ -1,5 +1,7 @@
 # Push Button — Build Log (BSH-FireAlarm)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 ## Status
 - [ ] Simulated in Wokwi first (Phase A0 — see `../Wokwi/README.md`) — date: ______
 - [ ] Component in hand

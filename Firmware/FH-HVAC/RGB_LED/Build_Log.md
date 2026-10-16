@@ -1,5 +1,7 @@
 # RGB LED -- Build Log (FH-HVAC)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 ## Status
 - [ ] Simulated in Wokwi first (Phase A0)
 - [x] Component in hand (RGB LED confirmed available 2026-10-07; common cathode vs anode: ______)

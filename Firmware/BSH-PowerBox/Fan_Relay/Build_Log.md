@@ -1,5 +1,7 @@
 # Fan Relay — Build Log (BSH-PowerBox)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 ## Status
 - [x] Simulated in Wokwi first (Phase A0 — see `../Wokwi/README.md`) — date: Sep 28–29, 2026
 - [x] Component in hand

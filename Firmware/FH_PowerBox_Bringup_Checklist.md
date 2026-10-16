@@ -1,5 +1,7 @@
 # FH-PowerBox — Bring-Up Checklist
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 **Purpose:** Founder's Hall mirror of BSH-PowerBox — fourth FH system per
 `Firmware/WORKFLOW.md`'s Phase 2 order. Identical hardware, wiring, and
 logic to BSH-PowerBox; only the static IP should differ.

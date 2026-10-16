@@ -1,5 +1,7 @@
 # Proxmox build log -- infrastructure
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 Durable record of the Proxmox / VM infrastructure build. Newest work at the bottom. The folder is the source of truth; this file logs what was actually done on `pve`. Status and "do next" live in `Next_Steps.md`.
 
 ## Host: `pve`
@@ -63,7 +65,12 @@ Run on VM 100 (`OpenPLC-Docker`, 192.168.50.10) over SSH from the laptop. `sudo`
 
 ### VM 101 `scada-hmi` (SCADA/HMI host, second architecture VM)
 - Created with the Create VM wizard: VMID 101, name `scada-hmi`; OS type Linux (`7.x - 2.6 Kernel` label on this Proxmox); ISO `ubuntu-24.04.5.1-desktop-amd64.iso`; QEMU agent on (agent=1); SCSI disk **25 GB on `local-lvm`** (iothread on, `virtio-scsi-single`); CPU 1 socket / 2 cores / type `host`; **8192 MB** RAM; net VirtIO on `vmbr0`, **firewall off**.
-- Ubuntu 24.04.5.1 LTS **desktop** installed with Erase disk (no LVM, no encryption), no third-party software. Hostname **`SCADA-HMI`**, user **`scada`** (password known to Luis, not recorded here). Install finished and the VM rebooted from its disk.
+- Ubuntu 24.04.5.1 LTS **desktop** installed with Erase disk (no LVM, no encryption), no third-party software. Hostname **`SCADA-HMI`**, user **`scada-hmi`** (password known to Luis, not recorded here). Install finished and the VM rebooted from its disk.
 - Install ISO **detached** (CD/DVD drive set to "Do not use any media"), so it will not boot the installer again.
-- **Not done yet on VM 101:** static IP (it is still on DHCP; plan 192.168.50.30, gw 192.168.50.1, DNS 192.168.50.1 + 8.8.8.8; ping it from the laptop first), `qemu-guest-agent`, SSH, an internet/DNS check, and the SCADA software itself.
+- **Oct 15:** installed `qemu-guest-agent` and `openssh-server` with apt, enabled `ssh`, started the agent. The VM first came up on **DHCP** (`ens18` = 192.168.50.237/24). Later the same day Luis set the **static IP 192.168.50.30** (outside .10-.24 and .111-.124; gw 192.168.50.1, DNS 192.168.50.1 + 8.8.8.8); `ip -4 addr` now shows 192.168.50.30/24 (as reported by Luis).
+- Internet and DNS from the VM verified Oct 15 (ping 8.8.8.8 and google.com both OK).
+- SSH from the laptop works (`ssh scada-hmi@192.168.50.237`, confirmed Oct 15); the password was reset to a letters-and-numbers one to avoid keyboard-layout problems between the Proxmox console and the laptop (not recorded here).
+- Ignition OS-support check (Oct 15): Inductive's Ignition 8.3 docs name no Linux distribution or Ubuntu release. They say Ignition "works with any major operating system, including Windows, MacOS, Linux, iOS, and Android" and give a minimum of a dual-core processor, 4 GB RAM and 10 GB free disk (the Windows install guide's figures). VM 101 (2 vCPU, 8 GB, 25 GB) meets that. Ubuntu 24.04 is therefore not on a published support list for the standalone Linux installer. Official evidence: the Ignition 8.3.0 release notes (Sep 16, 2025) say Cloud Edition 8.3.0 "is now based on Ubuntu Server 24.04 LTS" and the Docker image moved to Ubuntu 24.04 LTS; the bundled Java is 17.0.14. That shows 8.3 is built on 24.04 but is not a written support statement for desktop installs. Re-check at install time.
+- Guest agent confirmed Oct 15: VM 101 Summary in Proxmox shows IPs 192.168.50.30 (status running, 2 vCPU, 8 GB, 25 GB boot disk; about 2.5 GiB memory in use at idle).
+- **Not done yet on VM 101:** the SCADA software itself (Ignition license pending; fallback Rapid SCADA / FUXA), start-at-boot, and a Proxmox backup.
 - Disk budget: `local-lvm` is 68.5 GB; VM 100 uses 40 GB and VM 101 25 GB, so about 3 GB is left unallocated on the SSD pool (thin provisioning, but do not plan more VM disks there).

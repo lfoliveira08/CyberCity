@@ -1,5 +1,7 @@
 # FH-Door (Gate) — Bring-Up Checklist
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 > **Update 2026-10-09: Phase B bench-confirmed** at 192.168.50.23 (see `FH-Door/ESP32_Core_Modbus/Build_Log.md`). Phase C not started (update Oct 14, 2026: Phase C started Oct 13; all 8 OpenPLC containers are running, none configured yet).
 
 **Purpose:** Founder's Hall mirror of BSH-Door — third FH system per

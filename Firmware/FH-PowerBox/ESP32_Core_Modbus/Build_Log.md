@@ -1,5 +1,7 @@
 # ESP32 Board + WiFi + Modbus TCP -- Build Log (FH-PowerBox)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 Board bring-up and Modbus TCP verification (Phase B), mirrored from
 `BSH-PowerBox/ESP32_Core_Modbus/Build_Log.md`. FH-PowerBox was built ahead of
 the BSH build order at Luis's request (Oct 6, 2026).

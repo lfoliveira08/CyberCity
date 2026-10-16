@@ -1,5 +1,7 @@
 # BSH-FireAlarm Pilot — Bring-Up Checklist
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 **Purpose:** this is the very first hardware/firmware milestone for Automated Cyber-Physical Campus System Design. The goal is
 *not* to finish the Fire Alarm system — it's to prove the whole chain (ESP32 → OpenPLC →
 SCADA) works at all, with the least hardware complexity of any of the project's nodes, before

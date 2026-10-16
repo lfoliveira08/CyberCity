@@ -21,7 +21,7 @@
 | Device name | `BSH-FireAlarm-ESP32` |
 | Protocol | Generic Modbus TCP Device |
 | IP address / port | 192.168.50.12 / 502 |
-| Slave ID | TBD -- confirm in Phase C (record the value that works in `Build_Log.md`) |
+| Slave ID | 0 (entered Oct 15; accepted by the form, not yet proven by live polling -- if polling fails retry 1) |
 | Discrete inputs | start 0, size 3 |
 | Coils | start 0, size 1 |
 | Input registers | start 0, size 3 (includes HEARTBEAT and RECONNECT_COUNT) |
@@ -32,7 +32,7 @@ This PLC itself: container `OpenPLC-BSH-FireAlarm` at 192.168.50.112, Web UI por
 
 ## 3. Address translation
 
-**UNVERIFIED:** the slave-block addresses (`%IX100.x`, `%QX100.x`, `%IW100+`, `%QW100+`) are the OpenPLC v3 convention, and the current OpenPLC documentation does not restate them. Confirm each one on the Monitoring page and write the result in `Build_Log.md`.
+**VERIFIED Oct 15, 2026** on this system's own container (192.168.50.112): the Slave Devices page lists this device at DI `%IX100.0`-`%IX100.2`, coil `%QX100.0`, IR `%IW100`-`%IW102`, and states "attached to address 100 onward". The `%IX100.x`/`%QX100.x`/`%IW100+`/`%QW100+` convention holds here.
 **From the OpenPLC docs:** the PLC's own Modbus server maps coil n to `%QX` bit n (coil 8 = `%QX1.0`) and holding register n to `%QWn`, both starting at 0. That is why this program publishes everything SCADA needs into `%QX0.x` and `%QW0..`. Some SCADA tools show these 1-based or in 0xxxx / 4xxxx notation, so subtract one or drop the prefix if values look shifted.
 
 | ESP32 register | OpenPLC slave-block address (verify) | Published for SCADA at | Modbus function / address (0-based) |

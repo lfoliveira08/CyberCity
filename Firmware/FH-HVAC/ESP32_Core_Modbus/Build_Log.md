@@ -1,5 +1,7 @@
 # ESP32 Board + WiFi + Modbus TCP -- Build Log (FH-HVAC)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 Phase B started 2026-10-07 at Luis's request. `FH_HVAC_Node/FH_HVAC_Node.ino` is now the Phase B sketch
 (WiFi + Modbus), written and logic-tested off-board; **flashed and bench-confirmed 2026-10-07 (see Date log).**
 The Phase A sketch is preserved in full in `../SYSTEM_REPORT.md`. Decisions:

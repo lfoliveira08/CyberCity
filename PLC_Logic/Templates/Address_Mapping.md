@@ -4,7 +4,7 @@ Two different address spaces meet in each PLC. Most bugs come from mixing them u
 
 ## A. This PLC as a Modbus master (talking to its ESP32)
 
-OpenPLC puts the slave device's data in the 100-block of its located variables (OpenPLC v3 convention -- **verify on the Monitoring page**; the current docs do not restate it):
+OpenPLC puts the slave device's data in the 100-block of its located variables (OpenPLC v3 convention -- **CONFIRMED Oct 15, 2026 on BSH-FireAlarm's container**: the Slave Devices page states "attached to address 100 onward" and listed the device at exactly these addresses. Verify per-system ranges on each system's own container):
 
 | ESP32 data | Located address of item k |
 |---|---|

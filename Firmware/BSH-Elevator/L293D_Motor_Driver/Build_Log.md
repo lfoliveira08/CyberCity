@@ -1,5 +1,7 @@
 # L293D Motor Driver — Build Log (BSH-Elevator)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 ## Status
 - [x] Simulated in Wokwi first (Phase A0 — see `../Wokwi/README.md`) — date: 2026-09-23
 - [x] Component in hand (driver + DG01D-A130 motor + external power supply)

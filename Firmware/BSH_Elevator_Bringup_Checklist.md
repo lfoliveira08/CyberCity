@@ -1,5 +1,7 @@
 # BSH-Elevator — Bring-Up Checklist
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 > **Update 2026-10-07: Phase B complete** -- flashed and bench-confirmed at 192.168.50.11 (see `BSH-Elevator/ESP32_Core_Modbus/Build_Log.md`). The display is an Adafruit SSD1306 OLED (libraries Adafruit SSD1306 + GFX), not the I2C LCD named further down. Phase C not started (update Oct 14, 2026: Phase C started Oct 13; all 8 OpenPLC containers are running, none configured yet).
 
 **Purpose:** second BSH system in the build order (right after the Fire

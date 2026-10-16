@@ -1,5 +1,7 @@
 # ESP32 Board + WiFi + Modbus TCP — Build Log (BSH-PowerBox)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 Board bring-up and Modbus TCP verification (Phase B) — not tied to one
 sensor, tracked separately from `Fan_Relay/` and `Lights_Relay/`.
 

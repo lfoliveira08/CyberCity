@@ -1,5 +1,7 @@
 # Push Buttons — Build Log (BSH-Elevator)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 ## Status
 
 > **Bench-test sketch:** `BenchTest.ino` in this folder — the sketch that

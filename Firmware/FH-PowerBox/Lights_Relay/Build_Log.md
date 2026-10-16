@@ -1,5 +1,7 @@
 # Lights relay (GPIO 13) -- Build Log (FH-PowerBox)
 
+> Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
+
 Mirror of `BSH-PowerBox/Lights_Relay/Build_Log.md`. Bench-tested on FH hardware Oct 7, 2026 (Phase B).
 
 ## Status

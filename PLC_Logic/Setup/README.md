@@ -38,5 +38,5 @@ Plan (from `Piranga_Workflow_v2.md` Sections 6 and 10): 8 OpenPLC containers, ea
 
 ## Still open
 
-- Slave-device address convention (`%IX100.0`, `%QX100.0`, `%IW100`, `%QW100`) and the Modbus slave ID: settle on the first real container (`PLC_Logic/BSH-FireAlarm/Build_Log.md`).
+- ~~Slave-device address convention (`%IX100.0`, `%QX100.0`, `%IW100`, `%QW100`) and the Modbus slave ID.~~ SETTLED Oct 15 on BSH-FireAlarm's container: convention confirmed ("attached to address 100 onward"); slave ID 0 entered (confirm by live polling). See `PLC_Logic/BSH-FireAlarm/Build_Log.md`.
 - FH-HVAC comms-loss direction for `HVAC_ENABLE` (see `PLC_Logic/README.md`).

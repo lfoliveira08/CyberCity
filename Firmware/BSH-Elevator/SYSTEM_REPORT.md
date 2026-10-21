@@ -15,7 +15,7 @@ per the build order).
 ## 1. How the system works
 
 BSH-Elevator represents a 3-floor elevator cab in the BSH building — one of
-eight node builds in CyberUIW (4 systems per building, BSH and FH; this count was 10 when this report was written, before Backup Power was dropped on Oct 5, 2026).
+eight node builds in Piranga (4 systems per building, BSH and FH; this count was 10 when this report was written, before Backup Power was dropped on Oct 5, 2026).
 Three floor-call buttons let a person locally request the cab; a DC motor
 (via an L293D driver) moves it; an OLED shows live status text.
 

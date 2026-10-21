@@ -1,10 +1,14 @@
 (* BSH-FireAlarm -- OpenPLC Structured Text program
-   DRAFT Oct 11, 2026 -- NOT yet compiled in OpenPLC Editor and NOT yet run on a container.
-   Source of truth for registers: BSH_Systems/02_BSH-FireAlarm.md (folder wins over any copy).
-   SCADA_* = bits/words SCADA writes into this PLC's own Modbus server (coil n = %QXn, holding n = %QWn).
-   PUB_*   = values this program publishes for SCADA to read from the same server.
-   Slave-device addresses (%IX100.x, %QX100.x, %IW100+, %QW100+) follow the OpenPLC v3 convention -- VERIFY on the Monitoring page. *)
-PROGRAM prog0
+   Generated Oct 19, 2026 from the OpenPLC Editor build (project BSH-FireAlarm-ESP32/):
+   the variable block comes from pous/programs/main.ld and the logic from the Editor's
+   compiled output (pou_MAIN.cpp). Wrapped here with CONFIGURATION/RESOURCE so the v3
+   web UI (iec2c) can compile it -- the Editor's own files have no CONFIGURATION block.
+   This is the deployable form of the ladder built in the Editor; it is behaviorally
+   identical to the Oct 11 hand-draft (kept as Program.st.oct11-draft.bak).
+   Registers source of truth: BSH_Systems/02_BSH-FireAlarm.md (folder wins over any copy).
+   SCADA_* = bits/words SCADA reads/writes in this PLC's own Modbus server.
+   PUB_*   = values this program publishes for SCADA to read. *)
+PROGRAM main
   VAR
     SCADA_ALARM_ACTIVATE AT %QX0.0 : BOOL;
     PUB_REMOTE_ONLY AT %QX0.1 : BOOL;
@@ -24,24 +28,26 @@ PROGRAM prog0
     RECONNECT_COUNT AT %IW102 : UINT;
   END_VAR
 
-  (* Forward SCADA commands to the ESP32 *)
+  (* R1 ForwardAlarmCommand -- forward the SCADA command to the ESP32 coil *)
   ALARM_ACTIVATE := SCADA_ALARM_ACTIVATE;
 
-  (* Flags computed in the PLC *)
-  PUB_REMOTE_ONLY := SCADA_ALARM_ACTIVATE AND NOT (MANUAL_PULL_TRIGGERED OR FLAME_DETECTED OR GAS_SMOKE_ALERT);
+  (* R2 ComputeRemoteOnly -- alarm commanded with no physical cause (Scenario 4) *)
+  PUB_REMOTE_ONLY := NOT(GAS_SMOKE_ALERT) AND NOT(FLAME_DETECTED) AND NOT(MANUAL_PULL_TRIGGERED) AND SCADA_ALARM_ACTIVATE;
 
-  (* Publish node status for SCADA *)
+  (* R3-R5 publish the ESP32 sensor bits for SCADA *)
   PUB_MANUAL_PULL_TRIGGERED := MANUAL_PULL_TRIGGERED;
   PUB_FLAME_DETECTED := FLAME_DETECTED;
   PUB_GAS_SMOKE_ALERT := GAS_SMOKE_ALERT;
-  PUB_GAS_RAW_VALUE := GAS_RAW_VALUE;
-  PUB_HEARTBEAT := HEARTBEAT;
-  PUB_RECONNECT_COUNT := RECONNECT_COUNT;
+
+  (* R6-R8 publish the ESP32 counters for SCADA (MOVE copies the 16-bit value) *)
+  PUB_GAS_RAW_VALUE := MOVE(GAS_RAW_VALUE);
+  PUB_HEARTBEAT := MOVE(HEARTBEAT);
+  PUB_RECONNECT_COUNT := MOVE(RECONNECT_COUNT);
 END_PROGRAM
 
 CONFIGURATION Config0
   RESOURCE Res0 ON PLC
     TASK task0(INTERVAL := T#20ms, PRIORITY := 0);
-    PROGRAM instance0 WITH task0 : prog0;
+    PROGRAM instance0 WITH task0 : main;
   END_RESOURCE
 END_CONFIGURATION

@@ -113,7 +113,7 @@ Same build order as BSH-BackupPower:
    count = 2, coil count = 1, input register count = 2.
 2. Write the same minimal ladder as BSH-BackupPower.
 3. Confirm OpenPLC's Monitoring page matches Phase B's live values.
-4. Add this node's tiles to the shared Node-RED dashboard, next to
+4. Add this node's tiles to the shared Ignition dashboard, next to
    BSH-BackupPower's.
 
 ---
@@ -126,7 +126,7 @@ Same build order as BSH-BackupPower:
   (Phase A).
 - A plain Modbus write to this node's own IP drives the relay, and it
   fails toward **not commanded** on comm loss (Phase B).
-- OpenPLC and Node-RED both show this node's live state, distinguishable
+- OpenPLC and Ignition both show this node's live state, distinguishable
   side-by-side from BSH-BackupPower's (Phase C).
 
 This is the last of the ten project nodes, per `Firmware/WORKFLOW.md`'s

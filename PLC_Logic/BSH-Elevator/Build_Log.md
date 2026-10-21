@@ -2,24 +2,42 @@
 
 > Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
 
-Status: **container running, program not loaded yet** (files drafted Oct 11, 2026; container started Oct 14, 2026).
+Status: **program running and the three functional tests passed on real hardware (Oct 20, 2026)**. Still open: the items listed under "Not done / open" at the end (files drafted Oct 11, 2026; container started Oct 14; ladder built in the Editor and uploaded Oct 20).
 
 ## Phase C steps
 
 - [x] Container `OpenPLC-BSH-Elevator` running at 192.168.50.111; Web UI reachable on port 8080 from the laptop (Oct 14, 2026: HTTP 200 from the laptop)
-- [ ] Modbus server enabled on port 502 (OpenPLC Settings)
-- [ ] ESP32 added as a slave device (192.168.50.11:502) with the sizes in `Register_Map.md`; slave ID that worked: ______
-- [ ] `Program.st` uploaded and compiled without errors
-- [ ] Monitoring page matches the ESP32's live values; `HEARTBEAT` counts up and `RECONNECT_COUNT` is present
-- [ ] A Modbus client on the laptop reads every `PUB_*` address in `Register_Map.md` and gets the right values
-- [ ] **Address convention verified:** slave-block addresses (`%IX100.0`, `%QX100.0`, `%IW100`, `%QW100`) confirmed or corrected: ______
+- [x] Modbus server enabled on port 502 (Oct 20, 2026). The runtime log at start shows `Issued start_modbus() command to start on port: 502` and `Server: Listening on port 502`, plus `stop_dnp3()`, `stop_enip()`, `stop_pstorage()` and `stop_snap7()`, so DNP3, EtherNet/IP, S7 and Persistent Storage are off. Hardware = Blank was part of the instructions; Luis did not report that value back
+- [x] ESP32 added as a slave device (192.168.50.11:502) with the sizes in `Register_Map.md`; **slave ID that worked: 0** (Oct 20, 2026; the log shows `Connected to MB device BSH-Elevator-ESP32` and the heartbeat then counted live). Device type: the generic `TCP` one per the instructions (Luis did not report the type separately)
+- [x] `Program.st` uploaded and compiled without errors (Oct 20, 2026). **First attempt failed with 25 errors, all from my `Program.st`** (see Results); the second compile finished with `Compilation finished successfully!` and listed the 18 glue variables `__QX0_0`-`_5`, `__QW0`-`2`, `__QX100_0`-`_3`, `__IX100_0`-`_1`, `__IW100`-`102`
+- [x] Monitoring page works with the PLC running (Oct 20, 2026; it was slow to open right after the first start, while the PLC log was showing timeouts; after the ESP32 reboot Luis reported it looked fine)
+- [x] A Modbus client reads every `PUB_*` address in `Register_Map.md` (Oct 20, 2026). **Done from the Kali VM (192.168.50.40), not the laptop**, with a read-only stdlib script (`~/elevator_read.py`, on the VM only): coils 0-5 by FC 1 and holding registers 0-2 by FC 3, unit ID 1, two reads 5 s apart. Read 1 (20:40:43): coils 0,0,0,0,0,0; `PUB_CURRENT_FLOOR` 1; `PUB_HEARTBEAT` 84; `PUB_RECONNECT_COUNT` 0. Read 2 (20:40:48): same coils and floor; heartbeat 90. **Heartbeat +6 in 5 s (one tick per second plus sampling): the PLC polls the ESP32 live and publishes it on port 502.** Not compared with the ESP32's serial output
+- [x] **Address convention used and working (Oct 20, 2026):** Luis reported checking the Slave Devices page (replied "checked"); the listing was not pasted here. The program ran with `%IX100.0`-`.1`, `%QX100.0`-`.3`, `%IW100`-`.102` and the ESP32 answered correctly through them (heartbeat, floor, calls), so the draft addresses are right
 
 ## Tests
 
-- [ ] Write SCADA_CALL_FLOOR_2 = 1: elevator moves to floor 2 and PUB_ELEVATOR_MOVING pulses.
-- [ ] Write SCADA_ELEVATOR_DISABLE = 1: elevator locks out (fault-injection target).
-- [ ] PUB_CURRENT_FLOOR follows the real floor.
+All run on the bench on Oct 20, 2026 by forcing values with the true/false buttons on the Monitoring page (not from a Modbus client), after the motor-lead repair described under Results.
+
+- [x] Short press of SCADA_CALL_FLOOR_2 (true then false): the elevator moved. Luis reported "worked"; the values of `PUB_ELEVATOR_MOVING` and `PUB_CURRENT_FLOOR` during and after the trip were not reported
+- [x] Held SCADA_CALL_FLOOR_3 = true, then the local floor 1 button pressed while it was still true: **the car went to floor 1**, i.e. the held bit did not take the car over (design B2 check). Not reported: whether it stayed at floor 1 afterwards, and what the OLED showed
+- [x] SCADA_ELEVATOR_DISABLE = true: nothing moved on a SCADA call. Not reported: whether a local button was also blocked, and the release step (false, then a call moves it again)
+- [ ] PUB_CURRENT_FLOOR follows the real floor: the Kali read showed 1 at idle only; not checked after a trip
+- [ ] PUB_ELEVATOR_FAULT: cannot be tested; the firmware header says the fault cannot latch (the normal arrival timeout fires first)
 
 ## Results and problems
 
-(none yet)
+- Oct 20, 2026: Luis built all 9 rungs in the OpenPLC Editor (project `BSH-Elevator-ESP32/`, saved with Save Project). Checked against the saved `main.ld`: 18 addressed variables plus `CALL_PULSE_TIME : TIME := T#300ms` and `TP0`, `TP1`, `TP2 : TP`; R1-R3 contact -> `IN`, `CALL_PULSE_TIME` -> `PT`, `Q` -> coil, one timer instance per rung, `ET` unused; R4-R6 contact and coil; R7-R9 MOVE with EN from the left rail and ENO to the right rail. The rung 3 comment in the saved project reads `R2_PulseCallFloor3` (a typo; `Program.st` calls it R3). `Program.st` was regenerated from that build. **Task interval `T#20ms`**: the value saved in Luis's Editor project (the Editor's default for a new project) and kept as he set it; it differs from BSH-Door's `T#100ms` and is written in the `CONFIGURATION` of `Program.st`.
+- **Design decision (Oct 20, 2026): call-floor rungs R1-R3 use a `TP` pulse timer (300 ms), R4 stays a plain copy.** Reasoning from `BSH_Elevator_Node.ino` (nothing tested before the build): the call coils are momentary (the ESP32 clears them after acting) and the PLC rewrites them every poll, so a held `SCADA_CALL_FLOOR_n` would re-request that floor every time the car goes idle and pin the car there (and the OLED would flicker "Already here"). A plain edge pulse (`R_TRIG`) lasts one scan, and the OpenPLC master writes the coil buffer and then sleeps a full Polling Period (source `modbus_master.cpp`), so a pulse shorter than the poll could be missed; `TP` gives the edge detection and a 300 ms stretch in one block. The ESP32 may see 2-3 rising edges inside the pulse; only the first starts a trip. Rejected: option A (plain copy, as on BSH-Door; simplest, but a held bit pins the car) and option B1 (`R_TRIG` only, can lose presses). `ELEVATOR_DISABLE` stays a level copy because the firmware treats it as a lockout level (never cleared by the ESP32, blocks local buttons and remote calls, does not stop a move already in progress). The 300 ms pulse and the extra edges were not observed on the bench.
+- **First compile failed, my mistake in `Program.st` (Oct 20, 2026):** a `VAR` block that contains located variables (`AT %...`) may hold only located variables (matiec grammar), and I had put `CALL_PULSE_TIME`, `TP0`, `TP1`, `TP2` in the same block. That gave "invalid located variable declaration" on those four lines and 21 knock-on errors on the `TP` calls. Fixed by a second `VAR ... END_VAR` block; the second compile succeeded. `iec2c` could not be built in the working environment, so the first real compile was on the container.
+- **ESP32 timeouts right after the first Start PLC (Oct 20, 2026):** the log alternated `Connected to MB device` with `Modbus Read Discrete Input Registers failed ... Connection timed out`, then `Bad file descriptor` on the next calls, then a reconnect, in a loop. A ping from the laptop to 192.168.50.11 showed 0% loss in 11 packets, 6-29 ms except a first reply of 205 ms (average 32 ms), so the network was fine. Luis stopped the PLC, unplugged and replugged the ESP32 and started the PLC again: it connected with no timeouts and Monitoring worked. **Cause not established.** My unproven guess: the ESP32 had held-open or stale client connections and accepted new ones without servicing them. Do not repeat the guess as fact.
+- **The car stopped moving during the functional tests (Oct 20, 2026): a motor lead had come off the motor.** Luis reported that the car and the local buttons did nothing, even after stopping the PLC and rebooting the ESP32. His photo showed the black lead fixed to one motor terminal with a zip tie and the red lead hanging free with a bare end, the other terminal empty. Luis repaired it (the method was not reported), and the local button then moved the car normally. So the stop was mechanical, not the lockout, the PLC or the firmware; my first guess (a `true` left on `SCADA_ELEVATOR_DISABLE`, or a lockout held inside the ESP32 after the PLC was stopped) was not the cause and was not tested. Strain relief on the motor leads is worth adding.
+- For Ignition: make the call-floor buttons momentary (the PLC now makes one 300 ms pulse per press anyway, but keep the habit); poll `PUB_ELEVATOR_MOVING` well under a second (a one-floor trip is about 1.7 s of motion, plus a 3 s door delay before it); `PUB_CURRENT_FLOOR` changes only on arrival, so it is not a live position; keep a tag for `PUB_ELEVATOR_FAULT` even though it should stay 0.
+
+## Not done / open
+
+- Polling Period and Timeout of this container were not read off its Settings page (BSH-Door and BSH-FireAlarm: 100 ms and 1000 ms); Hardware = Blank was not reported back.
+- Test details not reported (see Tests): what the values and the OLED showed in each test, whether the car stayed at floor 1 in the held-bit test, whether a local button was blocked by the lockout, and the lockout release.
+- Direct-write bypass (Kali writes a call coil or `ELEVATOR_DISABLE` straight to the ESP32 at 192.168.50.11:502, so the car moves or locks but no `SCADA_*` bit or `PUB_*` flag shows it) and the expected self-healing of `ELEVATOR_DISABLE` (the PLC overwrites coil 3 on the next poll) are untested; they belong to the attack-scenario session.
+- WiFi-drop case (heartbeat frozen, then resuming with `RECONNECT_COUNT` + 1 and no reboot) is untested.
+- Whether a stopped PLC leaves the ESP32's `ELEVATOR_DISABLE` at its last value (the firmware never clears it) is unverified; the lockout was not the cause of the stall.
+- One read compared with the ESP32's own serial output (values right, not only moving) is not done.

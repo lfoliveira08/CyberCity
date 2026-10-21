@@ -2,7 +2,7 @@
 
 - **Link:** https://rapidscada.org/ (community modules repo: https://github.com/RapidScada/scada-community, which is add-ons, not the core)
 - **System:** SCADA/HMI layer (Phase C)
-- **Status:** **Under evaluation**, fallback #1 (Ignition chosen Oct 12, 2026, license pending)
+- **Status:** **Under evaluation**, fallback #1 (Ignition chosen Oct 12, 2026, license confirmed Oct 19, 2026; only needed if that license is lost)
 - **License:** per the site, the Community edition is free with no data-point limit and no expiry; paid editions add modules. The community repo is Apache-2.0
 - **Version installed:** none. The site lists 6.5.0 released Sept 7, 2026
 - **Checked:** Oct 9, 2026, the product site and one third-party integration guide

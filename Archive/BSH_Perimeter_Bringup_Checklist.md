@@ -158,7 +158,7 @@ Only move here once Phase B works cleanly.
    a SCADA-writable internal coil through to `Coil0`.
 3. Confirm OpenPLC's Monitoring page shows the same live values seen in
    Phase B.
-4. Point a Node-RED Modbus connection node at this OpenPLC instance and add
+4. Point a Ignition Modbus connection node at this OpenPLC instance and add
    a status tile to the test dashboard.
 
 ---
@@ -170,7 +170,7 @@ Only move here once Phase B works cleanly.
 - A plain Modbus read from a laptop shows both live sensor signals, and a
   Modbus write to `ZONE_DISABLE` forces them false only while comms are
   live (Phase B).
-- OpenPLC and Node-RED both show the same live state (Phase C).
+- OpenPLC and Ignition both show the same live state (Phase C).
 - `OBJECT_RANGE_THRESHOLD_CM` (50cm placeholder in the firmware) has been
   recalibrated against the actual printed perimeter geometry — not left
   for the night before the demo.

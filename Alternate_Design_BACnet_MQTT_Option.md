@@ -14,13 +14,13 @@ Only the backhaul for three systems. Door and Power Box stay exactly as currentl
 
 | System | Backhaul (alternate) | Bridge |
 |---|---|---|
-| Elevator | BACnet/IP, Device Instance 3011 (BSH) / 3021 (FH) | BACnet↔Modbus (Node-RED) |
-| Fire Alarm | BACnet/IP, Device Instance 3012 (BSH) / 3022 (FH) | BACnet↔Modbus (Node-RED) |
-| Air Quality | MQTT (broker on hub, 192.168.1.10:1883) | MQTT↔Modbus (Node-RED) |
+| Elevator | BACnet/IP, Device Instance 3011 (BSH) / 3021 (FH) | BACnet↔Modbus (Ignition) |
+| Fire Alarm | BACnet/IP, Device Instance 3012 (BSH) / 3022 (FH) | BACnet↔Modbus (Ignition) |
+| Air Quality | MQTT (broker on hub, 192.168.1.10:1883) | MQTT↔Modbus (Ignition) |
 
 ## How the Bridge Pattern Works
 
-Each bridge is a bidirectional Node-RED flow:
+Each bridge is a bidirectional Ignition bridge:
 - It polls (BACnet) or subscribes to (MQTT) the ESP32's native protocol.
 - It writes the resulting values into that system's own dedicated OpenPLC instance over Modbus (OpenPLC's internal Modbus **server**, not its master function).
 - For commands going the other direction (e.g., a SCADA-issued `ALARM_ACTIVATE`), the bridge reads the write from OpenPLC's Modbus memory and issues the equivalent BACnet `WriteProperty` or MQTT publish back out to the ESP32.
@@ -59,7 +59,7 @@ This keeps the SCADA layer's view of all 10 systems uniform (it always reads/wri
 
 - **BACnet on ESP32:** Real implementations exist (`bacnet-stack-esp32`, Chipkin's `ESP32-BACnetServerExample`), but a couple of community forum threads report rough edges in some ports. Budget real debugging time if this is revisited — this was the main driver of extra project risk in this design.
 - **MQTT on ESP32:** Fully native, zero risk — this was already proven working in the original v1 design for Founder's Hall.
-- Reviving this option means building and testing 2 Node-RED bridge flows (BACnet↔Modbus, MQTT↔Modbus) that don't currently exist anywhere in the project.
+- Reviving this option means building and testing 2 Ignition bridges (BACnet↔Modbus, MQTT↔Modbus) that don't currently exist anywhere in the project.
 
 ## A Smaller Middle-Ground Option, If Revisited
 

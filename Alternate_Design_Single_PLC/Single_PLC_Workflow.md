@@ -1,6 +1,8 @@
 # Automated Cyber-Physical Campus System Design -- Parallel Workflow
 ## Alternate Architecture: One Real PLC for One System (FH-PowerBox)
 
+> **SCADA note (Oct 19, 2026):** the SCADA layer in this draft is **Ignition**; the Modbus connections it describes work the same way.
+
 **Status:** Exploratory draft for professor review. Direction agreed with the
 professor on Sep 28, 2026: scope this to **one** system rather than all ten.
 Does not supersede `Piranga_Workflow_v2.md`, which remains the authoritative
@@ -44,7 +46,7 @@ not just a smaller version of the same idea.
 - `OpenPLC-FH-PowerBox` (the Docker container at 192.168.1.124) is retired
   for this one system and replaced by the real MicroLogix 1400 on its own IP.
 - That one system's ladder logic moves from OpenPLC's web UI to RSLogix 500.
-- Node-RED's Modbus connection list swaps one entry (FH-PowerBox's
+- Ignition's Modbus connection list swaps one entry (FH-PowerBox's
   controller) from the old container IP to the PLC's IP -- everything else
   about the SCADA layer is untouched.
 
@@ -54,7 +56,7 @@ not just a smaller version of the same idea.
   dedicated OpenPLC Docker containers, unchanged, exactly as
   `Piranga_Workflow_v2.md` describes them.
 - The Raspberry Pi / Docker hub keeps running (now 9 OpenPLC containers
-  instead of 10, plus Node-RED) -- it is **not** removed, unlike the earlier
+  instead of 10, plus Ignition) -- it is **not** removed, unlike the earlier
   full-replacement draft assumed.
 - Every ESP32's firmware, including FH-PowerBox's own sketch
   (`FH_PowerBox_Node.ino`) -- it's already a plain Modbus TCP slave and needs
@@ -103,10 +105,10 @@ This was Luis's choice, made with the professor. Worth noting for the record
 ```
                          +---------------------------------------------+
                          |           SCADA / Dashboard Layer            |
-                         |         (Node-RED, on hub 192.168.1.10)      |
+                         |         (Ignition, on hub 192.168.1.10)      |
                          |   Polls all 10 controllers via Modbus TCP -- |
                          |   9 software, 1 real, all look the same to   |
-                         |   Node-RED                                    |
+                         |   Ignition                                    |
                          +---+---+---+---+---+---+---+---+---+----------+
                              |   |   |   |   |   |   |   |   |
                     (9x OpenPLC, unchanged)     |   (1x REAL PLC)
@@ -131,7 +133,7 @@ This was Luis's choice, made with the professor. Worth noting for the record
 ```
 
 The whole point of this diagram versus the earlier all-10 draft: **from
-Node-RED's point of view, nothing looks different.** It still polls 10
+Ignition's point of view, nothing looks different.** It still polls 10
 Modbus TCP servers on 10 IPs. Only one of those IPs now happens to be a real
 PLC instead of a Docker container -- and that PLC only has to talk to one
 downstream ESP32, not ten.
@@ -224,7 +226,7 @@ thing to verify.
 ## 7. Cascade Event Flow
 
 No changes needed to `Piranga_Workflow_v2.md` Section 7's design at all.
-Node-RED already treats every controller uniformly through Modbus TCP,
+Ignition already treats every controller uniformly through Modbus TCP,
 regardless of what implements it -- a cascade rule that reads FH-PowerBox's
 status and writes into, say, FH-FireAlarm's coil works exactly the same
 whether FH-PowerBox's controller is a Docker container or a real PLC. This
@@ -241,7 +243,7 @@ Relative to `Piranga_Workflow_v2.md` Section 8:
 
 **Keep, unchanged:**
 - Raspberry Pi 4 (or laptop) running the Docker hub -- now 9 OpenPLC
-  containers instead of 10, plus Node-RED. (The first draft of this folder
+  containers instead of 10, plus Ignition. (The first draft of this folder
   incorrectly assumed the Pi/Docker hub could be removed entirely -- that
   was only true for the full-replacement version, not this one.)
 - Every other system's hardware, wiring, and 3D-printed structure --
@@ -286,12 +288,12 @@ Relative to `Piranga_Workflow_v2.md` Section 10, this is now a small,
 contained change:
 
 1. Hub setup: 9 OpenPLC containers instead of 10 (drop `OpenPLC-FH-PowerBox`
-   from the Docker deployment), Node-RED unchanged.
+   from the Docker deployment), Ignition unchanged.
 2. The real PLC gets configured once: the register map from Section 5.2,
    the two MSG blocks from Section 6, and whatever safe-state/fail-direction
    logic FH-PowerBox's own system doc specifies (same behavior OpenPLC's
    ladder would have implemented for it).
-3. Node-RED: swap one Modbus connection node's target IP from `.124` to the
+3. Ignition: swap one Modbus device connection's target IP from `.124` to the
    PLC's IP (`.100` proposed). Nothing else about the dashboard, cascade
    rules, or event log changes.
 
@@ -354,7 +356,7 @@ suggested order:
 3. Build the two MSG blocks (Section 6) and the register map (Section 5.2)
    against the now-proven ESP32 node, and bench-measure timing against the
    watchdog.
-4. Wire FH-PowerBox into Node-RED via the PLC (Section 10) and confirm
+4. Wire FH-PowerBox into Ignition via the PLC (Section 10) and confirm
    dashboard + cascade behavior end-to-end.
 
 Because this option only touches one system and needs a much smaller new

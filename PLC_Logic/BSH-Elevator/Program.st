@@ -1,10 +1,18 @@
 (* BSH-Elevator -- OpenPLC Structured Text program
-   DRAFT Oct 11, 2026 -- NOT yet compiled in OpenPLC Editor and NOT yet run on a container.
-   Source of truth for registers: BSH_Systems/01_BSH-Elevator.md (folder wins over any copy).
-   SCADA_* = bits/words SCADA writes into this PLC's own Modbus server (coil n = %QXn, holding n = %QWn).
-   PUB_*   = values this program publishes for SCADA to read from the same server.
-   Slave-device addresses (%IX100.x, %QX100.x, %IW100+, %QW100+) follow the OpenPLC v3 convention -- VERIFY on the Monitoring page. *)
-PROGRAM prog0
+   Generated Oct 20, 2026 from Luis's OpenPLC Editor build (project BSH-Elevator-ESP32/):
+   the variable block comes from pous/programs/main.ld and the logic from its 9 rungs
+   (R1-R9, wiring checked against the saved project). Wrapped here with
+   CONFIGURATION/RESOURCE so the v3 web UI (iec2c) can compile it -- the Editor's
+   own files have no CONFIGURATION block.
+   This is the deployable form of the ladder built in the Editor; it replaces the
+   Oct 11 hand-draft. Unlike that draft, the three call-floor rungs use a TP pulse
+   timer (design decision of Oct 20, 2026, see Build_Log.md).
+   Registers source of truth: BSH_Systems/01_BSH-Elevator.md (folder wins over any copy).
+   SCADA_* = bits SCADA writes in this PLC's own Modbus server.
+   PUB_*   = values this program publishes for SCADA to read.
+   Slave-block addresses (%IX100.x, %QX100.x, %IW100+) follow the convention verified
+   on BSH-FireAlarm and BSH-Door; confirm them on this container's Slave Devices page. *)
+PROGRAM main
   VAR
     SCADA_CALL_FLOOR_1 AT %QX0.0 : BOOL;
     SCADA_CALL_FLOOR_2 AT %QX0.1 : BOOL;
@@ -27,23 +35,44 @@ PROGRAM prog0
     RECONNECT_COUNT AT %IW102 : UINT;
   END_VAR
 
-  (* Forward SCADA commands to the ESP32 *)
-  CALL_FLOOR_1 := SCADA_CALL_FLOOR_1;
-  CALL_FLOOR_2 := SCADA_CALL_FLOOR_2;
-  CALL_FLOOR_3 := SCADA_CALL_FLOOR_3;
+  (* matiec rule: a VAR block with located variables (AT %...) holds only located
+     variables, so the unlocated ones sit in their own VAR block. *)
+  VAR
+    (* ---- pulse stretch for the call-floor commands ---- *)
+    CALL_PULSE_TIME : TIME := T#300ms;
+    TP0 : TP;
+    TP1 : TP;
+    TP2 : TP;
+  END_VAR
+
+  (* R1 PulseCallFloor1 -- one press of SCADA_CALL_FLOOR_1 gives one 300 ms pulse to the ESP32 coil *)
+  TP0(IN := SCADA_CALL_FLOOR_1, PT := CALL_PULSE_TIME);
+  CALL_FLOOR_1 := TP0.Q;
+
+  (* R2 PulseCallFloor2 *)
+  TP1(IN := SCADA_CALL_FLOOR_2, PT := CALL_PULSE_TIME);
+  CALL_FLOOR_2 := TP1.Q;
+
+  (* R3 PulseCallFloor3 (the saved project's rung comment says R2_PulseCallFloor3, a typo) *)
+  TP2(IN := SCADA_CALL_FLOOR_3, PT := CALL_PULSE_TIME);
+  CALL_FLOOR_3 := TP2.Q;
+
+  (* R4 ForwardElevatorDisable -- level copy: the ESP32 treats DISABLE as a lockout level *)
   ELEVATOR_DISABLE := SCADA_ELEVATOR_DISABLE;
 
-  (* Publish node status for SCADA *)
+  (* R5-R6 publish the ESP32 discrete inputs for SCADA *)
   PUB_ELEVATOR_MOVING := ELEVATOR_MOVING;
   PUB_ELEVATOR_FAULT := ELEVATOR_FAULT;
-  PUB_CURRENT_FLOOR := CURRENT_FLOOR;
-  PUB_HEARTBEAT := HEARTBEAT;
-  PUB_RECONNECT_COUNT := RECONNECT_COUNT;
+
+  (* R7-R9 publish the ESP32 input registers for SCADA (MOVE copies the 16-bit value) *)
+  PUB_CURRENT_FLOOR := MOVE(CURRENT_FLOOR);
+  PUB_HEARTBEAT := MOVE(HEARTBEAT);
+  PUB_RECONNECT_COUNT := MOVE(RECONNECT_COUNT);
 END_PROGRAM
 
 CONFIGURATION Config0
   RESOURCE Res0 ON PLC
     TASK task0(INTERVAL := T#20ms, PRIORITY := 0);
-    PROGRAM instance0 WITH task0 : prog0;
+    PROGRAM instance0 WITH task0 : main;
   END_RESOURCE
 END_CONFIGURATION

@@ -1,10 +1,17 @@
 (* BSH-Door -- OpenPLC Structured Text program
-   DRAFT Oct 11, 2026 -- NOT yet compiled in OpenPLC Editor and NOT yet run on a container.
-   Source of truth for registers: BSH_Systems/03_BSH-Door.md (folder wins over any copy).
-   SCADA_* = bits/words SCADA writes into this PLC's own Modbus server (coil n = %QXn, holding n = %QWn).
-   PUB_*   = values this program publishes for SCADA to read from the same server.
-   Slave-device addresses (%IX100.x, %QX100.x, %IW100+, %QW100+) follow the OpenPLC v3 convention -- VERIFY on the Monitoring page. *)
-PROGRAM prog0
+   Generated Oct 20, 2026 from Luis's OpenPLC Editor build (project BSH-Door-ESP32/):
+   the variable block comes from pous/programs/main.ld and the logic from its 8 rungs
+   (R1-R8, wiring checked against the saved project). Wrapped here with
+   CONFIGURATION/RESOURCE so the v3 web UI (iec2c) can compile it -- the Editor's
+   own files have no CONFIGURATION block.
+   This is the deployable form of the ladder built in the Editor; it is behaviorally
+   identical to the Oct 11 hand-draft (replaced by this file).
+   Registers source of truth: BSH_Systems/03_BSH-Door.md (folder wins over any copy).
+   SCADA_* = bits SCADA writes in this PLC's own Modbus server.
+   PUB_*   = values this program publishes for SCADA to read.
+   Slave-block addresses (%IX100.x, %QX100.x, %IW100+) follow the convention verified
+   on BSH-FireAlarm; confirm them on this container's Slave Devices page. *)
+PROGRAM main
   VAR
     SCADA_DOOR_OPEN_CMD AT %QX0.0 : BOOL;
     SCADA_DOOR_CLOSE_CMD AT %QX0.1 : BOOL;
@@ -24,24 +31,28 @@ PROGRAM prog0
     RECONNECT_COUNT AT %IW101 : UINT;
   END_VAR
 
-  (* Forward SCADA commands to the ESP32 *)
+  (* R1 ForwardOpenCommand -- forward the SCADA open command to the ESP32 coil *)
   DOOR_OPEN_CMD := SCADA_DOOR_OPEN_CMD;
+
+  (* R2 ForwardCloseCommand -- forward the SCADA close command to the ESP32 coil *)
   DOOR_CLOSE_CMD := SCADA_DOOR_CLOSE_CMD;
 
-  (* Flags computed in the PLC *)
-  PUB_REMOTE_OPEN_NO_CARD := SCADA_DOOR_OPEN_CMD AND NOT ACCESS_GRANTED;
+  (* R3 ComputeRemoteOpenNoCard -- open commanded with no accepted card *)
+  PUB_REMOTE_OPEN_NO_CARD := SCADA_DOOR_OPEN_CMD AND NOT(ACCESS_GRANTED);
 
-  (* Publish node status for SCADA *)
+  (* R4-R6 publish the ESP32 discrete inputs for SCADA *)
   PUB_IR_DETECTED := IR_DETECTED;
   PUB_DOOR_POSITION := DOOR_POSITION;
   PUB_ACCESS_GRANTED := ACCESS_GRANTED;
-  PUB_HEARTBEAT := HEARTBEAT;
-  PUB_RECONNECT_COUNT := RECONNECT_COUNT;
+
+  (* R7-R8 publish the ESP32 counters for SCADA (MOVE copies the 16-bit value) *)
+  PUB_HEARTBEAT := MOVE(HEARTBEAT);
+  PUB_RECONNECT_COUNT := MOVE(RECONNECT_COUNT);
 END_PROGRAM
 
 CONFIGURATION Config0
   RESOURCE Res0 ON PLC
-    TASK task0(INTERVAL := T#20ms, PRIORITY := 0);
-    PROGRAM instance0 WITH task0 : prog0;
+    TASK task0(INTERVAL := T#100ms, PRIORITY := 0);
+    PROGRAM instance0 WITH task0 : main;
   END_RESOURCE
 END_CONFIGURATION

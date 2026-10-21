@@ -114,7 +114,7 @@ original deferral text below is historical.
 
 **NETWORK (decided Oct 6, 2026):** the lab router SCT5 is a **192.168.50.x** network (gateway 192.168.50.1, SSID `SCT5`) and Luis cannot change it, so the whole project uses 192.168.50.x with the same last numbers as before: hub 192.168.50.10, nodes .11-.24, OpenPLC containers .111-.124. Every sketch, doc and checklist in this folder was updated that day (Archive and the `Alternate_Design_*` files were left alone). Before using any address, `ping` it from the laptop -- the router hands out DHCP leases in the same range and cannot be told to avoid ours, so a reply means another device already has it.
 
-**HOSTING (decided Oct 9, 2026):** Phase C runs on a Proxmox VE server (`pve`, 192.168.50.143, Web UI :8006). The OpenPLC Docker VM (192.168.50.10) holds the 8 OpenPLC containers; the SCADA/HMI layer (Ignition, Maker Edition; license pending) runs in a separate VM (IP to be assigned). Create the VMs when Luis starts Phase C. See `Piranga_Workflow_v2.md` Section 6 (Hosting layer) and Section 10.
+**HOSTING (decided Oct 9, 2026):** Phase C runs on a Proxmox VE server (`pve`, 192.168.50.143, Web UI :8006). The OpenPLC Docker VM (192.168.50.10) holds the 8 OpenPLC containers; the SCADA/HMI layer (Ignition; license confirmed Oct 19, 2026) runs in a separate VM (IP to be assigned). Create the VMs when Luis starts Phase C. See `Piranga_Workflow_v2.md` Section 6 (Hosting layer) and Section 10.
 
 **PLC LOGIC (Oct 11, 2026):** the OpenPLC side of each system lives in `PLC_Logic/<Bldg>-<System>/` (ladder diagram, register map, `Program.st`, build log), not in the bring-up checklists. All 8 are drafted and untested. Phase C started Oct 13, 2026; a node's `Build_Log.md` there is filled in as its container is built.
 
@@ -217,6 +217,7 @@ gets flashed by mistake. There is one home for each kind of file:*
 | Component reference sheet | `BSH_Sensors/` or `FH_Sensors/` | One per building, mirrored |
 | Retired files | `Archive/` | Never build from these; see `Archive/README.md` |
 | Wireshark/pcap evidence for the Section 11 attack scenarios | `Security_Capture/` | One home for this activity (added Oct 14, 2026): `README.md`, `Capture_Setup.md`, `Scenario_Capture_Plan.md`, `Capture_Log_Template.md`, `Captures/` |
+| Attack scripts and attack reports for the Section 11 scenarios (run from the Kali VM) | `Kali/` | Created Oct 20, 2026; **not in use until the attack-scenario session**. `README.md` only for now. Pcap evidence stays in `Security_Capture/` |
 | Daily decisions and lessons learned | `Logs/` | One file per working day, `YYYY-MM-DD.md`, plus `INDEX.md` and `README.md` (the rules). Added Oct 15, 2026; continues `Piranga_Workflow_v2.md` Section 14, which is frozen as history up to Oct 14, 2026 |
 
 Rules that follow from the table:

@@ -14,7 +14,7 @@ before moving on to the next system.
 
 ## 1. How the system works
 
-BSH-FireAlarm is one of eight node builds in CyberUIW (4 systems per building, BSH and FH;
+BSH-FireAlarm is one of eight node builds in Piranga (4 systems per building, BSH and FH;
 this count was 10 when this report was written, before Backup Power was dropped on Oct 5, 2026). Its job is to represent a fire/gas alarm point for the
 BSH building: it watches three independent local trigger sources and drives
 one shared alarm output (buzzer + RGB LED) whenever any of them fires.

@@ -6,7 +6,7 @@
 
 ## What Changed From the Original Workflow
 
-The original workflow compared protocols **per building**: BSH ran entirely on Modbus TCP, Founder's Hall ran entirely on MQTT, bridged through one shared OpenPLC + Node-RED hub. The revised design compares protocols **per system** instead, and gives each system its own dedicated PLC — closer to how a real building's fire alarm, elevator, access control, and lighting systems are actually separate vendor systems integrated at a SCADA/BMS layer, not one shared controller.
+The original workflow compared protocols **per building**: BSH ran entirely on Modbus TCP, Founder's Hall ran entirely on MQTT, bridged through one shared OpenPLC + Ignition hub. The revised design compares protocols **per system** instead, and gives each system its own dedicated PLC — closer to how a real building's fire alarm, elevator, access control, and lighting systems are actually separate vendor systems integrated at a SCADA/BMS layer, not one shared controller.
 
 Both buildings now have the identical 4 systems (Elevator, Fire Alarm, Door, Power Box — Backup Power was dropped Oct 5, 2026 — with Founder's Hall's slot 1 since changed from Elevator to HVAC, see `FH_Systems/01_FH-HVAC.md`), each mirrored between BSH and Founder's Hall with the same protocol choices — 8 ESP32 nodes total, 8 dedicated OpenPLC instances total, unified by one SCADA/dashboard layer.
 
@@ -45,11 +45,11 @@ All 8 OpenPLC instances run as separate Docker containers inside one Proxmox VM 
 
 ## SCADA Layer
 
-Runs in its own SCADA/HMI VM on Proxmox. Ignition (Maker Edition; professor approved Oct 12, 2026, company license pending), polling all 8 OpenPLC Modbus servers as separate device connections and merging them into one dashboard. Fallbacks: Rapid SCADA, FUXA. Options and status: `Piranga_Workflow_v2.md` Section 10.
+Runs in its own SCADA/HMI VM on Proxmox. Ignition (professor approved Oct 12, 2026; license confirmed Oct 19, 2026), polling all 8 OpenPLC Modbus servers as separate device connections and merging them into one dashboard. Fallbacks: Rapid SCADA, FUXA. Options and status: `Piranga_Workflow_v2.md` Section 10.
 
 ## Open Items
 
-1. `Piranga_Workflow_v2.md` is the authoritative current reference. (The original v1 workflow has no local copy — it exists only in the Claude project, as `claude/CyberUIW_Workflow.md`.)
+1. `Piranga_Workflow_v2.md` is the authoritative current reference. (The original v1 workflow has no local copy — it exists only in the Claude project, as the original v1 workflow file in the Claude project.)
 2. The cascade event flow (originally Section 5 of the v1 doc) now routes entirely through the SCADA layer via uniform Modbus reads/writes to any of the 8 OpenPLC instances — see `Piranga_Workflow_v2.md` Section 7.
 3. DALI was retired Sep 28, 2026 in favor of a plain relay for Power Box lighting, removing the project's only unverified field-bus library — see `BSH_Sensors/12_DALI_LED_Driver.md` (now a retirement stub) and `Piranga_Workflow_v2.md` Section 14. (The Door's reader risk dropped when Wiegand was replaced by the RC522 RFID module on Sep 15 2026.)
 4. Decide whether all 8 OpenPLC containers truly run on one shared hub (as mapped above) or get split across multiple physical hosts.

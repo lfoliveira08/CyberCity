@@ -2,24 +2,36 @@
 
 > Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
 
-Status: **container running, program not loaded yet** (files drafted Oct 11, 2026; container started Oct 14, 2026).
+Status: **program running and the functional tests passed on real hardware (Oct 20, 2026)**. Still open: the one-shot decision (option A or B below), the unexplained RFID outage, and the Polling Period/Timeout values (files drafted Oct 11, 2026; container started Oct 14; ladder built in the Editor and uploaded Oct 20).
 
 ## Phase C steps
 
 - [x] Container `OpenPLC-BSH-Door` running at 192.168.50.113; Web UI reachable on port 8080 from the laptop (Oct 14, 2026: HTTP 200 from the laptop)
-- [ ] Modbus server enabled on port 502 (OpenPLC Settings)
-- [ ] ESP32 added as a slave device (192.168.50.13:502) with the sizes in `Register_Map.md`; slave ID that worked: ______
-- [ ] `Program.st` uploaded and compiled without errors
-- [ ] Monitoring page matches the ESP32's live values; `HEARTBEAT` counts up and `RECONNECT_COUNT` is present
-- [ ] A Modbus client on the laptop reads every `PUB_*` address in `Register_Map.md` and gets the right values
-- [ ] **Address convention verified:** slave-block addresses (`%IX100.0`, `%QX100.0`, `%IW100`, `%QW100`) confirmed or corrected: ______
+- [x] Modbus server enabled on port 502 (OpenPLC Settings, Oct 20, 2026). Hardware = Blank; S7 and EtherNet/IP off. The runtime log at start shows `stop_dnp3()`, `stop_enip()`, `stop_pstorage()` and `stop_snap7()` issued and `Server: Listening on port 502`, so DNP3, EtherNet/IP, S7 and Persistent Storage are all off
+- [x] ESP32 added as a slave device (192.168.50.13:502) with the sizes in `Register_Map.md`; **slave ID that worked: 0** (Oct 20, 2026; the runtime log shows `Connected to MB device BSH-Door-ESP32` and the heartbeat then counted live). Device type TCP (the generic one, not the `ESP32` preset, which locks the sizes to 8/8/1)
+- [x] `Program.st` uploaded and compiled without errors (Oct 20, 2026; Luis confirmed it compiled and ran; the compile log text was not recorded)
+- [x] Monitoring page works with the PLC running (Oct 20, 2026). `HEARTBEAT` counting was proven by the Kali read below; Luis did not report the individual Monitoring row values
+- [x] A Modbus client reads every `PUB_*` address in `Register_Map.md` (Oct 20, 2026). **Done from the Kali VM (192.168.50.40), not the laptop**, with a read-only stdlib script (`~/door_read.py`, on the VM only): coils 0-5 by FC 1 and holding registers 0-1 by FC 3, unit ID 1, two reads 5 s apart. Read 1 (17:23:36): coils 0,0,0,1,1,0; `PUB_HEARTBEAT` 599; `PUB_RECONNECT_COUNT` 0. Read 2 (17:23:41): same coils; heartbeat 604. **Heartbeat +5 in 5 s: the PLC polls the ESP32 live and publishes it, and port 502 on this container was open from the start.** `PUB_IR_DETECTED` and `PUB_DOOR_POSITION` read 1 at idle, as in the Phase B capture (sensor setup); not compared with the ESP32 serial output
+- [x] **Address convention verified (Oct 20, 2026):** the Slave Devices page of this container lists `BSH-Door-ESP32`, type TCP, DI `%IX100.0` to `%IX100.2`, DO `%QX100.0` to `%QX100.1`, AI `%IW100` to `%IW101`, AO none. This matches `Register_Map.md` and `Program.st` exactly
 
 ## Tests
 
-- [ ] Write SCADA_DOOR_OPEN_CMD = 1 with no card: door opens and PUB_REMOTE_OPEN_NO_CARD = 1.
-- [ ] Scan a valid card: ACCESS_GRANTED reads 1 and the flag stays 0.
-- [ ] Write SCADA_DOOR_CLOSE_CMD = 1: door closes.
+- [x] Write SCADA_DOOR_OPEN_CMD = 1 with no card: door opens and PUB_REMOTE_OPEN_NO_CARD = 1 (Oct 20, 2026, by forcing the value on the Monitoring page, not from a Modbus client). **Held at 1, the gate stays open for as long as the force is on**, and the card reader is ignored meanwhile (see Results)
+- [x] Scan a valid card: ACCESS_GRANTED reads 1 and the flag stays 0 (Oct 20, 2026, reported by Luis as worked)
+- [x] Write SCADA_DOOR_CLOSE_CMD = 1: door closes (Oct 20, 2026, forced on Monitoring; reported by Luis as yes)
+- [x] Extra: unknown card is denied (Oct 20, 2026, reported as worked)
+- [x] Extra: a short pulse of SCADA_DOOR_OPEN_CMD (1 then 0 within a second) opens the gate, which holds and closes by itself (Oct 20, 2026, reported as yes)
+- [x] Extra: ESP32 unplugged and plugged back in: the heartbeat stopped and then counted again (Oct 20, 2026). Luis reported that nothing visibly changed on the page during the unplug (the PLC keeps the last polled values, so a dead node can look frozen rather than flagged). The 5 s watchdog and `PUB_RECONNECT_COUNT` were not observed; an unplug reboots the ESP32, so the firmware resets both counters to 0, and a real WiFi drop without a reboot is the case that raises `RECONNECT_COUNT`
 
 ## Results and problems
 
-(none yet)
+- Oct 20, 2026: Luis built all 8 rungs in the OpenPLC Editor (project `BSH-Door-ESP32/`, saved with Save Project). Checked against the saved `main.ld`: 15 variables with the addresses in `Register_Map.md`, and R1-R8 wired left rail to right rail (R1/R2 contact-coil, R3 contact + inverted contact + coil, R4-R6 contact-coil, R7/R8 MOVE with EN from the left rail and ENO to the right rail). `Program.st` was regenerated from that build with task `T#100ms` in its CONFIGURATION, the same value Luis set in the Editor project (it was first written as `T#20ms` by mistake, copied from BSH-FireAlarm, and corrected the same day at Luis's question). Not compiled or run yet.
+- Design points to test on the hardware (from reading `BSH_Door_Node.ino`, nothing tested yet): the open and close coils are momentary (the ESP32 clears them after acting) and an open write while the gate is holding restarts the hold timer, so a `SCADA_DOOR_OPEN_CMD` held at 1 may keep the gate open; if both commands arrive in one pass, open wins. If the test shows the problem, add a rising-edge one-shot (R_TRIG) to R1/R2.
+- `ACCESS_GRANTED` is a pulse of about 2 s: Ignition must poll `PUB_ACCESS_GRANTED` well under 2 s or it can miss a card read. `PUB_REMOTE_OPEN_NO_CARD` only sees commands that go through the PLC (`SCADA_DOOR_OPEN_CMD`); a direct write to the ESP32 coil at 192.168.50.13:502 bypasses it, so SCADA must also compare `PUB_DOOR_POSITION` with `PUB_ACCESS_GRANTED`.
+- Oct 20, 2026 (held command): with `SCADA_DOOR_OPEN_CMD` forced to 1, the gate opened and stayed open until the force was removed, `PUB_REMOTE_OPEN_NO_CARD` was 1, and the RFID reader did nothing. Cause, read in `BSH_Door_Node.ino`: the open command restarts the hold timer each time it is written (the PLC rewrites it every cycle), and `pollCard()` returns early unless the gate is fully closed. Side effect for the testbed: a held open command both keeps the gate open and disables card access.
+- **Decision (Oct 20, 2026, evening): option A.** Keep R1/R2 as built, so SCADA must send a short pulse; the alternative (B) was to add a rising-edge one-shot (`R_TRIG`) so the ESP32 gets one write per command. Luis asked for a recommendation, A was recommended, and Luis **confirmed it himself** ("I am leaving like it is", Oct 20, 2026). Known risk accepted: a held open bit keeps the gate open and disables the card reader, and the 5 s WiFi watchdog does not cover it. For the Ignition setup: make the open and close buttons momentary, and log `PUB_REMOTE_OPEN_NO_CARD` the moment it goes to 1. Revisit B only if Ignition's tags make a pulse awkward.
+- **Unexplained, left as is (Oct 20, 2026; Luis: "it worked, so we leave it like that"):** after the force was removed and the gate was closed, the RFID reader still did nothing for a while; about an hour later Luis reported it working again, with no cause known (what, if anything, was done in between was not recorded). If it happens again, check the LED colour and the ESP32 serial output (`Card UID:` lines) before touching anything, and note that opening the Serial Monitor can reset the ESP32.
+- Settings page, Slave Devices section (Luis's screenshot, Oct 20, 2026; the image does not show which container it came from, it was taken during the BSH-Door work): **Polling Period 100 ms, Timeout 1000 ms**. Luis reported BSH-FireAlarm is the same (not seen).
+- `PUB_IR_DETECTED` and `PUB_DOOR_POSITION` both read 1 at idle; Luis confirmed on Oct 20, 2026 that the readings match what is physically happening on the bench ("right"), so the reed and IR polarity flags in the firmware are correct.
+- **WiFi-drop case not tested.** Luis asked for it to be marked as passed; it was not run (the unplug test was a power reboot), so it stays untested here. Deferred to the attack scenarios, or to a bench test that drops WiFi while the ESP32 stays powered.
+- Not done: the direct-write bypass test (Kali writes coil 0 straight to the ESP32 at 192.168.50.13:502, so the gate opens but `PUB_REMOTE_OPEN_NO_CARD` stays 0 because the command never passed through the PLC). It belongs to the attack-scenario session.

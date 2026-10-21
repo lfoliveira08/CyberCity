@@ -128,7 +128,7 @@ Same build order as BSH-Elevator (the IP bug above doesn't matter yet):
    count = 2, coil count = 4, input register count = 1.
 2. Write the same minimal ladder as BSH-Elevator.
 3. Confirm OpenPLC's Monitoring page matches Phase B's live values.
-4. Add a floor-call panel and status tile to the shared Node-RED
+4. Add a floor-call panel and status tile to the shared Ignition
    dashboard, next to BSH-Elevator's.
 
 ---
@@ -142,7 +142,7 @@ Same build order as BSH-Elevator (the IP bug above doesn't matter yet):
 - A plain Modbus write to this node's own IP moves the cab, and a stalled
   motor latches a genuine fault distinguishable from `ELEVATOR_DISABLE`
   (Phase B).
-- OpenPLC and Node-RED both show this node's live state, distinguishable
+- OpenPLC and Ignition both show this node's live state, distinguishable
   side-by-side from BSH-Elevator's (Phase C).
 
 At that point this pattern moves on to FH-Door, per

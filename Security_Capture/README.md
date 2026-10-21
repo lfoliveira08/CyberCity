@@ -38,3 +38,7 @@ when.
    difference in the log.
 5. **Do not push large captures to the Claude project.** Keep them here;
    the project is a read-only mirror of the design documents.
+
+## Related folder
+
+Attack scripts and attack reports (what was run from the Kali VM) go in `Kali/` (added Oct 20, 2026, not in use until the attack-scenario session). A report there refers to its pcap here by file name.

@@ -107,7 +107,7 @@ bench in Phase A.
    count = 2, input register count = 1, coil count = 1.
 2. Write the same minimal ladder as BSH-Perimeter.
 3. Confirm OpenPLC's Monitoring page matches Phase B's live values.
-4. Add a status tile to the shared Node-RED dashboard, next to
+4. Add a status tile to the shared Ignition dashboard, next to
    BSH-Perimeter's.
 
 ---
@@ -118,11 +118,11 @@ bench in Phase A.
   network dependency (Phase A).
 - Modbus confirms the correct IP (192.168.1.25) and the same
   fail-toward-enabled behavior as BSH-Perimeter (Phase B).
-- OpenPLC and Node-RED both show this node's live state (Phase C).
+- OpenPLC and Ignition both show this node's live state (Phase C).
 - `OBJECT_RANGE_THRESHOLD_CM` recalibrated against FH's actual printed
   perimeter geometry — it's a separate physical zone from BSH's, so don't
   assume BSH-Perimeter's calibrated value carries over.
 
 At that point all ten project nodes (five BSH, five FH) are built — the
-CyberUIW testbed's full sensing/actuation layer is complete, ready for
+The testbed's full sensing/actuation layer is complete, ready for
 scenario development and validation.

@@ -1,6 +1,6 @@
 # START HERE — what this project actually is, as of Oct 5, 2026
 
-> **Read `Next_Steps.md` right after this file.** It is the current handoff: what was decided, what is waiting, and what to do next (updated Oct 12, 2026). Where this file says Node-RED is the SCADA layer, `Next_Steps.md` and `Piranga_Workflow_v2.md` Section 10 are newer: it is now Ignition.
+> **Read `Next_Steps.md` right after this file.** It is the current handoff: what was decided, what is waiting, and what to do next (updated Oct 12, 2026). The SCADA/HMI software is Ignition.
 
 ## 1. The main folder is the single source of truth
 
@@ -21,7 +21,7 @@ Two files here are authoritative over everything else:
 - `Piranga_Workflow_v2.md` — architecture, networking, protocols, scenarios,
   deliverables, and the decisions log. (In the Claude project it is mirrored at
   `claude/Piranga_Workflow_v2.md`. An older copy under the name
-  `CyberUIW_Workflow_v2.md` was deleted on Sep 26, 2026 — it caused months of
+  the old v2 workflow copy was deleted on Sep 26, 2026 — it caused months of
   broken cross-references because the folder and the project used two different
   names for the same document.)
 - `Firmware/WORKFLOW.md` — build order, single-focus rule, phase definitions,
@@ -41,11 +41,11 @@ refreshed from it, not the other way around.
 Those two fields live only in claude.ai and can only be edited by hand there —
 neither this file nor any other document can change them. The custom
 instructions field already points to this file and names the two authoritative
-docs above, so it's current. The description field is also close to accurate
-(two buildings, eight ESP32 nodes, per-node OpenPLC over Modbus TCP, one Node-RED
-SCADA layer) apart from one leftover label — it still says "NSF LSAMP," which
-isn't important to what this project actually is and should be dropped by
-editing the field directly in claude.ai project settings.
+docs above, so it's current. The description field is out of date in two ways:
+it says 10 ESP32 nodes (the project has eight) and it names the old SCADA
+software (the SCADA/HMI is Ignition), and it may still carry the leftover
+"NSF LSAMP" label, which isn't important to what this project actually is.
+Fix these by editing the field directly in claude.ai project settings.
 
 ## 4. What the project is now
 
@@ -56,7 +56,7 @@ Two buildings — **BSH** and **Founder's Hall (FH)** — with **four subsystems
 each, eight ESP32 nodes in total**. Each node is a plain Modbus TCP slave polled
 directly by **its own dedicated OpenPLC instance**, each instance running as its
 own Docker container on its own LAN IP (`192.168.50.111`–`.124`, macvlan) using
-the default ports 8080 and 502. All eight containers run in one Proxmox VM on the Proxmox server (`pve`, 192.168.50.143, operational Oct 9, 2026), and the SCADA/HMI layer (Ignition, Maker Edition; company license pending) runs in its own VM there. One SCADA layer polls all eight and
+the default ports 8080 and 502. All eight containers run in one Proxmox VM on the Proxmox server (`pve`, 192.168.50.143, operational Oct 9, 2026), and the SCADA/HMI layer (Ignition; license confirmed Oct 19, 2026) runs in its own VM there. One SCADA layer polls all eight and
 evaluates the cross-system cascade rules. There are **no protocol-translation
 bridges anywhere** — OpenPLC's polling engine only speaks Modbus, so protocol
 variety lives at the field-bus layer instead (SPI/RFID at the Door — Power Box
@@ -118,7 +118,7 @@ per-component `BenchTest.ino` sketches, `Archive/`, and the
 
 **Only in the Claude project, not in this folder:** ten first-pass WiFi+Modbus
 `.ino` sketches at `Firmware/*_Node.ino`, the v1 workflow
-(`claude/CyberUIW_Workflow.md`), `Elevator_Motor.ino` (the original blocking
+(the original v1 workflow file in the Claude project), `Elevator_Motor.ino` (the original blocking
 elevator prototype), and `Firmware/BSH-Door/Stepper_Motor_Reference.ino`. These
 are **older than** this folder's own firmware and were deliberately left in the
 project rather than copied here — this folder's versions are the ones being
@@ -135,6 +135,8 @@ The team runs Wireshark on a Linux machine to capture the network, and what is
 done in the systems, while performing the Section 11 vulnerability scenarios.
 Everything about that -- where the capture runs, filters, naming, the per-run
 log -- lives in `Security_Capture/`. See `Security_Capture/README.md` first.
+
+**`Kali/` (added Oct 20, 2026)** will hold the attack scripts and attack reports run from the Kali VM (VM 102, 192.168.50.40). It exists but is not in use until the attack-scenario session; see `Kali/README.md`. The pcap evidence stays in `Security_Capture/`.
 
 ## 8. Conventions worth knowing before touching anything
 

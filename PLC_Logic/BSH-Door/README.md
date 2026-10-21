@@ -2,7 +2,7 @@
 
 OpenPLC instance `OpenPLC-BSH-Door` (container 192.168.50.113) polls this node's ESP32 at 192.168.50.13 and exposes it to SCADA.
 
-**Status (Oct 11, 2026):** drafted only. The ladder diagram, register map and Structured Text program exist; nothing has been compiled in OpenPLC Editor or run on a container. Phase C has not been declared started.
+**Status (Oct 20, 2026):** built and running. Luis built the 8 rungs in the OpenPLC Editor (`BSH-Door-ESP32/`), `Program.st` was regenerated from that build, uploaded to the container and run against the real ESP32; the functional tests passed (`Build_Log.md`).
 
 | File | What it is |
 |---|---|

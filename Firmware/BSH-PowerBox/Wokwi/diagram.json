@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "author": "CyberUIW — BSH-PowerBox (Phase A0) -- lights on GPIO13, not the strapping pin GPIO12; local override buttons on GPIO4/GPIO16",
+  "author": "Piranga — BSH-PowerBox (Phase A0) -- lights on GPIO13, not the strapping pin GPIO12; local override buttons on GPIO4/GPIO16",
   "editor": "wokwi",
   "parts": [
     {"type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {}},

@@ -1,6 +1,6 @@
 # Papers — Annotated Bibliography
 
-Research papers and surveys found for CyberUIW, recommended by the professor's
+Research papers and surveys found for the project, recommended by the professor's
 reading list (IEEE, ASEE, ASME). Added Sep 30, 2026.
 
 **Read this before citing anything here.** These entries came from web-search

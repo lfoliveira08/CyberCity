@@ -2,7 +2,7 @@
 
 - **Link:** https://github.com/frangoteam/FUXA
 - **System:** SCADA/HMI layer (Phase C)
-- **Status:** **Under evaluation**, fallback #2 (Ignition chosen Oct 12, 2026, license pending)
+- **Status:** **Under evaluation**, fallback #2 (Ignition chosen Oct 12, 2026, license confirmed Oct 19, 2026; only needed if that license is lost)
 - **License:** MIT (per the repository page)
 - **Version installed:** none. The repository page's Releases section was empty when checked, so no version or release date is recorded
 - **Checked:** Oct 9, 2026, repository front page only

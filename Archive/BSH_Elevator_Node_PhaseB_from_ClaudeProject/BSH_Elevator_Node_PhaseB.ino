@@ -1,6 +1,6 @@
 /*
   ============================================================================
-  Project CyberUIW -- BSH-Elevator Node (PHASE B DRAFT: WiFi + Modbus)
+  Project Piranga -- BSH-Elevator Node (PHASE B DRAFT: WiFi + Modbus)
   ============================================================================
   STATUS (2026-09-26): NOT THE CURRENT FIRMWARE. This is the WiFi+Modbus
   version, written 2026-09-14, that had been living only in the Claude

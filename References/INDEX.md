@@ -106,7 +106,7 @@ Paywalled papers stay as links only (same rule as `Books/`).
 | [Wokwi docs: supported parts](https://docs.wokwi.com/getting-started/supported-hardware) | All (Phase A0) | Which parts Wokwi simulates natively | Adopted (Phase A0, `Firmware/WORKFLOW.md` §7) |
 | [DG01D-A130 gearmotor datasheet (SparkFun-hosted)](https://cdn.sparkfun.com/datasheets/Robotics/DG01D.pdf) | Elevator | 48:1 gearmotor spec sheet -- voltage, no-load RPM/current, torque | **Adopted** (confirmed motor in hand, Sep 24, 2026 -- see `Firmware/BSH-Elevator/L293D_Motor_Driver/Wiring.md`) |
 | [OpenPLC Editor docs: Modbus addressing](https://edge.autonomylogic.com/docs/openplc-editor/communication/modbus/addressing) | All (Phase C) | How Modbus coils, discrete inputs and registers map to `%QX`, `%IX`, `%IW`, `%QW` on the PLC's own Modbus server. Does not state where slave-device data appears | **Adopted** (basis of `PLC_Logic/Templates/Address_Mapping.md`) |
-| [Ignition Maker Edition docs](https://docs.inductiveautomation.com/docs/8.3/other-editions/ignition-maker-edition.md) | SCADA/HMI | Free license for non-commercial and personal educational use; 10,000 tags, 10 Perspective sessions; includes Perspective, Modbus and OPC UA drivers; educational institutions are told to contact sales for classroom/senior-project options | **Adopted** (professor approved Oct 12, 2026; company license pending) |
+| [Ignition Maker Edition docs](https://docs.inductiveautomation.com/docs/8.3/other-editions/ignition-maker-edition.md) | SCADA/HMI | Free license for non-commercial and personal educational use; 10,000 tags, 10 Perspective sessions; includes Perspective, Modbus and OPC UA drivers; educational institutions are told to contact sales for classroom/senior-project options | **Adopted** (professor approved Oct 12, 2026; license confirmed Oct 19, 2026) |
 | [Configuring openPLC and Rapid SCADA 6 Modbus Integration](https://industrialmonitordirect.com/blogs/knowledgebase/configuring-openplc-and-rapid-scada-6-modbus-integration) | SCADA/HMI | Third-party step-by-step guide to polling OpenPLC from Rapid SCADA 6 | Background (third-party, unverified; see `GitHub/SCADA_RapidScada.md`) |
 
 ---
@@ -161,8 +161,8 @@ Use this section when you start work on a system.
 - `thiagoralves/OpenPLC_v3` · OpenPLC Editor docs, Modbus addressing
 - The OpenPLC programs themselves: `PLC_Logic/` (Templates/Address_Mapping.md)
 
-**SCADA/HMI** (Phase C; Ignition chosen Oct 12, 2026, company license pending)
-- Chosen: Ignition Maker Edition. Fallbacks: Rapid SCADA, then FUXA. Not chosen: ScadaBR, Node-RED (earlier plan). Full options table: `Piranga_Workflow_v2.md` Section 10
+**SCADA/HMI** (Phase C; Ignition chosen Oct 12, 2026, license confirmed Oct 19, 2026)
+- Chosen: Ignition Maker Edition. Fallbacks: Rapid SCADA, then FUXA. Not chosen: ScadaBR. Full options table: `Piranga_Workflow_v2.md` Section 10
 - Dunn: Programmable Logic Controllers, Process Control
 
 ---

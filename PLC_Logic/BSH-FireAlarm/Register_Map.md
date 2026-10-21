@@ -21,7 +21,7 @@
 | Device name | `BSH-FireAlarm-ESP32` |
 | Protocol | Generic Modbus TCP Device |
 | IP address / port | 192.168.50.12 / 502 |
-| Slave ID | 0 (entered Oct 15; accepted by the form, not yet proven by live polling -- if polling fails retry 1) |
+| Slave ID | 0 (entered Oct 15; proven by live polling Oct 19, 2026) |
 | Discrete inputs | start 0, size 3 |
 | Coils | start 0, size 1 |
 | Input registers | start 0, size 3 (includes HEARTBEAT and RECONNECT_COUNT) |

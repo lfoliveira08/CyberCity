@@ -525,7 +525,8 @@ PROGRAM main
           "targetHandle": "right-rail"
         }
       ],
-      "selectedNodes": []
+      "selectedNodes": [],
+      "handleBranches": []
     },
     {
       "id": "rung_main_ac876449-a5d2-46f2-a824-c7d2a22e3f2c",
@@ -1491,7 +1492,8 @@ PROGRAM main
           "targetHandle": "right-rail"
         }
       ],
-      "selectedNodes": []
+      "selectedNodes": [],
+      "handleBranches": []
     },
     {
       "id": "rung_main_e2f74480-75d7-4af7-9cd7-0d6934343ebd",
@@ -1998,7 +2000,8 @@ PROGRAM main
           "targetHandle": "input"
         }
       ],
-      "selectedNodes": []
+      "selectedNodes": [],
+      "handleBranches": []
     },
     {
       "id": "rung_main_07d077ba-28d5-46c2-a3ad-b04ca32d353b",
@@ -2505,7 +2508,8 @@ PROGRAM main
           "targetHandle": "right-rail"
         }
       ],
-      "selectedNodes": []
+      "selectedNodes": [],
+      "handleBranches": []
     },
     {
       "id": "rung_main_027a5751-b3a4-4a15-a7aa-4608d8209742",
@@ -3012,7 +3016,8 @@ PROGRAM main
           "targetHandle": "right-rail"
         }
       ],
-      "selectedNodes": []
+      "selectedNodes": [],
+      "handleBranches": []
     },
     {
       "id": "rung_main_7d253b4c-78d1-4316-a4cc-7b287d68c13f",
@@ -3723,7 +3728,8 @@ PROGRAM main
           "targetHandle": "input"
         }
       ],
-      "selectedNodes": []
+      "selectedNodes": [],
+      "handleBranches": []
     },
     {
       "id": "rung_main_931f1a9e-9a87-4ce6-b881-173991553f4a",
@@ -4434,7 +4440,8 @@ PROGRAM main
           "targetHandle": "input"
         }
       ],
-      "selectedNodes": []
+      "selectedNodes": [],
+      "handleBranches": []
     },
     {
       "id": "rung_main_206f4de2-2d54-40c5-b513-d096eefa9441",
@@ -5145,7 +5152,8 @@ PROGRAM main
           "targetHandle": "input"
         }
       ],
-      "selectedNodes": []
+      "selectedNodes": [],
+      "handleBranches": []
     }
   ]
 }

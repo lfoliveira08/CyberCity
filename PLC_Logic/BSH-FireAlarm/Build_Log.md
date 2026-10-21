@@ -2,23 +2,23 @@
 
 > Log it: anything decided, learned or changed here is also recorded in that day's file in `Logs/` (rules: `Logs/README.md`).
 
-Status: **slave device added, program not loaded yet** (files drafted Oct 11, 2026; container started Oct 13, 2026; ESP32 slave device added Oct 15, 2026).
+Status: **program running and the three functional tests passed on real hardware (Oct 19, 2026)**. Still open: a Modbus client check of the `PUB_*` addresses from the laptop (files drafted Oct 11, 2026; container started Oct 13; ESP32 slave device added Oct 15; program uploaded and verified Oct 19).
 
 ## Phase C steps
 
 - [x] Container `OpenPLC-BSH-FireAlarm` running at 192.168.50.112; Web UI reachable on port 8080 from the laptop (Oct 13, 2026)
 - [x] Modbus server enabled on port 502 (Oct 15). Also: Hardware Layer = Blank; S7 and EtherNet/IP servers turned OFF (both were on by default).
-- [x] ESP32 added as a slave device (192.168.50.12:502) with the sizes in `Register_Map.md` (Oct 15, 2026). Listed on the Slave Devices page as `BSH-FireAlarm-ESP32`, type TCP. **Slave ID entered: 0.** Accepted by the form and the device is listed; **not yet confirmed by live polling** -- the PLC was still Stopped with a Blank Program, so no Modbus request has been sent to the ESP32 yet. If polling fails later, retry with slave ID 1 and record the change here
-- [ ] `Program.st` uploaded and compiled without errors
-- [ ] Monitoring page matches the ESP32's live values; `HEARTBEAT` counts up and `RECONNECT_COUNT` is present
-- [ ] A Modbus client on the laptop reads every `PUB_*` address in `Register_Map.md` and gets the right values
+- [x] ESP32 added as a slave device (192.168.50.12:502) with the sizes in `Register_Map.md` (Oct 15, 2026). Listed on the Slave Devices page as `BSH-FireAlarm-ESP32`, type TCP. **Slave ID entered: 0.** Accepted by the form and the device is listed; **CONFIRMED by live polling Oct 19, 2026** (HEARTBEAT counted up on the Monitoring page, so slave ID 0 works; no retry with ID 1 was needed)
+- [x] `Program.st` uploaded; the PLC then ran (Oct 19, 2026). The compiler output text was not recorded, but the program started and executed, so it compiled. The file uploaded is the one regenerated Oct 19 from Luis's Editor build (`BSH-FireAlarm-ESP32/build/`), not the Oct 11 hand-written draft
+- [x] Monitoring page matches the ESP32's live values (Oct 19, 2026): `HEARTBEAT` `%IW101` counted up (1663 on one screenshot), `RECONNECT_COUNT` `%IW102` = 0, `GAS_RAW_VALUE` `%IW100` read 0 to 17 with all BOOLs FALSE, and each `PUB_*` row matched its source row
+- [x] A Modbus client reads every `PUB_*` address in `Register_Map.md` (Oct 20, 2026). **Done from the Kali VM (192.168.50.40), not the laptop**, with a read-only stdlib Python script: coils 0-4 by FC 1 and holding registers 0-2 by FC 3. Values were consistent with an idle node and a live PLC; they were not compared against the ESP32's own serial output.
 - [x] **Address convention VERIFIED (Oct 15, 2026).** The Slave Devices page states "Slave devices are attached to address 100 onward (i.e. %IX100.0, %IW100, %QX100.0, and %QW100)" and lists this device as DI `%IX100.0` to `%IX100.2`, DO `%QX100.0` to `%QX100.0`, AI `%IW100` to `%IW102`, AO `-`. This matches `Register_Map.md` section 3 exactly, so the drafted `Program.st` addresses are correct as written. Confirmed from the OpenPLC web UI, not yet from live values on the Monitoring page
 
 ## Tests
 
-- [ ] Write coil SCADA_ALARM_ACTIVATE = 1 from a Modbus client: buzzer sounds and PUB_REMOTE_ONLY = 1.
-- [ ] Press the pull station: MANUAL_PULL_TRIGGERED reads 1 and PUB_REMOTE_ONLY stays 0 (physical cause).
-- [ ] Clear the command: alarm stops (unless a physical trigger is still active).
+- [x] SCADA_ALARM_ACTIVATE = 1: buzzer sounds, ALARM_ACTIVATE `%QX100.0` and PUB_REMOTE_ONLY `%QX0.1` go TRUE (Oct 19, 2026). **Done by forcing the value on the OpenPLC Monitoring page, not from a Modbus client on the laptop.**
+- [x] Press the pull station: MANUAL_PULL_TRIGGERED `%IX100.0` and PUB_MANUAL_PULL_TRIGGERED `%QX0.2` go TRUE (Oct 19, 2026). With the remote command on at the same time, PUB_REMOTE_ONLY dropped to FALSE (physical cause present). ALARM_ACTIVATE stays FALSE on a physical pull alone: it only mirrors SCADA_ALARM_ACTIVATE, by design
+- [x] Clear the command: alarm and ALARM_ACTIVATE / PUB_REMOTE_ONLY stop (Oct 19, 2026)
 
 ## Results and problems
 
@@ -27,3 +27,8 @@ Status: **slave device added, program not loaded yet** (files drafted Oct 11, 20
 - Still to do in the web UI: add the slave device, upload `Program.st`, start the PLC.
 - Oct 15, 2026: ESP32 added as a slave device on the container at 192.168.50.112. The Slave Devices page lists `BSH-FireAlarm-ESP32`, type TCP, with DI `%IX100.0`-`%IX100.2`, DO `%QX100.0`, AI `%IW100`-`%IW102`, AO none -- matching `Register_Map.md` exactly. Slave ID 0 was used. **This settles the project-wide `%IX100.x` question:** the page's own banner says slave devices attach at address 100 onward. PLC still Stopped with Blank Program at this point, so nothing has been polled yet.
 - Oct 15, 2026: Settings done -- Modbus server on (502), Hardware = Blank, S7 + EtherNet/IP OFF (default-on, turned off; applies to all 8). All 8 rungs built in the OpenPLC Editor (project `BSH-FireAlarm-ESP32/`); compiled output verified identical to `Program.st` (15 vars, same logic, same 15 located addresses). Not yet compiled/Started on the container. Deploy artifact = hand-written `Program.st` (v4 Editor does not export a loose `.st` for the v3 web UI).
+- Oct 19, 2026: the v3 web UI cannot take the Editor project, so `Program.st` was regenerated from Luis's own Editor build output (his ladder, not the Oct 11 draft) and uploaded. The old draft is still in the folder as `Program.st.oct11-draft.bak` (could not be deleted from the session; Luis can delete it). Powered the ESP32; Monitoring showed the PLC polling it. All three functional tests passed (see Tests). Teaching points covered while testing: a physical pull does not change `ALARM_ACTIVATE` (that row is the PLC's command to the ESP32); the buzzer is driven locally by the ESP32 firmware, so the alarm works if the container is down.
+- Observation to check: the clean-air gas reading was ~0-17 on Oct 19, versus a baseline of ~40 recorded in `Firmware/WORKFLOW.md`. Sensor warm-up or placement may explain it; re-read after the MQ-2 has been powered for a few minutes and update the baseline if it settles somewhere else.
+- Not yet done: read every `PUB_*` address from a Modbus client on the laptop (Ignition will do this later); the slave polling period and timeout values from the Settings page were not captured.
+- Oct 19, 2026 (evening): tried to read the `PUB_*` addresses from the laptop with pymodbus (via `uv run --with pymodbus`) and with a raw PowerShell socket. **Both got "actively refused" on 192.168.50.112:502**, while the web UI on 8080 loaded fine, so the container was reachable but nothing was listening on 502. Cause not found: Dashboard state (Running/Stopped) and the Modbus Settings checkbox were not checked, and the Stop/Start PLC restart was not tried. Luis chose to skip the test for now. This must be resolved before Ignition can poll the container.
+- Oct 20, 2026 (afternoon): from the Kali VM, read the PLC's Modbus server at 192.168.50.112:502 (read-only, unit ID 1, FC 1 coils 0-4 and FC 3 holding registers 0-2). Read 1: all five coils 0, `PUB_GAS_RAW_VALUE` 65, `PUB_HEARTBEAT` 101, `PUB_RECONNECT_COUNT` 0. A later read: coils 0, gas 36, heartbeat 131, reconnect 0. **The heartbeat rose from 101 to 131 between reads, so the PLC is polling the ESP32 live and publishing it.** The earlier port 502 refusal (Oct 19 evening) is gone; what changed was not observed (nothing was recorded as changed). Gas 65 then 36 is within the ~40 baseline in `Firmware/WORKFLOW.md`, so the earlier 0-17 reading looks like warm-up; keep the baseline check open until it is read after a longer warm-up. Only one of the two commands' output was pasted for the 'sleep 5' pair.

@@ -74,3 +74,25 @@ Run on VM 100 (`OpenPLC-Docker`, 192.168.50.10) over SSH from the laptop. `sudo`
 - Guest agent confirmed Oct 15: VM 101 Summary in Proxmox shows IPs 192.168.50.30 (status running, 2 vCPU, 8 GB, 25 GB boot disk; about 2.5 GiB memory in use at idle).
 - **Not done yet on VM 101:** the SCADA software itself (Ignition license pending; fallback Rapid SCADA / FUXA), start-at-boot, and a Proxmox backup.
 - Disk budget: `local-lvm` is 68.5 GB; VM 100 uses 40 GB and VM 101 25 GB, so about 3 GB is left unallocated on the SSD pool (thin provisioning, but do not plan more VM disks there).
+
+## Oct 19, 2026 (night) -- VM 102 `Kali` (attacker / Modbus-client VM)
+
+### Why and what
+- Luis decided on Oct 19 that the Modbus-client tests against the OpenPLC containers, and later the Section 11 attack scenarios, run from a Kali VM instead of the laptop. Named in the plan as "Further VMs (optional): attacker/analysis VM".
+- Built as the third VM on `pve`. It is a lab tool for the closed testbed subnet only (`Security_Capture/README.md` rule 1).
+
+### VM 102 specs (from the Create VM Confirm tab)
+- VMID 102, name **`Kali`** in Proxmox; OS type Linux (`7.x - 2.6 Kernel`); ISO `kali-linux-2026.2-installer-everything-amd64.iso` (already on `Big_Storage`); QEMU agent on (agent=1); CPU 1 socket / 2 cores / type `host`; **4096 MB** RAM; SCSI disk **40 GB on `Big_Storage`** (qcow2, iothread on; chosen over `local-lvm` because `local-lvm` has about 3 GB unallocated); net VirtIO on `vmbr0`, no `firewall=1` (firewall off); started after creation.
+- Installed from the graphical installer: English, Central time, Guided - use entire disk, one partition (about 40.7 GB ext4 on `/` plus 2.2 GB swap), default software selection (Xfce desktop, top10 and default tool sets), GRUB on `/dev/sda`. No disk encryption, no LVM. Hostname `kali`, user `kali`. The password is a simple one chosen by Luis and is not recorded here.
+- Network: set to a static IP **192.168.50.40/24** with `nmcli` on connection "Wired connection 1" (gw 192.168.50.1, DNS 192.168.50.1 + 8.8.8.8). Verified on screen: `ip -4 addr` shows `192.168.50.40/24` on `eth0`, and `ping google.com` works (2 of 2, 0% loss).
+
+### Confirmed later the same night
+- **Guest agent works:** Proxmox's Network Information panel for VM 102 shows `eth0` = 192.168.50.40/24 (MAC `bc:24:11:f6:36:6a`); that panel is filled in by the guest agent.
+- **Install ISO detached:** Hardware > CD/DVD Drive (ide2) shows `none` and the Edit dialog has "Do not use any media" selected. (The Kali desktop still shows an empty `cdrom0` icon, which is only the empty virtual drive.)
+
+- **SSH from the laptop works** (confirmed Oct 19, 23:23 local): `ssh kali@192.168.50.40` accepted the host key and the password and showed Kali GNU/Linux, kernel 6.19.14+kali-amd64, hostname `kali`.
+
+### Not verified / not done yet
+- Change the weak password before SSH is relied on, since the lab router is shared.
+- Where Wireshark runs: a VM on `vmbr0` sees only its own traffic, not traffic between other hosts; see `Security_Capture/Capture_Setup.md`.
+- Backup of VMs 100-102 to `Big_Storage` (still open from `Next_Steps.md`).

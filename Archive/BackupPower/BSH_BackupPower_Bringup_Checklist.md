@@ -136,7 +136,7 @@ inputs are this node's real unknowns):
    surface DI0/DI1/IR0/IR1 for the dashboard.
 3. Confirm OpenPLC's Monitoring page matches Phase B's live values.
 4. Add utility-status, battery-%, load-current, and an ATS-transfer button
-   to the shared Node-RED dashboard.
+   to the shared Ignition dashboard.
 
 ---
 
@@ -148,7 +148,7 @@ inputs are this node's real unknowns):
 - A plain Modbus write to `ATS_TRANSFER_CMD` drives the relay, and it
   fails toward **not commanded** on comm loss — distinguishable from the
   retired Perimeter node's opposite fail direction (Phase B).
-- OpenPLC and Node-RED both show this node's live state (Phase C).
+- OpenPLC and Ignition both show this node's live state (Phase C).
 - The real R1/R2 divider values and the `LOW_BATTERY` threshold are
   calibrated against the actual battery pack in hand, not left as
   placeholders.

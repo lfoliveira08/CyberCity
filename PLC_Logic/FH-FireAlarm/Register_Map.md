@@ -1,6 +1,6 @@
 # FH-FireAlarm -- Register map and address translation
 
-> DRAFT Oct 11, 2026. Source of truth for the ESP32 side: `FH_Systems/02_FH-FireAlarm.md`. If this file and that doc disagree, the doc wins.
+> Drafted Oct 11, 2026; program built and running Oct 21, 2026 (see `Build_Log.md`). Source of truth for the ESP32 side: `FH_Systems/02_FH-FireAlarm.md`. If this file and that doc disagree, the doc wins.
 
 ## 1. ESP32 registers (what the node exposes)
 
@@ -21,7 +21,7 @@
 | Device name | `FH-FireAlarm-ESP32` |
 | Protocol | Generic Modbus TCP Device |
 | IP address / port | 192.168.50.22 / 502 |
-| Slave ID | TBD -- confirm in Phase C (record the value that works in `Build_Log.md`) |
+| Slave ID | 0 (entered Oct 21; proven by live polling Oct 21, 2026) |
 | Discrete inputs | start 0, size 3 |
 | Coils | start 0, size 1 |
 | Input registers | start 0, size 3 (includes HEARTBEAT and RECONNECT_COUNT) |
@@ -32,7 +32,7 @@ This PLC itself: container `OpenPLC-FH-FireAlarm` at 192.168.50.122, Web UI port
 
 ## 3. Address translation
 
-**UNVERIFIED:** the slave-block addresses (`%IX100.x`, `%QX100.x`, `%IW100+`, `%QW100+`) are the OpenPLC v3 convention, and the current OpenPLC documentation does not restate them. Confirm each one on the Monitoring page and write the result in `Build_Log.md`.
+**Verified on the BSH containers** (Slave Devices page: "attached to address 100 onward"). On this container the Slave Devices listing was not shown on Oct 21, 2026, but the running program is consistent with the convention (heartbeat and pull-station tests worked).
 **From the OpenPLC docs:** the PLC's own Modbus server maps coil n to `%QX` bit n (coil 8 = `%QX1.0`) and holding register n to `%QWn`, both starting at 0. That is why this program publishes everything SCADA needs into `%QX0.x` and `%QW0..`. Some SCADA tools show these 1-based or in 0xxxx / 4xxxx notation, so subtract one or drop the prefix if values look shifted.
 
 | ESP32 register | OpenPLC slave-block address (verify) | Published for SCADA at | Modbus function / address (0-based) |

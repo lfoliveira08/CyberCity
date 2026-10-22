@@ -23,6 +23,8 @@ Mirrors `BSH-PowerBox` exactly — same components, same GPIO map, same protocol
 
 **Local override buttons (Sep 29, 2026):** mirrors the BSH-PowerBox change — added a real physical push-button switch per channel alongside the existing remote Modbus command. See `BSH_Systems/04_BSH-PowerBox.md` Notes and the Sep 29, 2026 entry in `Piranga_Workflow_v2.md` Section 14 for the full authority-rule rationale. Also closes the previous open-loop gap — `LIGHTS_STATUS`/`FAN_STATUS` (DI0/DI1) now report actual physical state honestly.
 
+**Authority rule changed (Oct 21, 2026, Phase C):** the same change as BSH-PowerBox (a coil write counts as a hub command only when its value differs from the last hub value; forgotten after a WiFi rejoin), made in `FH_PowerBox_Node.ino` ahead of FH Phase C because OpenPLC rewrites the coils every poll. Luis reported flashing it; it is NOT bench-tested on FH. The old sketch is `Archive/FH_PowerBox_Node_PhaseB_every-write-wins.ino`. See `BSH_Systems/04_BSH-PowerBox.md` for the full reason.
+
 **Design change (Sep 28, 2026):** mirrors the BSH-PowerBox change — DALI dropped in favor of a plain on/off relay for lights, and the lights relay's GPIO corrected from 12 (a strapping pin) to 13. **Update (Sep 29, 2026):** that GPIO move turned out not to be what actually caused the inverted-lights symptom seen in BSH-PowerBox's Phase A0 test — the real cause was Wokwi's simulated relay module energizing on HIGH rather than LOW, on both channels. The GPIO 12→13 move itself is still worth keeping (a real hazard for any pulled-up peripheral), just not the explanation for that particular bug. See `BSH_Systems/04_BSH-PowerBox.md` Notes and the Sep 28/29, 2026 entries in `Piranga_Workflow_v2.md` Section 14.
 
 ## GPIO Pin Map

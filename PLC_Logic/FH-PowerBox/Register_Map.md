@@ -1,6 +1,6 @@
 # FH-PowerBox -- Register map and address translation
 
-> DRAFT Oct 11, 2026. Source of truth for the ESP32 side: `FH_Systems/04_FH-PowerBox.md`. If this file and that doc disagree, the doc wins.
+> Drafted Oct 11, 2026; slave ID 0 proven on the container Oct 21, 2026 (the Slave Devices listing was not shown). Source of truth for the ESP32 side: `FH_Systems/04_FH-PowerBox.md`. If this file and that doc disagree, the doc wins.
 
 ## 1. ESP32 registers (what the node exposes)
 
@@ -20,7 +20,7 @@
 | Device name | `FH-PowerBox-ESP32` |
 | Protocol | Generic Modbus TCP Device |
 | IP address / port | 192.168.50.24 / 502 |
-| Slave ID | TBD -- confirm in Phase C (record the value that works in `Build_Log.md`) |
+| Slave ID | 0 (worked, Oct 21, 2026: the heartbeat moved in the Kali read) |
 | Discrete inputs | start 0, size 2 |
 | Coils | start 0, size 2 |
 | Input registers | start 0, size 2 (includes HEARTBEAT and RECONNECT_COUNT) |
@@ -31,7 +31,7 @@ This PLC itself: container `OpenPLC-FH-PowerBox` at 192.168.50.124, Web UI port 
 
 ## 3. Address translation
 
-**UNVERIFIED:** the slave-block addresses (`%IX100.x`, `%QX100.x`, `%IW100+`, `%QW100+`) are the OpenPLC v3 convention, and the current OpenPLC documentation does not restate them. Confirm each one on the Monitoring page and write the result in `Build_Log.md`.
+**Confirmed fine by Luis (night of Oct 21, 2026), listing not pasted.** The convention was verified on the earlier nodes, and the Kali read returned a moving `PUB_HEARTBEAT` (copy of `%IW100`), so the block is read. The slave-block addresses (`%IX100.x`, `%QX100.x`, `%IW100+`, `%QW100+`) are the OpenPLC v3 convention, and the current OpenPLC documentation does not restate them. Confirm each one on the Monitoring page and write the result in `Build_Log.md`.
 **From the OpenPLC docs:** the PLC's own Modbus server maps coil n to `%QX` bit n (coil 8 = `%QX1.0`) and holding register n to `%QWn`, both starting at 0. That is why this program publishes everything SCADA needs into `%QX0.x` and `%QW0..`. Some SCADA tools show these 1-based or in 0xxxx / 4xxxx notation, so subtract one or drop the prefix if values look shifted.
 
 | ESP32 register | OpenPLC slave-block address (verify) | Published for SCADA at | Modbus function / address (0-based) |

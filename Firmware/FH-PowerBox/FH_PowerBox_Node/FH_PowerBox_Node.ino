@@ -14,6 +14,10 @@
   light or the fan comes ON at boot, or follows commands backwards, flip
   RELAY_LIGHTS_ACTIVE_LOW / RELAY_FAN_ACTIVE_LOW below and re-flash.
 
+  CHANGED 2026-10-21 (Phase C): hub-write rule is now "different value only"
+  -- see AUTHORITY RULE below. Applied ahead of FH Phase C so the node does not
+  repeat the BSH button-override problem. NOT yet flashed or bench-tested.
+
   Architecture: plain Modbus TCP SLAVE at 192.168.50.24:502. OpenPLC-FH-PowerBox
   (192.168.50.124) will poll it directly in Phase C.
 
@@ -33,8 +37,19 @@
 
   AUTHORITY RULE (whichever source acted most recently wins):
     - A debounced button press toggles the output immediately.
-    - The hub regains control only on a FRESH coil WRITE (detected by the
-      onSetCoil callback), not by the coil still holding its old value.
+    - The hub only regains control when it writes a coil value that is
+      DIFFERENT from the last value it wrote (detected in the onSetCoil
+      callback). Changed Oct 21, 2026 (Phase C), same as BSH-PowerBox:
+      OpenPLC rewrites the coil on every poll (about 100 ms), so the old rule
+      ("every write counts, even the same value") let the PLC undo every
+      button press within one poll. Now a repeated write of the same value is
+      ignored, so a button press sticks until SCADA sends a different command.
+      The previous behavior is archived in
+      Archive/FH_PowerBox_Node_PhaseB_every-write-wins.ino.
+    - Cost: the hub cannot re-force the SAME value after a button press; it
+      must send the opposite value and then the original.
+    - After a WiFi rejoin the "last hub value" is forgotten, so the first
+      write after reconnect counts.
     - Status DIs always report the real physical state.
 
   FAIL-SAFE: if WiFi stays down longer than WATCHDOG_MS, both outputs go OFF.
@@ -90,6 +105,9 @@ bool lightsOn = false;
 bool fanOn    = false;
 
 // Set from the Modbus callbacks (run inside mb.task()), consumed in loop().
+// lastHub*: last value the hub wrote (-1 = none yet / forgotten on rejoin).
+volatile int8_t lightsLastHub = -1;
+volatile int8_t fanLastHub    = -1;
 volatile bool lightsWritePending = false;
 volatile bool lightsWriteValue   = false;
 volatile bool fanWritePending    = false;
@@ -136,15 +154,24 @@ bool readButtonEdge(int pin, int &lastReading, int &stableState, unsigned long &
 }
 
 // Modbus write callbacks: fire on every write request, even if the value is
-// unchanged -- that is what makes "fresh write" detectable.
+// unchanged. Only a write whose value differs from the last hub value counts
+// as a fresh command (Oct 21, 2026: OpenPLC rewrites the coil every poll).
 uint16_t onLightsCoilWrite(TRegister* reg, uint16_t val) {
-  lightsWriteValue = (val != 0);
-  lightsWritePending = true;
+  int8_t v = (val != 0) ? 1 : 0;
+  if (v != lightsLastHub) {
+    lightsLastHub = v;
+    lightsWriteValue = (v == 1);
+    lightsWritePending = true;
+  }
   return val;
 }
 uint16_t onFanCoilWrite(TRegister* reg, uint16_t val) {
-  fanWriteValue = (val != 0);
-  fanWritePending = true;
+  int8_t v = (val != 0) ? 1 : 0;
+  if (v != fanLastHub) {
+    fanLastHub = v;
+    fanWriteValue = (v == 1);
+    fanWritePending = true;
+  }
   return val;
 }
 
@@ -230,6 +257,9 @@ void loop() {
     // Drop any stale command state so a held coil cannot silently re-arm.
     mb.Coil(COIL_LIGHTS_ON_CMD, false);
     mb.Coil(COIL_FAN_CMD, false);
+    // Forget the last hub values so the first write after rejoin counts.
+    lightsLastHub = -1;
+    fanLastHub = -1;
   }
 
   // --- local override buttons: act immediately ---

@@ -41,3 +41,5 @@ All run on the bench on Oct 20, 2026 by forcing values with the true/false butto
 - WiFi-drop case (heartbeat frozen, then resuming with `RECONNECT_COUNT` + 1 and no reboot) is untested.
 - Whether a stopped PLC leaves the ESP32's `ELEVATOR_DISABLE` at its last value (the firmware never clears it) is unverified; the lockout was not the cause of the stall.
 - One read compared with the ESP32's own serial output (values right, not only moving) is not done.
+
+- Update Oct 21, 2026 (night): Luis confirmed, for all eight containers, that the compile logs, the Settings pages (S7 and EtherNet/IP off) and the Slave Devices listings are all fine. Reported by Luis, not pasted: the numbers (Polling Period, Timeout, listing addresses) and the log text were not recorded, and the Hardware page was not named separately.

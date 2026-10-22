@@ -1,6 +1,6 @@
 # FH-Door -- Register map and address translation
 
-> DRAFT Oct 11, 2026. Source of truth for the ESP32 side: `FH_Systems/03_FH-Door.md`. If this file and that doc disagree, the doc wins.
+> Drafted Oct 11, 2026; built and verified Oct 21, 2026. Source of truth for the ESP32 side: `FH_Systems/03_FH-Door.md`. If this file and that doc disagree, the doc wins.
 
 ## 1. ESP32 registers (what the node exposes)
 
@@ -21,7 +21,7 @@
 | Device name | `FH-Door-ESP32` |
 | Protocol | Generic Modbus TCP Device |
 | IP address / port | 192.168.50.23 / 502 |
-| Slave ID | TBD -- confirm in Phase C (record the value that works in `Build_Log.md`) |
+| Slave ID | 0 (entered Oct 21; proven by live polling the same day) |
 | Discrete inputs | start 0, size 3 |
 | Coils | start 0, size 2 |
 | Input registers | start 0, size 2 (includes HEARTBEAT and RECONNECT_COUNT) |
@@ -32,10 +32,13 @@ This PLC itself: container `OpenPLC-FH-Door` at 192.168.50.123, Web UI port 8080
 
 ## 3. Address translation
 
-**UNVERIFIED:** the slave-block addresses (`%IX100.x`, `%QX100.x`, `%IW100+`, `%QW100+`) are the OpenPLC v3 convention, and the current OpenPLC documentation does not restate them. Confirm each one on the Monitoring page and write the result in `Build_Log.md`.
+**VERIFIED Oct 21, 2026** on this system's own container (192.168.50.123): the Slave Devices page lists this device at DI `%IX100.0`-`%IX100.2`, DO `%QX100.0`-`%QX100.1`, AI `%IW100`-`%IW101`, AO none. The slave-block addresses (`%IX100.x`, `%QX100.x`, `%IW100+`, `%QW100+`) are the OpenPLC v3 convention.
+
+**Oct 21, 2026:** the Editor build (`FH-Door-ESP32/`) and the regenerated `Program.st` use exactly the names and addresses in this table.
+
 **From the OpenPLC docs:** the PLC's own Modbus server maps coil n to `%QX` bit n (coil 8 = `%QX1.0`) and holding register n to `%QWn`, both starting at 0. That is why this program publishes everything SCADA needs into `%QX0.x` and `%QW0..`. Some SCADA tools show these 1-based or in 0xxxx / 4xxxx notation, so subtract one or drop the prefix if values look shifted.
 
-| ESP32 register | OpenPLC slave-block address (verify) | Published for SCADA at | Modbus function / address (0-based) |
+| ESP32 register | OpenPLC slave-block address (verified Oct 21) | Published for SCADA at | Modbus function / address (0-based) |
 |---|---|---|---|
 | Coil0 DOOR_OPEN_CMD | %QX100.0 | `SCADA_DOOR_OPEN_CMD` at %QX0.0 (SCADA writes) | coil 0 (FC 5/15) |
 | Coil1 DOOR_CLOSE_CMD | %QX100.1 | `SCADA_DOOR_CLOSE_CMD` at %QX0.1 (SCADA writes) | coil 1 (FC 5/15) |

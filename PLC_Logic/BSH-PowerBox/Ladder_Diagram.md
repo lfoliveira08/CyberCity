@@ -1,7 +1,6 @@
 # BSH-PowerBox -- Ladder diagram
 
-> DRAFT Oct 11, 2026. Not yet built or tested in OpenPLC Editor. Drawn from `BSH_Systems/04_BSH-PowerBox.md`.
-> Addresses marked in `Register_Map.md` as "verify" must be confirmed on a real container before this is trusted.
+> BUILT Oct 21, 2026 by Luis in the OpenPLC Editor (project `BSH-PowerBox-ESP32/`, program `main`, task `T#20ms`) and run on the container; the drawing below is the original Oct 11 design and the saved project matches it. Rung comments in the Editor: R1_ForwardLightsCommand, R2_ForwardFanCommand, R3_ComputeLightsMismatch, R4_ComputeFanMismatch, R5_PublishLightsStatus, R6_PublishFanStatus, R7_PublishHeartbeat, R8_PublishReconnectCount. R3 and R4 are two series branches in parallel (command AND NOT status, OR NOT command AND status). The slave-block addresses were confirmed on the container's Slave Devices page. Drawn from `BSH_Systems/04_BSH-PowerBox.md`.
 
 Naming: `SCADA_*` = SCADA writes it into this PLC's own Modbus server. `PUB_*` = this program publishes it for SCADA to read. Un-prefixed names are the ESP32's own register names (the slave-device block starting at `%IX100.0` / `%QX100.0` / `%IW100` / `%QW100`).
 

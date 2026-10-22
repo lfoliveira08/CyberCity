@@ -323,8 +323,8 @@ Protect the cascade and integration days (Oct 24-27); that is where schedules sl
 2. [ ] Install Ignition (license confirmed Oct 19, 2026, see "Platform decisions" below) in the SCADA/HMI VM
 
 ### Per-System OpenPLC Configuration
-1. [ ] For all 4 systems: add the corresponding ESP32 as a Generic Modbus TCP Slave Device in that system's own OpenPLC instance — identical configuration pattern for all 8 nodes, no bridges to build
-2. [ ] Write the per-system ladder logic in each instance (safe-state behavior, and passing SCADA-written coils like `ALARM_ACTIVATE` through to the ESP32). Each system has a folder in `PLC_Logic/` (ladder diagram, register map, Structured Text program, build log); drafted Oct 11, 2026, not yet run
+1. [x] For all 4 systems: add the corresponding ESP32 as a Generic Modbus TCP Slave Device in that system's own OpenPLC instance — identical configuration pattern for all 8 nodes, no bridges to build. **Done on all 8 containers by Oct 21, 2026** (slave ID 0; listings and Settings confirmed fine by Luis, not pasted, see each `PLC_Logic/<System>/Build_Log.md`)
+2. [x] Write the per-system ladder logic in each instance (safe-state behavior, and passing SCADA-written coils like `ALARM_ACTIVATE` through to the ESP32). Each system has a folder in `PLC_Logic/` (ladder diagram, register map, Structured Text program, build log); drafted Oct 11, 2026; **built in the Editor by Luis and run on all 8 containers by Oct 21, 2026** (`Program.st` regenerated from each saved Editor project)
 
 ### SCADA (Ignition) Dashboard
 1. [ ] Add a Modbus TCP device connection per OpenPLC instance (8 total)
@@ -399,8 +399,8 @@ The original 12-week milestone table (Aug 24 – Dec 11) still applies as the ov
 |---|---|---|---|
 | 1 | Functional 3D-printed smart campus model | ⬜ Not started | BSH + FH buildings |
 | 2 | 8 ESP32 nodes (firmware + wiring), 4 per building | 🟩 Firmware complete and bench-confirmed through Phase B on all 8 nodes (Oct 6-9, 2026): BSH Elevator, Fire Alarm, Door, PowerBox and FH HVAC, Fire Alarm, Door, PowerBox, each a Modbus TCP slave with heartbeat and reconnect counters, verified from a laptop. Phase C (OpenPLC and SCADA) started Oct 13, 2026: OpenPLC Docker VM, image, macvlan network and all 8 containers are running (Oct 14), no program loaded yet, SCADA VM (VM 101) built Oct 14 but no SCADA software yet | See Section 9 |
-| 3 | 8 OpenPLC instances configured in the Proxmox OpenPLC Docker VM | ⬜ Not started | See Section 10 |
-| 4 | Ladder logic programs for all 8 OpenPLC instances | 🟨 Drafted, untested (Oct 11, 2026) | Safe-state behavior + SCADA-coil pass-through, see Section 10. Files in `PLC_Logic/` (one folder per system) |
+| 3 | 8 OpenPLC instances configured in the Proxmox OpenPLC Docker VM | 🟩 All 8 containers running with their slave device and program (Oct 21, 2026); S7 and EtherNet/IP off confirmed by Luis on all 8 (night of Oct 21, not pasted) | See Section 10 and `PLC_Logic/README.md` |
+| 4 | Ladder logic programs for all 8 OpenPLC instances | 🟩 Built in the Editor and run on all 8 containers (Oct 19-21, 2026); Kali read tests passed, functional tests passed or reported as worked; direct-write, WiFi-drop and unplug checks still open (Oct 21, 2026) | Safe-state behavior + SCADA-coil pass-through, see Section 10. Files in `PLC_Logic/` (one folder per system) |
 | 5 | SCADA dashboard with cross-system cascade rules | ⬜ Not started | Ignition (professor approved Oct 12, 2026; license confirmed Oct 19, 2026). See Sections 7 and 10 |
 | 6 | Demonstration of 3+ security scenarios | ⬜ Not started | 10 candidate scenarios documented (Scenario 6 since dropped, Oct 5, 2026). Network evidence captured with Wireshark on a Linux machine per run; procedure, filters and per-run log live in `Security_Capture/` (added Oct 14, 2026) |
 | 7 | System wiring and architecture diagrams | ⬜ Not started | |

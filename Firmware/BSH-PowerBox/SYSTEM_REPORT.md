@@ -6,6 +6,8 @@ override buttons bench-confirmed together in the standalone integration sketch.
 Phase B sketch sits at `BSH_PowerBox_Node/BSH_PowerBox_Node.ino` (see
 `ESP32_Core_Modbus/Build_Log.md`). Phase C has not started (update Oct 14, 2026: Phase C started Oct 13; all 8 OpenPLC containers are running, none configured yet).
 
+**Update Oct 21, 2026:** Phase C for this node ran on real hardware (program running, functional and Kali read tests passed). The Phase B sketch's authority rule was changed that day (a coil write counts as a hub command only when its value differs from the last hub value) because OpenPLC rewrites the coils every poll; Section 1 below describes the Oct 6 rule. See `PLC_Logic/BSH-PowerBox/Build_Log.md`.
+
 Produced per `Firmware/WORKFLOW.md` Section 4.
 
 ---

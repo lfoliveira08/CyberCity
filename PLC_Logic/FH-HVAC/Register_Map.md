@@ -1,6 +1,6 @@
 # FH-HVAC -- Register map and address translation
 
-> DRAFT Oct 11, 2026. Source of truth for the ESP32 side: `FH_Systems/01_FH-HVAC.md`. If this file and that doc disagree, the doc wins.
+> Drafted Oct 11, 2026; program built and running Oct 21, 2026 (see `Build_Log.md`). Source of truth for the ESP32 side: `FH_Systems/01_FH-HVAC.md`. If this file and that doc disagree, the doc wins.
 
 ## 1. ESP32 registers (what the node exposes)
 
@@ -22,7 +22,7 @@
 | Device name | `FH-HVAC-ESP32` |
 | Protocol | Generic Modbus TCP Device |
 | IP address / port | 192.168.50.21 / 502 |
-| Slave ID | TBD -- confirm in Phase C (record the value that works in `Build_Log.md`) |
+| Slave ID | 0 (entered Oct 21; proven by live polling Oct 21, 2026) |
 | Discrete inputs | start 0, size 2 |
 | Coils | start 0, size 1 |
 | Input registers | start 0, size 4 (includes HEARTBEAT and RECONNECT_COUNT) |
@@ -33,10 +33,10 @@ This PLC itself: container `OpenPLC-FH-HVAC` at 192.168.50.121, Web UI port 8080
 
 ## 3. Address translation
 
-**UNVERIFIED:** the slave-block addresses (`%IX100.x`, `%QX100.x`, `%IW100+`, `%QW100+`) are the OpenPLC v3 convention, and the current OpenPLC documentation does not restate them. Confirm each one on the Monitoring page and write the result in `Build_Log.md`.
+**Verified on this container Oct 21, 2026:** the Slave Devices listing shows DI `%IX100.0`-`%IX100.1`, DO `%QX100.0`, AI `%IW100`-`%IW103`, AO `%QW100`, matching the table below. Units: `TEMP_C` and `TARGET_TEMP_C` are tenths of a degree C (240 = 24.0 C); the Kali reads showed values that are not multiples of 10 (193, 192), so do not assume whole degrees.
 **From the OpenPLC docs:** the PLC's own Modbus server maps coil n to `%QX` bit n (coil 8 = `%QX1.0`) and holding register n to `%QWn`, both starting at 0. That is why this program publishes everything SCADA needs into `%QX0.x` and `%QW0..`. Some SCADA tools show these 1-based or in 0xxxx / 4xxxx notation, so subtract one or drop the prefix if values look shifted.
 
-| ESP32 register | OpenPLC slave-block address (verify) | Published for SCADA at | Modbus function / address (0-based) |
+| ESP32 register | OpenPLC slave-block address | Published for SCADA at | Modbus function / address (0-based) |
 |---|---|---|---|
 | Coil0 HVAC_ENABLE | %QX100.0 | `SCADA_HVAC_ENABLE` at %QX0.0 (SCADA writes) | coil 0 (FC 5/15) |
 | HR0 TARGET_TEMP_C | %QW100 | `SCADA_TARGET_TEMP_C` at %QW0 (SCADA writes) | holding register 0 (FC 6/16) |

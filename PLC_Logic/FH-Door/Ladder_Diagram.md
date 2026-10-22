@@ -1,7 +1,6 @@
 # FH-Door -- Ladder diagram
 
-> DRAFT Oct 11, 2026. Not yet built or tested in OpenPLC Editor. Drawn from `FH_Systems/03_FH-Door.md`.
-> Addresses marked in `Register_Map.md` as "verify" must be confirmed on a real container before this is trusted.
+> Drawn Oct 11, 2026 from `FH_Systems/03_FH-Door.md`; built in OpenPLC Editor by Luis (task `T#20ms`) and tested on the container Oct 21, 2026 (`Build_Log.md`). The slave-block addresses were verified the same day.
 
 Naming: `SCADA_*` = SCADA writes it into this PLC's own Modbus server. `PUB_*` = this program publishes it for SCADA to read. Un-prefixed names are the ESP32's own register names (the slave-device block starting at `%IX100.0` / `%QX100.0` / `%IW100` / `%QW100`).
 

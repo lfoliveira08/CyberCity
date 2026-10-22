@@ -1,7 +1,6 @@
 # FH-HVAC -- Ladder diagram
 
-> DRAFT Oct 11, 2026. Not yet built or tested in OpenPLC Editor. Drawn from `FH_Systems/01_FH-HVAC.md`.
-> Addresses marked in `Register_Map.md` as "verify" must be confirmed on a real container before this is trusted.
+> Drawn Oct 11, 2026 from `FH_Systems/01_FH-HVAC.md`. **Built in the OpenPLC Editor by Luis and run on the container on Oct 21, 2026** (rung comments R1_ForwardEnable to R8_PublishReconnectCount); the diagram below matches the saved project. Test results are in `Build_Log.md`.
 
 Naming: `SCADA_*` = SCADA writes it into this PLC's own Modbus server. `PUB_*` = this program publishes it for SCADA to read. Un-prefixed names are the ESP32's own register names (the slave-device block starting at `%IX100.0` / `%QX100.0` / `%IW100` / `%QW100`).
 
@@ -57,4 +56,4 @@ RUNG 8: publish RECONNECT_COUNT for SCADA
 
 ## Notes
 
-DECISION PENDING: which way HVAC_ENABLE fails on comms loss (fail-off vs fail-open) is not decided in the system doc yet. This draft is pass-through only; add the comms-loss rung once that is decided.
+Comms loss (decided Oct 21, design A): there is no comms-loss rung. The program is pass-through only and fail-off stays in the ESP32 (WiFi down more than 10 s opens the relay). SCADA watches `PUB_HEARTBEAT`. Accepted risk: a PLC that stops polling while the ESP32 WiFi stays up is not detected. See `Build_Log.md`.

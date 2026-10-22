@@ -19,7 +19,7 @@ hardcoding BSH-PowerBox's 192.168.50.14) was fixed in the same pass that
 rewrote the firmware for the relay-only design — confirm the Serial
 Monitor prints `.24`, not `.14`, during Phase B regardless.
 
-**Status (Oct 7, 2026): Phase B complete** -- flashed and bench-confirmed at 192.168.50.24 (both outputs OFF at boot with both flags `false`, so FH's boards are active-HIGH; coils, status, buttons, hub-regains-authority, 5 s watchdog and heartbeat/reconnect all passed). The note below is the pre-flash history.
+**Status (Oct 7, 2026): Phase B complete** -- flashed and bench-confirmed at 192.168.50.24 (both outputs OFF at boot with both flags `false`, so FH's boards are active-HIGH; coils, status, buttons, hub-regains-authority, 5 s watchdog and heartbeat/reconnect all passed). The note below is the pre-flash history. **Oct 21, 2026 (Phase C):** the hub-write rule described below ("every write is a fresh command / regains authority") was changed: a coil write now counts only when its value differs from the last hub value, because OpenPLC rewrites the coil every poll. See `PLC_Logic/FH-PowerBox/Build_Log.md`.
 
 **Status note (Oct 6, 2026):** FH-PowerBox was built ahead of the BSH build order at Luis's request, and its Phase B sketch is written but NOT yet flashed. Its standalone Phase A was never logged separately, and BSH's relay polarity (active-HIGH) cannot be assumed for these boards: at boot both outputs must be OFF; if not, flip `RELAY_LIGHTS_ACTIVE_LOW` / `RELAY_FAN_ACTIVE_LOW` in the sketch.
 
@@ -131,7 +131,9 @@ IP doesn't matter yet):
    - Press a button on the bench and confirm it flips the output and its
      status DI immediately, without any coil write, and that a
      subsequent fresh coil write from the client correctly regains
-     authority over it.
+     authority over it. (Oct 21, 2026: only a write with a DIFFERENT
+     value than the last hub value counts; a repeated same value is
+     ignored.)
    - Disconnect Wi-Fi with lights/fan on — both default to OFF once the
      watchdog timeout elapses, but the buttons keep working locally.
 4. With both BSH-PowerBox and FH-PowerBox up simultaneously **and both on
@@ -166,7 +168,7 @@ IP doesn't matter yet):
   dependency (Phase A).
 - A plain Modbus write to this node's own IP changes both outputs, both
   fail safely to OFF on comm loss, and local button overrides plus the
-  hub-regains-authority-on-fresh-command rule behave the same as
+  hub-regains-authority-on-fresh-command rule (Oct 21, 2026: a fresh command means a changed value) behave the same as
   BSH-PowerBox (Phase B).
 - OpenPLC and the SCADA dashboard both show this node's live state, distinguishable
   side-by-side from BSH-PowerBox's (Phase C).

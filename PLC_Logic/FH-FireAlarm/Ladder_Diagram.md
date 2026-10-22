@@ -1,7 +1,6 @@
 # FH-FireAlarm -- Ladder diagram
 
-> DRAFT Oct 11, 2026. Not yet built or tested in OpenPLC Editor. Drawn from `FH_Systems/02_FH-FireAlarm.md`.
-> Addresses marked in `Register_Map.md` as "verify" must be confirmed on a real container before this is trusted.
+> Drawn Oct 11, 2026 from `FH_Systems/02_FH-FireAlarm.md`. **Built in the OpenPLC Editor by Luis and run on the container on Oct 21, 2026** (rung comments R1_ForwardAlarmCommand to R8_PublishReconnect); the diagram below matches the saved project. Test results are in `Build_Log.md`.
 
 Naming: `SCADA_*` = SCADA writes it into this PLC's own Modbus server. `PUB_*` = this program publishes it for SCADA to read. Un-prefixed names are the ESP32's own register names (the slave-device block starting at `%IX100.0` / `%QX100.0` / `%IW100` / `%QW100`).
 

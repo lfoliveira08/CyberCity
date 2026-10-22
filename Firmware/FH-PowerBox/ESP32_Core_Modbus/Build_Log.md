@@ -23,6 +23,7 @@ the BSH build order at Luis's request (Oct 6, 2026).
 ## Date log
 | Date | What happened |
 |---|---|
+| 2026-10-21 | **Authority rule changed in `FH_PowerBox_Node.ino`** (same change as BSH-PowerBox, made ahead of FH Phase C because OpenPLC rewrites the coils every ~100 ms and undid local button presses on BSH). Luis reported flashing it; NOT bench-tested on FH (no PLC on this node yet, nothing reported). Old sketch: `Archive/FH_PowerBox_Node_PhaseB_every-write-wins.ino`. |
 | 2026-10-07 | **Phase B bench-confirmed at 192.168.50.24.** Flashed; Serial showed `Connected. IP address: 192.168.50.24`. Outputs OFF at boot with both flags at `false`, so FH's relay boards are active-HIGH like BSH's (verified on this hardware, not assumed). Laptop coil writes drive the lights and fan and the status DIs follow; local buttons override immediately; a fresh coil write takes control back; 5 s WiFi-link watchdog forces both OFF with buttons still working; HEARTBEAT counts up and RECONNECT_COUNT reads 0 after boot and 1 after a WiFi drop. Tested from PowerShell with raw Modbus frames. Both PowerBoxes online together was later confirmed by Luis (2026-10-09). |
 | 2026-10-06 | Phase B firmware written as a mirror of BSH-PowerBox's confirmed sketch, static IP 192.168.50.24. NOT yet flashed. FH's standalone Phase A was never logged separately; relay polarity on the FH boards is unchecked. |
 

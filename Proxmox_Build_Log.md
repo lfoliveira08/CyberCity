@@ -51,7 +51,7 @@ Run on VM 100 (`OpenPLC-Docker`, 192.168.50.10) over SSH from the laptop. `sudo`
 
 ### Not done yet (next session)
 - Build the SCADA/HMI VM (VM 2) next. (Done later on Oct 14: VM 101, see the next section.)
-- Then configure each container in its web UI: add its ESP32 slave device, upload its `Program.st`, start the PLC, verify (start with BSH-FireAlarm, see `PLC_Logic/BSH-FireAlarm/Build_Log.md`).
+- Then configure each container in its web UI: add its ESP32 slave device, upload its `Program.st`, start the PLC, verify (start with BSH-FireAlarm, see `PLC_Logic/BSH-FireAlarm/Build_Log.md`). (Done on all 8 containers Oct 19-21, 2026; per-node results in `PLC_Logic/<System>/Build_Log.md`.)
 - Detach the install ISO from VM 100 (cleanup).
 
 ## Oct 14, 2026 (evening) -- pve DNS fix, Ubuntu 24.04 ISO, VM 101 `scada-hmi`

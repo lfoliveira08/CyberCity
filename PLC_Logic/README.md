@@ -2,7 +2,7 @@
 
 This folder is the one home for everything about the OpenPLC side of each system: the ladder diagram, the register-address translation, the program code, and the build and test notes. It sits beside `Firmware/` (the ESP32 side) and follows the same one-folder-per-system layout.
 
-**Status (Oct 14, 2026):** all 8 systems are drafted. Phase C started Oct 13: the `openplc:v3` image is built and all 8 containers are running with a blank program (BSH-FireAlarm since Oct 13, the other 7 since Oct 14). Nothing here has been compiled in OpenPLC Editor or run on a container yet. Treat every program as a reference draft: you may rewrite any of them yourself and replace the draft.
+**Status (Oct 21, 2026):** all 8 programs are built in the OpenPLC Editor by Luis, regenerated into `Program.st` from the saved Editor projects, and run on their containers (table below). Phase C started Oct 13; the OpenPLC layer is done and the SCADA layer (Ignition on VM 101) is not started. Luis confirmed on the night of Oct 21 that the compile logs, Settings pages (S7 and EtherNet/IP off) and Slave Devices listings are fine on all eight containers (reported, not pasted). The direct-write, WiFi-drop and unplug checks are open on every node; see the open questions below and each `Build_Log.md`.
 
 ## Layout
 
@@ -32,21 +32,23 @@ PLC_Logic/
 
 | System | ESP32 | OpenPLC container | Kind | Status |
 |---|---|---|---|---|
-| BSH-FireAlarm | 192.168.50.12 | 192.168.50.112 | Fire Alarm | Drafted; container running (Oct 13), program not loaded yet |
-| FH-FireAlarm | 192.168.50.22 | 192.168.50.122 | Fire Alarm | Drafted; container running (Oct 14), program not loaded yet |
-| BSH-Elevator | 192.168.50.11 | 192.168.50.111 | Elevator | Drafted; container running (Oct 14), program not loaded yet |
-| BSH-Door | 192.168.50.13 | 192.168.50.113 | Door/Gate | Drafted; container running (Oct 14), program not loaded yet |
-| FH-Door | 192.168.50.23 | 192.168.50.123 | Door/Gate | Drafted; container running (Oct 14), program not loaded yet |
-| BSH-PowerBox | 192.168.50.14 | 192.168.50.114 | Power Box | Drafted; container running (Oct 14), program not loaded yet |
-| FH-PowerBox | 192.168.50.24 | 192.168.50.124 | Power Box | Drafted; container running (Oct 14), program not loaded yet |
-| FH-HVAC | 192.168.50.21 | 192.168.50.121 | HVAC zone unit | Drafted; container running (Oct 14), program not loaded yet |
+| BSH-FireAlarm | 192.168.50.12 | 192.168.50.112 | Fire Alarm | Built in the Editor and running (Oct 19); slave ID 0 proven, three functional tests passed, Kali read test passed (heartbeat 101 -> 131, Oct 20) |
+| FH-FireAlarm | 192.168.50.22 | 192.168.50.122 | Fire Alarm | Built in the Editor and running (Oct 21); functional and Kali read tests passed; gas read 0, reported fine by Luis |
+| BSH-Elevator | 192.168.50.11 | 192.168.50.111 | Elevator | Built in the Editor and running (Oct 20); functional and Kali read tests passed; comms-loss design A (fail-off stays in the ESP32) |
+| BSH-Door | 192.168.50.13 | 192.168.50.113 | Door/Gate | Built in the Editor and running (Oct 20); slave ID 0 proven, Kali read test passed (heartbeat 599 -> 604), functional tests passed; a held open bit keeps the gate open and blocks the reader (accepted risk) |
+| FH-Door | 192.168.50.23 | 192.168.50.123 | Door/Gate | Built in the Editor and running (Oct 21); Kali read test passed (heartbeat 156 -> 161), functional tests reported as worked; plain level copy for open/close, same as BSH-Door |
+| BSH-PowerBox | 192.168.50.14 | 192.168.50.114 | Power Box | Built in the Editor and running (Oct 21); Kali read test passed (heartbeat 881 -> 887), lights and fan tests passed after the ESP32 firmware change (a coil write counts only when its value changes) |
+| FH-PowerBox | 192.168.50.24 | 192.168.50.124 | Power Box | Built in the Editor and running (Oct 21); Kali read test passed (heartbeat 536 -> 541), functional tests reported as worked; plain level copy, mirror of BSH-PowerBox; the last of the eight PLC programs |
+| FH-HVAC | 192.168.50.21 | 192.168.50.121 | HVAC zone unit | Built in the Editor and running (Oct 21); Kali read test passed (heartbeat 135 -> 140), functional tests reported as worked; plain level copy for the enable and a MOVE for the setpoint, comms-loss design A |
 
 ## Open questions to settle on the first real container
 
 1. ~~Where slave-device data appears (`%IX100.0`, `%QX100.0`, `%IW100`, `%QW100`).~~ SETTLED Oct 15: confirmed on BSH-FireAlarm's container -- the Slave Devices page states "attached to address 100 onward" and listed this device at exactly those addresses. Per-system ranges still verify on each system's own container.
 2. Which Modbus slave ID the ESP32 firmware answers to. Oct 15: **slave ID 0** entered on BSH-FireAlarm (form accepted it); confirm by live polling (HEARTBEAT ticking). If it fails, retry ID 1.
 3. ~~The exact Docker image to use for OpenPLC.~~ Settled Oct 13: built locally as `openplc:v3` from the OpenPLC_v3 repo (see `Setup/README.md`).
-4. FH-HVAC: the comms-loss direction for `HVAC_ENABLE`.
+4. ~~FH-HVAC: the comms-loss direction for `HVAC_ENABLE`.~~ SETTLED Oct 21: fail-off in the ESP32 (design A), no PLC rung; the residual risk is recorded in `FH-HVAC/Build_Log.md`.
+5. FH-Door: compile log, Settings values and test values were not shown on Oct 21 (compile log, Settings and listings later confirmed fine by Luis, not pasted; test values still not reported); direct-write, WiFi-drop and unplug checks are left for the attack-scenario session (see `FH-Door/Build_Log.md`).
+6. FH-PowerBox: test values were not reported on Oct 21 (compile log, Slave Devices listing and Settings, S7 and EtherNet/IP off, later confirmed fine by Luis, not pasted; Polling Period and Timeout reported the same as BSH-FireAlarm); the Oct 21 firmware rule on FH was reported as working, no serial lines given; direct-write, WiFi-drop and unplug checks are left for the attack-scenario session (see `FH-PowerBox/Build_Log.md`).
 
 ## References
 

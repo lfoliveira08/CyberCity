@@ -1,10 +1,17 @@
 (* FH-PowerBox -- OpenPLC Structured Text program
-   DRAFT Oct 11, 2026 -- NOT yet compiled in OpenPLC Editor and NOT yet run on a container.
-   Source of truth for registers: FH_Systems/04_FH-PowerBox.md (folder wins over any copy).
-   SCADA_* = bits/words SCADA writes into this PLC's own Modbus server (coil n = %QXn, holding n = %QWn).
-   PUB_*   = values this program publishes for SCADA to read from the same server.
-   Slave-device addresses (%IX100.x, %QX100.x, %IW100+, %QW100+) follow the OpenPLC v3 convention -- VERIFY on the Monitoring page. *)
-PROGRAM prog0
+   Generated Oct 21, 2026 from Luis's OpenPLC Editor build (project FH-PowerBox-ESP32/):
+   the variable block comes from pous/programs/main.ld and the logic from its 8 rungs
+   (R1-R8, wiring checked against the saved project). Wrapped here with
+   CONFIGURATION/RESOURCE so the v3 web UI (iec2c) can compile it -- the Editor's
+   own files have no CONFIGURATION block.
+   This is the deployable form of the ladder built in the Editor; it replaces the
+   Oct 11 hand-draft (same logic: plain level copies, option A, mirror of BSH-PowerBox).
+   Registers source of truth: FH_Systems/04_FH-PowerBox.md (folder wins over any copy).
+   SCADA_* = bits SCADA writes in this PLC's own Modbus server.
+   PUB_*   = values this program publishes for SCADA to read.
+   Slave-block addresses (%IX100.x, %QX100.x, %IW100+) follow the convention verified
+   on the earlier nodes; confirm them on this container's Slave Devices page. *)
+PROGRAM main
   VAR
     SCADA_LIGHTS_ON_CMD AT %QX0.0 : BOOL;
     SCADA_FAN_CMD AT %QX0.1 : BOOL;
@@ -23,24 +30,30 @@ PROGRAM prog0
     RECONNECT_COUNT AT %IW101 : UINT;
   END_VAR
 
-  (* Forward SCADA commands to the ESP32 *)
+  (* R1 ForwardLightsCommand -- copy the SCADA lights command to the ESP32 coil (level copy) *)
   LIGHTS_ON_CMD := SCADA_LIGHTS_ON_CMD;
+
+  (* R2 ForwardFanCommand -- copy the SCADA fan command to the ESP32 coil (level copy) *)
   FAN_CMD := SCADA_FAN_CMD;
 
-  (* Flags computed in the PLC *)
-  PUB_LIGHTS_MISMATCH := SCADA_LIGHTS_ON_CMD XOR LIGHTS_STATUS;
-  PUB_FAN_MISMATCH := SCADA_FAN_CMD XOR FAN_STATUS;
+  (* R3 ComputeLightsMismatch -- XOR: commanded state and actual state disagree *)
+  PUB_LIGHTS_MISMATCH := (SCADA_LIGHTS_ON_CMD AND NOT(LIGHTS_STATUS)) OR (NOT(SCADA_LIGHTS_ON_CMD) AND LIGHTS_STATUS);
 
-  (* Publish node status for SCADA *)
+  (* R4 ComputeFanMismatch -- XOR: commanded state and actual state disagree *)
+  PUB_FAN_MISMATCH := (SCADA_FAN_CMD AND NOT(FAN_STATUS)) OR (NOT(SCADA_FAN_CMD) AND FAN_STATUS);
+
+  (* R5-R6 publish the ESP32 discrete inputs for SCADA *)
   PUB_LIGHTS_STATUS := LIGHTS_STATUS;
   PUB_FAN_STATUS := FAN_STATUS;
-  PUB_HEARTBEAT := HEARTBEAT;
-  PUB_RECONNECT_COUNT := RECONNECT_COUNT;
+
+  (* R7-R8 publish the ESP32 counters for SCADA (MOVE copies the 16-bit value) *)
+  PUB_HEARTBEAT := MOVE(HEARTBEAT);
+  PUB_RECONNECT_COUNT := MOVE(RECONNECT_COUNT);
 END_PROGRAM
 
 CONFIGURATION Config0
   RESOURCE Res0 ON PLC
     TASK task0(INTERVAL := T#20ms, PRIORITY := 0);
-    PROGRAM instance0 WITH task0 : prog0;
+    PROGRAM instance0 WITH task0 : main;
   END_RESOURCE
 END_CONFIGURATION

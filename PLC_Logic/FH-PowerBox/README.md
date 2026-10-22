@@ -2,7 +2,7 @@
 
 OpenPLC instance `OpenPLC-FH-PowerBox` (container 192.168.50.124) polls this node's ESP32 at 192.168.50.24 and exposes it to SCADA.
 
-**Status (Oct 11, 2026):** drafted only. The ladder diagram, register map and Structured Text program exist; nothing has been compiled in OpenPLC Editor or run on a container. Phase C has not been declared started.
+**Status (Oct 21, 2026):** built in the OpenPLC Editor by Luis (8 rungs, task `T#20ms`), `Program.st` regenerated from the saved project and run on the container; slave ID 0 proven (Kali read, heartbeat 536 -> 541); functional tests reported as worked (no values). Compile log, Slave Devices listing and Settings values were not shown. Plain level copy, same as BSH-PowerBox. Details in `Build_Log.md`.
 
 | File | What it is |
 |---|---|

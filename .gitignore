@@ -1,2 +1,23 @@
 # OpenPLC Editor regenerable build output (per-system Editor projects)
 PLC_Logic/*/*-ESP32/build/
+
+# Vendor documentation kept locally, re-pull method is in each folder's README.md
+# (Inductive's Ignition manual and the ESP-IDF guide conversion)
+References/Ignition/
+References/ESP-IDF/
+
+# Conversion leftovers and archives
+*.zip
+
+# Credentials: never commit a local secrets file
+secrets.h
+.env
+
+# Arduino / editor / OS noise
+build/
+*.elf
+*.bin
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini

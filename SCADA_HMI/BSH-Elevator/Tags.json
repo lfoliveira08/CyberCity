@@ -1,0 +1,75 @@
+{
+  "name": "Elevator",
+  "tagType": "Folder",
+  "tags": [
+    {
+      "name": "CallFloor1",
+      "dataType": "Boolean",
+      "opcItemPath": "[BSH-Elevator]C0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "CallFloor2",
+      "dataType": "Boolean",
+      "opcItemPath": "[BSH-Elevator]C1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "CallFloor3",
+      "dataType": "Boolean",
+      "opcItemPath": "[BSH-Elevator]C2",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "ElevatorDisable",
+      "dataType": "Boolean",
+      "opcItemPath": "[BSH-Elevator]C3",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "ElevatorMoving",
+      "dataType": "Boolean",
+      "opcItemPath": "[BSH-Elevator]C4",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "ElevatorFault",
+      "dataType": "Boolean",
+      "opcItemPath": "[BSH-Elevator]C5",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "CurrentFloor",
+      "opcItemPath": "[BSH-Elevator]HR0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "Heartbeat",
+      "opcItemPath": "[BSH-Elevator]HR1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "ReconnectCount",
+      "opcItemPath": "[BSH-Elevator]HR2",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    }
+  ]
+}

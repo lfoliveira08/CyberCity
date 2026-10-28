@@ -96,3 +96,49 @@ Run on VM 100 (`OpenPLC-Docker`, 192.168.50.10) over SSH from the laptop. `sudo`
 - Change the weak password before SSH is relied on, since the lab router is shared.
 - Where Wireshark runs: a VM on `vmbr0` sees only its own traffic, not traffic between other hosts; see `Security_Capture/Capture_Setup.md`.
 - Backup of VMs 100-102 to `Big_Storage` (still open from `Next_Steps.md`).
+
+## Oct 22, 2026 -- Ignition on VM 101 `scada-hmi`
+
+### Done
+- **Snapshot first:** `before-ignition` taken on VM 101 (16:24, task OK). Proxmox warned that the thin volumes total 90 GiB, more than the `pve/data` pool. `local-lvm` Usage read at 17:17: 44.30% (32.58 of 73.55 GB), fine.
+- **Installer:** `ignition-8.3.10-linux-64-installer.run` (2.0 GB), downloaded in Firefox on the VM. Run with `sudo ./ignition-8.3.10-linux-64-installer.run --accept -- unattended=text`; installer options go after `--` (`--mode text` is rejected). It asked which user to install for; answered `scada-hmi`. Log at `/home/scada-hmi/.ignition/install/install.log`. The Gateway started by itself on port 8088.
+- **Commissioning wizard** (from the laptop at `http://192.168.50.30:8088`): edition Ignition (Standard 8.3.10), admin account `AdminLuis` (password not recorded here), ports 8088 / 8043 / 8060 (defaults), Quick Start declined. Gateway name `Ignition-SCADA-HMI`.
+- **License:** the Capstone license was activated from the Licensing page with the license key plus the activation token from the license document (the token is a secret; keep it out of the repo and the Claude project). Status ACTIVE, Platform expiry 2027-01-31, "will automatically renew" about every 72 hours (a rolling lease; VM 101 needs internet). One activation only.
+- **Modules:** 29 running, 24 licensed. Enterprise Administration and Voice Notification were on Trial and kept the "License Incomplete" bar up; both were disabled and the Gateway restarted, and the bar went away. Modbus Driver v2, Perspective, Vision, Historian Core, SQL Historian, Alarm Notification, SMS Notification, Reporting and SQL Bridge show Activated.
+- **Memory check:** `free -h` on VM 101: 7.8 GiB total, 3.1 GiB used, 4.7 GiB available, swap unused (Proxmox's 93% counts cache).
+- **Designer:** Designer Launcher installed on the laptop (for me only), Gateway added by URL, Designer opened, empty project `CyberCity` created.
+- **Snapshot after:** `ignition-licensed` taken by Luis (17:05, task OK).
+
+### Not done yet
+- First Modbus device (Connections > Devices > Modbus TCP, 192.168.50.112:502 for BSH-FireAlarm), tags, Perspective screens, cascade rules.
+- Unused drivers (Siemens, Omron, DNP3, BACnet, Allen-Bradley and others) still enabled; disable them later as hardening.
+- Ask Inductive whether the lease renewal needs internet and whether an offline option exists.
+- Export a project backup and a Gateway backup before the license ends 2027-01-31.
+
+## Oct 26, 2026 -- VM 100 `openplc-docker` paused with io-error (thin pool full)
+
+### What broke
+- VM 100 showed a yellow warning triangle in the tree, a black Console, and on the Summary tab Status `running (io-error)` with IPs `Guest Agent not running`. VMs 101 and 102 were normal.
+
+### Cause (from `dmesg -T` on pve)
+- `local-lvm` thin pool `pve/data` is 68.5 GiB and the volume group is fully allocated (`pvs`: `/dev/sdb3`, PFree 0). It was extended on Oct 13 (about 49 GiB to 68.5 GiB) and cannot grow again.
+- The disks on it are over-provisioned: vm-100-disk-0 (40 GiB), vm-101-disk-0 (25 GiB) and two 25 GiB snapshots of VM 101 (`before_ignition`, `ignition_licensed`), about 115 GiB of virtual size on a 68.5 GiB pool. Proxmox already warned about this on Oct 22.
+- A teammate logged into Proxmox, started a clone of a VM (reported by Luis; the source VM and the target storage were not checked, presumably a full clone of VM 100 to the default `local-lvm`) and then deleted the clone. VM 100's disk was about 77% used (about 30 GiB of data), more than the free space in the pool.
+- Kernel log: Oct 26 14:07:58 pool reached low water mark and went to out-of-data-space (queue IO); 14:08:58 out-of-data-space (error IO); 14:09:00 back to write mode (the clone had been deleted and the space freed). On the first failed write QEMU paused VM 100 (`io-error`); it stays paused until resumed, even after space is free.
+- Not the cause: a physical disk fault. No SATA or I/O error lines in `dmesg`. (Unrelated and minor: `tg3 nic0 transmit timed out, resetting` on Oct 20-22.)
+
+### Checks run (after recovery)
+- `pvesm status`: Big_Storage 15.39% (71 of 458 GiB used), local 11.24%, local-lvm 68.47%.
+- `lvs`: pool `data` Data% 68.47, Meta% 3.32; vm-100-disk-0 76.72%; vm-101-disk-0 56.48%; no leftover clone volume.
+
+### Fix
+- `qm resume 100`; `qm status 100 --verbose` then showed `qmpstatus: running`.
+- `docker ps` in VM 100: all 8 OpenPLC containers `Up 11 days` (HVAC, FH-PowerBox, BSH-PowerBox, FH-Door, BSH-Door, BSH-Elevator, FH-FireAlarm, BSH-FireAlarm). The VM was not rebooted and no container restarted.
+
+### Not verified / not done yet
+- Ignition on VM 101 has not been checked for healthy Modbus connections after the pause.
+- VM 100's disk is still on `local-lvm`. Planned: `qm config 100 | grep -E "scsi|virtio|sata|ide"` to get the disk name, then `qm move-disk 100 scsi0 Big_Storage --format qcow2 --delete 1`.
+- Decide whether to keep the two VM 101 snapshots (they grow as VM 101 changes).
+- Enable Discard on the VM disks and run `fstrim -av` in the guests.
+- Rule for the team: when cloning, set Target Storage to `Big_Storage`, never `local-lvm`. To keep a copy, use `vzdump <vmid> --storage Big_Storage --mode snapshot`.
+- Watch `Data%` of `data` in `lvs`; keep it under about 80%.

@@ -20,7 +20,7 @@ them in this local folder only. Don't upload them to the Claude project, a
 shared Drive, or anywhere public. Everything else is fine to share (check
 each guide's license page to be sure).
 
-Last updated: Oct 11, 2026
+Last updated: Oct 27, 2026
 
 ---
 
@@ -85,6 +85,24 @@ then edit the note.
 | [frangoteam/FUXA](https://github.com/frangoteam/FUXA) | SCADA/HMI | Web-based SCADA/HMI editor, MIT | **Under evaluation** (fallback #2) | `SCADA_frangoteam_FUXA.md` |
 | [Rapid SCADA](https://rapidscada.org/) | SCADA/HMI | Open-source SCADA platform, free Community edition | **Under evaluation** (fallback #1 if Ignition is not licensed) | `SCADA_RapidScada.md` |
 | [ScadaBR/ScadaBR](https://github.com/ScadaBR/ScadaBR) | SCADA/HMI | Open-source Java SCADA, last release 2021 | Not chosen (weak candidate) | `SCADA_ScadaBR.md` |
+
+## ESP-IDF/ (the ESP-IDF Programming Guide v5.3.2, local copy) -- GROUND TRUTH for ESP32 hardware
+
+190 Markdown files converted Oct 27, 2026 from `Guides/Espressif_ESP-IDF_Guide_v5.3.2.pdf` (ESP32 target), split on the guide's own chapter/section structure, one file per peripheral driver. Each file records its source PDF page range. **Look up any ESP32 hardware fact here and cite the file path.** Read `ESP-IDF/README.md` first (rule, topic map, gaps).
+
+Two standing caveats: it documents **ESP-IDF, not the Arduino core** our sketches use -- the hardware facts apply, the code examples do not paste in; and it is **text only**, so the PDF in `Guides/` stays the source for diagrams and pinout figures. The *ESP32 Technical Reference Manual* and the *ESP32-WROOM-32 datasheet* are separate documents and are still missing (see the Datasheets priority list above).
+
+| Folder | What it is | Status |
+|---|---|---|
+| `ESP-IDF/` | ESP-IDF Programming Guide v5.3.2, ESP32 target, as Markdown (190 files, PDF pages 14-3065; alphabetical index and TOC skipped) | **Adopted** (ground truth for ESP32 hardware behavior; the PDF in `Guides/` remains the source and the place to read figures) |
+
+## Ignition/ (the Ignition 8.3 User Manual, local copy) -- GROUND TRUTH
+
+All 1,571 pages of the Ignition 8.3 User Manual as Markdown, pulled Oct 27, 2026 from the official site. **Use it for every Ignition question or setup step: look the page up here first, cite the file path, and say "not in the manual" when it is not covered. Never answer Ignition how-to from memory.** Do not edit it. Read `Ignition/README.md` first (the rule, a topic-to-folder map, known gaps).
+
+| Folder | What it is | Status |
+|---|---|---|
+| `Ignition/` | Ignition 8.3 User Manual, one `.md` per page, same structure as docs.inductiveautomation.com/docs/8.3 | **Adopted** (ground truth for all SCADA/HMI work, Phase C) |
 
 ## Papers/ (annotated bibliography)
 
@@ -162,6 +180,7 @@ Use this section when you start work on a system.
 - The OpenPLC programs themselves: `PLC_Logic/` (Templates/Address_Mapping.md)
 
 **SCADA/HMI** (Phase C; Ignition chosen Oct 12, 2026, license confirmed Oct 19, 2026)
+- **Ignition how-to: always use `Ignition/` (local 8.3 manual) and cite the page. See `Ignition/README.md`.**
 - Chosen: Ignition Maker Edition. Fallbacks: Rapid SCADA, then FUXA. Not chosen: ScadaBR. Full options table: `Piranga_Workflow_v2.md` Section 10
 - Dunn: Programmable Logic Controllers, Process Control
 

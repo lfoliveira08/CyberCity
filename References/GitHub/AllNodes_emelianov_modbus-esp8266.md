@@ -1,7 +1,7 @@
 # emelianov / modbus-esp8266 (`ModbusIP_ESP8266`)
 
 - **Link:** https://github.com/emelianov/modbus-esp8266
-- **System:** all 10 nodes (Phase B backhaul)
+- **System:** all 8 nodes (Phase B backhaul)
 - **Status:** **Adopted** — this is the library every node's Modbus TCP slave layer is built on
 - **License:** not yet recorded — check it before copying any of its code into ours (using it as an installed library is a separate question from copying source)
 - **Version installed:** not yet recorded. Record it here the first time Phase B is brought up, per `References/INDEX.md`'s rule
@@ -16,7 +16,7 @@ master.
 
 ## What we use it for
 
-One uniform pattern across all 10 nodes — the project deliberately has no
+One uniform pattern across all 8 nodes — the project deliberately has no
 protocol diversity at the backhaul (see `Piranga_Workflow_v2.md` Section 5), so
 this single library covers every node:
 

@@ -14,7 +14,7 @@ and a dust sensor, publishing over MQTT.
 ## Why it was rejected
 
 It depends on a **public cloud MQTT broker.** Same reasoning that removed the
-Blynk transport from the `bugsNburgers` reference: this project's ten nodes all
+Blynk transport from the `bugsNburgers` reference: this project's eight nodes all
 speak direct Modbus TCP to their own dedicated OpenPLC instance with no bridge
 anywhere, and a security testbed built to demonstrate resilience should not have
 an outside dependency in the middle of it.

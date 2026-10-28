@@ -1,0 +1,13 @@
+{
+  "name": "FireAlarm",
+  "tagType": "Folder",
+  "tags": [
+    {
+      "name": "TestHeartbeat",
+      "opcItemPath": "[BSH-FireAlarm]HR1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    }
+  ]
+}

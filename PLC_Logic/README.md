@@ -1,5 +1,8 @@
 # PLC_Logic -- OpenPLC programs for all 8 nodes
 
+
+**Status and open items for the whole project live in `../STATUS.md`.** Do not repeat status here; update that file instead.
+
 This folder is the one home for everything about the OpenPLC side of each system: the ladder diagram, the register-address translation, the program code, and the build and test notes. It sits beside `Firmware/` (the ESP32 side) and follows the same one-folder-per-system layout.
 
 **Status (Oct 21, 2026):** all 8 programs are built in the OpenPLC Editor by Luis, regenerated into `Program.st` from the saved Editor projects, and run on their containers (table below). Phase C started Oct 13; the OpenPLC layer is done and the SCADA layer (Ignition on VM 101) is not started. Luis confirmed on the night of Oct 21 that the compile logs, Settings pages (S7 and EtherNet/IP off) and Slave Devices listings are fine on all eight containers (reported, not pasted). The direct-write, WiFi-drop and unplug checks are open on every node; see the open questions below and each `Build_Log.md`.

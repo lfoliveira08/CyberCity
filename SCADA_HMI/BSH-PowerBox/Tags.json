@@ -1,0 +1,68 @@
+{
+  "name": "PowerBox",
+  "tagType": "Folder",
+  "tags": [
+    {
+      "name": "LightsOnCmd",
+      "dataType": "Boolean",
+      "opcItemPath": "[BSH-PowerBox]C0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "FanCmd",
+      "dataType": "Boolean",
+      "opcItemPath": "[BSH-PowerBox]C1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "LightsMismatch",
+      "dataType": "Boolean",
+      "opcItemPath": "[BSH-PowerBox]C2",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "FanMismatch",
+      "dataType": "Boolean",
+      "opcItemPath": "[BSH-PowerBox]C3",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "LightsStatus",
+      "dataType": "Boolean",
+      "opcItemPath": "[BSH-PowerBox]C4",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "FanStatus",
+      "dataType": "Boolean",
+      "opcItemPath": "[BSH-PowerBox]C5",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "Heartbeat",
+      "opcItemPath": "[BSH-PowerBox]HR0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "name": "ReconnectCount",
+      "opcItemPath": "[BSH-PowerBox]HR1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    }
+  ]
+}

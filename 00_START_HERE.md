@@ -1,4 +1,7 @@
-# START HERE — what this project actually is, as of Oct 5, 2026
+# START HERE — what this project actually is
+
+
+**Status and open items for the whole project live in `STATUS.md`.** Do not repeat status here; update that file instead.
 
 > **Read `Next_Steps.md` right after this file.** It is the current handoff: what was decided, what is waiting, and what to do next (updated Oct 12, 2026). The SCADA/HMI software is Ignition.
 
@@ -91,7 +94,7 @@ Backup Power / ATS Monitor system (dropped without a replacement on Oct 5,
 
 Phase B (WiFi + Modbus) is done on every node (bench-confirmed Oct 6-9, 2026). The phases are
 A0 Wokwi simulation → A bench hardware → B WiFi + Modbus → C OpenPLC + SCADA.
-**Phase B is done on all eight nodes. Phase C (OpenPLC + SCADA) started Oct 13, 2026** with the infrastructure: the OpenPLC Docker VM (`openplc-docker`, 192.168.50.10, Ubuntu 26.04 desktop) is built and running Docker (verified Oct 13, 2026). Later that evening the `openplc:v3` image was built, the macvlan network `cybercity_lan` was created, and the first container (`OpenPLC-BSH-FireAlarm`, 192.168.50.112) started. On Oct 14 the other 7 containers were started with `run_containers.sh`; all 8 are running and their web UIs answer from the laptop. By Oct 21, 2026 all eight PLC programs were built in the OpenPLC Editor and run on their containers, each with its ESP32 slave device added (per-node status and open items in `PLC_Logic/README.md`), so the OpenPLC layer of Phase C is done and the SCADA layer is not. The SCADA/HMI VM (VM 101 `scada-hmi`, Ubuntu 24.04 LTS desktop) was built on Oct 14 and has static IP 192.168.50.30 (set Oct 15); it has no SCADA software yet (Ignition is licensed but not installed), and no Ignition tags exist. See `Next_Steps.md` and `Proxmox_Build_Log.md`.
+**Phase B is done on all eight nodes. Phase C (OpenPLC + SCADA) started Oct 13, 2026** with the infrastructure: the OpenPLC Docker VM (`openplc-docker`, 192.168.50.10, Ubuntu 26.04 desktop) is built and running Docker (verified Oct 13, 2026). Later that evening the `openplc:v3` image was built, the macvlan network `cybercity_lan` was created, and the first container (`OpenPLC-BSH-FireAlarm`, 192.168.50.112) started. On Oct 14 the other 7 containers were started with `run_containers.sh`; all 8 are running and their web UIs answer from the laptop. By Oct 21, 2026 all eight PLC programs were built in the OpenPLC Editor and run on their containers, each with its ESP32 slave device added (per-node status and open items in `PLC_Logic/README.md`), so the OpenPLC layer of Phase C is done and the SCADA layer is not. The SCADA/HMI VM (VM 101 `scada-hmi`, Ubuntu 24.04 LTS desktop) was built on Oct 14 and has static IP 192.168.50.30 (set Oct 15); Ignition 8.3.10 was installed on it and the Capstone license activated on Oct 22, 2026 (expires 2027-01-31; it renews about every 72 hours, so the VM needs internet), and the empty project `CyberCity` exists, but no Modbus device or Ignition tags exist yet. See `Next_Steps.md` and `Proxmox_Build_Log.md`.
 
 | System | State |
 |---|---|
@@ -108,6 +111,8 @@ Build order, for both buildings: Fire Alarm → Elevator (BSH) / HVAC (FH) → D
 → Power Box. Only one system is "active" at a time.
 
 ## 6. What lives where
+
+**Ignition ground truth (added Oct 27, 2026):** the full Ignition 8.3 User Manual is saved locally at `References/Ignition/`. For ANY Ignition question or setup step, read the relevant page there first (start with `References/Ignition/README.md`), cite the page, and say "not in the manual" if it is not covered. Do not answer from memory. `SCADA_HMI/CLAUDE.md` repeats the rule.
 
 **`PLC_Logic/` (added Oct 11, 2026):** the OpenPLC side of every system, one subfolder each: `README.md`, `Register_Map.md`, `Ladder_Diagram.md`, `Program.st`, `Build_Log.md`. Shared pieces are in `PLC_Logic/Templates/` and `PLC_Logic/Setup/`. All 8 are drafts, untested. It sits beside `Firmware/` and follows the same one-folder-per-system layout.
 

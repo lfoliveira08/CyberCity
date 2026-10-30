@@ -11,7 +11,7 @@ Eight devices, same IPs, shared Device UDT, tag paths `<Bldg>/<System>/<Name>`, 
 | Item | Change |
 |---|---|
 | `Tag_Map.md` + `Tags.json` (BSH-PowerBox) | `FanCmd`, `FanMismatch`, `FanStatus` out. In: `ElevRailCmd`, `FireRailCmd`, `DoorRailCmd` (write) and `ElevRailStatus`, `FireRailStatus`, `DoorRailStatus` (read). Addresses per `Register_Map_DRAFT.md` §3. Both files change in the same sitting. |
-| PowerBox screen | lights control plus three rail controls, each showing powered or cut |
+| PowerBox screen | three rail controls, each showing powered or cut (lights dropped Oct 28, 2026) |
 | Campus_Map | each node gets a power state beside its alive/dead state |
 
 ## Derived node state (idea)

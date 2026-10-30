@@ -1,56 +1,49 @@
-# Relay Modules -- Lights + Fan
+# Relay Modules -- BSH-PowerBox Power Rails
 
-**Used in:** BSH-PowerBox node (lights + fan)
+> **Redesigned Oct 28, 2026.** This sheet used to describe the lights + fan relays; the old version, and the old `Fan_Relay/`/`Lights_Relay/` build folders, are archived (`Archive/README.md`, Oct 28, 2026 rows).
+
+**Used in:** BSH-PowerBox node (3 power-rail channels — Elevator, FireAlarm, Door)
 
 ## Function
-Switches the building's illumination lighting and a small fan on/off under hub (or attacker) command, or a local override button — models a smart building's power/environmental control layer. Replaced DALI dimming for the lighting channel (Sep 28, 2026) — see `BSH_Systems/04_BSH-PowerBox.md` Notes.
 
-**Two separate 1-channel modules (Sep 30, 2026):** lights and fan were
-originally planned to share one 2-channel relay module. Switched to two
-separate 1-channel relay modules instead -- one board per channel -- see
-the Sep 30, 2026 entry in `Piranga_Workflow_v2.md` Section 14. No
-functional difference to the ESP32, but each board now has its own
-`VCC`/`GND` wired to the ESP32, and the two relays are not guaranteed to
-share a polarity just because they used to share a board.
+Each relay switches power to one of the other three BSH systems, under hub (or attacker) command — models a power-distribution layer where cutting one rail takes a whole downstream system offline, a heavier form of manipulation than flipping a light. Replaces the old lights + fan relays (dropped Oct 28, 2026) — see `BSH_Systems/04_BSH-PowerBox.md` Notes.
 
 ## Key Specs
-- Two separate 1-channel 5V relay modules, one per channel (lights, fan)
-- Typically active-LOW trigger (check **each** specific module -- don't
-  assume the lights relay matches the fan relay's result)
-- **Confirmed Oct 5, 2026 (Phase A bench test, via the combined
-  standalone sketch):** both of this node's boards are active-HIGH --
-  `RELAY_LIGHTS_ACTIVE_LOW = false` and `RELAY_FAN_ACTIVE_LOW = false` in
-  `BSH_PowerBox_Node.ino`. Specific to BSH-PowerBox's own two boards --
-  FH-PowerBox's are untested, see `FH_Sensors/09_Relay_Module.md`.
-- ~70mA coil current per active channel
+
+- Three separate 1-channel 5V relay modules, one per rail (Elevator, FireAlarm, Door). Songle SRD-05VDC-SL-C type reported on the bench.
+- Typically active-LOW trigger (check **each** specific module — don't assume one rail's result matches another's)
+- **Not individually bench-confirmed per rail on this build.** One relay board was tested with a multimeter (continuity across COM/NO) during the prototype phase and found consistent with the chosen contact type; the other two were not separately verified. See `Logs/2026-10-28.md`.
+- ~70mA coil current per active channel (about 210 mA for all three energised at once)
 
 ## Wiring / Pins (BSH-PowerBox ESP32)
+
 | Channel | GPIO |
 |---|---|
-| Lights | GPIO 13 |
-| Fan | GPIO 15 |
+| Elevator rail | GPIO 25 |
+| FireAlarm rail | GPIO 26 |
+| Door rail | GPIO 27 |
 
-Each relay module has its own `VCC`/`GND` pair wired to the ESP32 (they
-are no longer a shared pair from one board).
+Each relay module has its own `VCC`/`GND` pair wired to the ESP32's 5V/GND rail (assumed shared across all three; not confirmed as electrically separate pairs — see `Firmware/BSH-PowerBox/Schematic/Connections.md`).
 
-**3 lights, 1 channel (Sep 30, 2026):** the lights channel's real-world load is 3 LEDs, one per floor of BSH, wired in parallel on the relay's single switched output — each LED gets its own series resistor. They're controlled as one group, not independently; this is a wiring/hardware detail only, the GPIO, Modbus coil, and firmware logic are all unchanged. See `Firmware/BSH-PowerBox/Lights_Relay/Wiring.md`.
+**Contact type — NO (normally open), decided Oct 27, 2026.** Unlike a relay used for simple on/off switching where either contact works, here the choice matters: with NO, the relay must be actively energised for the rail to be powered, so a dead or unflashed PowerBox leaves the downstream node **without** power ("fail-dark"). COM is fed from the PowerBox ESP32's own VIN pin; NO feeds the downstream node's own 5V/VIN pin directly (not its USB cable, which must be unplugged while powered this way — see `BSH_Systems/04_BSH-PowerBox.md` Notes, "5V-pin method").
 
 ## Modbus Register Tie-In
-- Coil `LIGHTS_ON_CMD` / Coil `FAN_CMD` — master-written commands
-- Discrete Input `LIGHTS_STATUS` / Discrete Input `FAN_STATUS` — the relay's actual physical state, reported back honestly regardless of whether the hub or a local override button (see `BSH_Sensors/02_Push_Button.md`) most recently changed it
 
-**Feedback added Sep 29, 2026:** this used to be open-loop with no feedback Discrete Inputs wired — the note used to read "easy to add later... if you want to detect a relay that silently fails to respond." Adding the local override buttons was the occasion to close that gap: the firmware now needs to report actual state anyway (so SCADA can see when a button press disagrees with the last command it sent), which happens to also cover the original silent-failure case.
+- Coil `ELEV_RAIL_CMD` / `FIRE_RAIL_CMD` / `DOOR_RAIL_CMD` — master-written commands, 1 = powered
+- Discrete Input `ELEV_RAIL_STATUS` / `FIRE_RAIL_STATUS` / `DOOR_RAIL_STATUS` — the rail's commanded state as the ESP32 drives it. **Not a measured voltage** — there is no local button or voltage-sense input on this design, so these can never disagree with the last command the way the old lights/fan status bits could.
 
 ## Notes
-Keep whatever the relay switches (lights, fan motor) on its own power rail, physically separated from the ESP32's own 5V/3.3V supply — same separation principle used for the IRONCLAD track-power relay.
 
-Firmware uses two independent flags, `RELAY_LIGHTS_ACTIVE_LOW`/`RELAY_FAN_ACTIVE_LOW`, matching the two separate physical boards. **Both bench-confirmed `false` (active-HIGH) as of Oct 5, 2026**, via the Phase A Step 4 combined standalone sketch -- both relays and both local override buttons verified working end-to-end. Phase B (Modbus-level verification) is still pending.
+Keep whatever a relay switches on its own power rail, physically separated from the ESP32's own supply — the old project rule, carried forward, but **not followed on the current build**: COM is fed from this board's own VIN pin, so all three downstream nodes draw through this ESP32's own 5V path and whatever source is behind it. Current through that path has not been measured.
+
+Firmware uses one flag, `RELAY_ACTIVE_LOW`, applied to all three rails (the old design's two independent per-channel flags, `RELAY_LIGHTS_ACTIVE_LOW`/`RELAY_FAN_ACTIVE_LOW`, are gone with the old channels). Test each board's own polarity before trusting the flag's value — don't assume one relay's result for another, same rule as always.
 
 ## In Wokwi (Phase A0)
-**Wokwi part:** Native — `wokwi-relay-module` (one instance per channel)
 
-**How to use it:** VCC, GND, IN→GPIO 13 for lights and IN→GPIO 15 for fan. Put a `wokwi-led` on the NO/COM side of each, so you can see when the contact closes.
+**Wokwi part:** Native — `wokwi-relay-module` (one instance per rail)
 
-**What the simulation hides:** Real modules vary in polarity, and Wokwi's `wokwi-relay-module` turned out to energize on HIGH — the opposite of the common active-LOW assumption this doc's Key Specs line above still reflects for real hardware. Phase A0 testing on this node found it the hard way (see `Firmware/BSH-PowerBox/Wokwi/README.md`'s "Relay polarity" section): don't assume the simulation's polarity matches your real module, in either direction — check it fresh on the bench.
+**How to use it:** VCC, GND, IN→GPIO 25/26/27 for the three rails. A `wokwi-led` on each relay's NO/COM side stands in for "that node has power."
 
-See `Firmware/WORKFLOW.md` Section 7 for the Phase A0 rule. The system's ready-made simulation lives in `Firmware/<System>/Wokwi/`.
+**What the simulation hides:** real current draw, the DevKit's VIN-path limit, and whether the relay pins glitch at ESP32 reset. Wokwi's `wokwi-relay-module` energises on HIGH — check each real module fresh on the bench, don't assume either direction.
+
+See `Firmware/WORKFLOW.md` Section 7 for the Phase A0 rule. The system's simulation lives in `Firmware/BSH-PowerBox/Wokwi/`.

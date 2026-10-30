@@ -1,0 +1,70 @@
+{
+  "name": "Door",
+  "tagType": "Folder",
+  "tags": [
+    {
+      "dataType": "Boolean",
+      "name": "DoorCloseCmd",
+      "opcItemPath": "[BSH-Door]C1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "IrDetected",
+      "opcItemPath": "[BSH-Door]C3",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Int2",
+      "name": "ReconnectCount",
+      "opcItemPath": "[BSH-Door]HR1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "AccessGranted",
+      "opcItemPath": "[BSH-Door]C5",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Int2",
+      "name": "Heartbeat",
+      "opcItemPath": "[BSH-Door]HR0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "RemoteOpenNoCard",
+      "opcItemPath": "[BSH-Door]C2",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "DoorOpenCmd",
+      "opcItemPath": "[BSH-Door]C0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "DoorPosition",
+      "opcItemPath": "[BSH-Door]C4",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # BSH-PowerBox -- System Report
 
+> **Historical: describes the old lights-and-fan design, retired Oct 28, 2026.** The node now switches power to the other three BSH systems — see `BSH_Systems/04_BSH-PowerBox.md` and `Firmware/BSH_PowerBox_Bringup_Checklist.md` for the current design. Kept as the Phase A/B record for that earlier build.
+
 **Status: Phase A complete** (2026-10-05) -- both relay channels and both local
 override buttons bench-confirmed together in the standalone integration sketch.
 **Phase B (WiFi + Modbus TCP) bench-confirmed 2026-10-06** at 192.168.50.14: the

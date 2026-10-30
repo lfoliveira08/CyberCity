@@ -1,50 +1,62 @@
 # FH-PowerBox Node
 
-**IP Address:** 192.168.50.24
-**Field layer:** Plain relay (lights + fan) + local override push buttons, 2-channel relay module
+> **Redesigned Oct 28, 2026, mirroring `BSH_Systems/04_BSH-PowerBox.md`.** This node no longer drives lights and a fan — it switches power to the other three FH systems (FH-HVAC, FH-FireAlarm, FH-Door). The old lights-and-fan design is archived: see `Archive/README.md`. Not yet bench-confirmed on FH's own hardware; mirrors BSH-PowerBox's bench results and decisions.
+
+**IP Address:** 192.168.50.24 (unchanged)
+**Field layer:** 3 relay channels (NO contact), one per downstream system, no local override buttons
 **Backhaul protocol:** Modbus TCP (direct — no bridge needed)
 **Dedicated PLC:** `OpenPLC-FH-PowerBox` — its own Docker container at 192.168.50.124 (macvlan, running in the OpenPLC Docker VM 192.168.50.10 on the Proxmox server), Web UI on port 8080, Modbus server on port 502 for the SCADA layer. It polls this ESP32 directly at 192.168.50.24:502
 **PLC program:** `PLC_Logic/FH-PowerBox/` (ladder diagram, register map, Structured Text program, build log)
 
-Mirrors `BSH-PowerBox` exactly — same components, same GPIO map, same protocol choices.
+Mirrors `BSH-PowerBox` exactly — same decisions, same GPIO map, same register layout. **FH has no Elevator**, so rail 1 is **FH-HVAC** instead of Elevator (the only naming difference from the BSH pattern).
 
-## Modbus Register Map
-| Type | Address | Name | Meaning |
-|---|---|---|---|
-| Coil | Coil0 | LIGHTS_ON_CMD | Lights on/off (master-written command) |
-| Coil | Coil1 | FAN_CMD | Fan on/off (master-written command) |
-| Discrete Input | DI0 | LIGHTS_STATUS | Lights' actual physical state (honest feedback — may disagree with the last command if a local button moved it since) |
-| Discrete Input | DI1 | FAN_STATUS | Fan's actual physical state (same idea) |
-| Input Register | IR0 | HEARTBEAT | Counts up once per second (wraps at 65535). Frozen = node lost (added Oct 6, 2026) |
-| Input Register | IR1 | RECONNECT_COUNT | WiFi rejoins since boot; 0 after a reboot (added Oct 6, 2026) |
+## Role
 
-## Notes
-**Connection monitoring (Oct 6, 2026):** every node exposes `HEARTBEAT` (counts up once a second, wraps at 65535) and `RECONNECT_COUNT` (WiFi rejoins since boot, 0 after a reboot) so SCADA can tell when this ESP32 drops off WiFi -- OpenPLC keeps answering with stale values, so only a counter the ESP32 itself increments proves it is alive. See `Piranga_Workflow_v2.md` Section 14, Oct 6, 2026. **OpenPLC Input Register count for this node: 2.**
+Switches power to the other three FH systems — FH-HVAC, FH-FireAlarm and FH-Door — each its own relay channel, under hub (SCADA/PLC) command. No local manual control; a Serial command is available for bench testing only.
 
-**Local override buttons (Sep 29, 2026):** mirrors the BSH-PowerBox change — added a real physical push-button switch per channel alongside the existing remote Modbus command. See `BSH_Systems/04_BSH-PowerBox.md` Notes and the Sep 29, 2026 entry in `Piranga_Workflow_v2.md` Section 14 for the full authority-rule rationale. Also closes the previous open-loop gap — `LIGHTS_STATUS`/`FAN_STATUS` (DI0/DI1) now report actual physical state honestly.
+## Components used
 
-**Authority rule changed (Oct 21, 2026, Phase C):** the same change as BSH-PowerBox (a coil write counts as a hub command only when its value differs from the last hub value; forgotten after a WiFi rejoin), made in `FH_PowerBox_Node.ino` ahead of FH Phase C because OpenPLC rewrites the coils every poll. Luis reported flashing it; it is NOT bench-tested on FH. The old sketch is `Archive/FH_PowerBox_Node_PhaseB_every-write-wins.ino`. See `BSH_Systems/04_BSH-PowerBox.md` for the full reason.
+- 3 × 1-channel 5V relay module (same type as BSH-PowerBox) — see `FH_Sensors/09_Relay_Module.md`
+- No lights, no fan, no local override buttons (dropped Oct 28, 2026, mirroring BSH)
 
-**Design change (Sep 28, 2026):** mirrors the BSH-PowerBox change — DALI dropped in favor of a plain on/off relay for lights, and the lights relay's GPIO corrected from 12 (a strapping pin) to 13. **Update (Sep 29, 2026):** that GPIO move turned out not to be what actually caused the inverted-lights symptom seen in BSH-PowerBox's Phase A0 test — the real cause was Wokwi's simulated relay module energizing on HIGH rather than LOW, on both channels. The GPIO 12→13 move itself is still worth keeping (a real hazard for any pulled-up peripheral), just not the explanation for that particular bug. See `BSH_Systems/04_BSH-PowerBox.md` Notes and the Sep 28/29, 2026 entries in `Piranga_Workflow_v2.md` Section 14.
+## GPIO pin map
 
-## GPIO Pin Map
 | Pin | Function |
 |---|---|
-| GPIO 13 | Lights relay |
-| GPIO 15 | Fan relay |
-| GPIO 4 | Lights local override button |
-| GPIO 16 | Fan local override button |
+| GPIO 25 | FH-HVAC rail relay IN |
+| GPIO 26 | FH-FireAlarm rail relay IN |
+| GPIO 27 | FH-Door rail relay IN |
+
+Same pins as BSH-PowerBox. 25, 26 and 27 are ordinary ESP32 pins — not strapping, SPI-flash or input-only (`References/ESP-IDF/02-api-reference/peripherals-api/gpio-rtc-gpio.md`, lines 56-101).
+
+## Modbus register map
+
+| Type | Address | Name | Meaning |
+|---|---|---|---|
+| Coil | Coil0 | HVAC_RAIL_CMD | FH-HVAC rail on/off (master-written command); 1 = powered |
+| Coil | Coil1 | FIRE_RAIL_CMD | FH-FireAlarm rail on/off (master-written command) |
+| Coil | Coil2 | DOOR_RAIL_CMD | FH-Door rail on/off (master-written command) |
+| Discrete Input | DI0 | HVAC_RAIL_STATUS | FH-HVAC rail's commanded state as the ESP32 drives it — **not** a measured voltage |
+| Discrete Input | DI1 | FIRE_RAIL_STATUS | same, FH-FireAlarm |
+| Discrete Input | DI2 | DOOR_RAIL_STATUS | same, FH-Door |
+| Input Register | IR0 | HEARTBEAT | Counts up once per second (wraps at 65535). Frozen = node lost |
+| Input Register | IR1 | RECONNECT_COUNT | WiFi rejoins since boot; 0 after a reboot |
+
+No mismatch bits, same reasoning as BSH-PowerBox. **OpenPLC Input Register count for this node: 2 (unchanged); Coil and Discrete Input counts: 3 each (were 2).**
+
+## Notes
+
+All of BSH-PowerBox's design decisions carry over unchanged — see `BSH_Systems/04_BSH-PowerBox.md` Notes for the full reasoning on each:
+
+- **Contact type: NO (normally open), fail-dark.** FH-PowerBox being off/unflashed/rebooting leaves FH-HVAC, FH-FireAlarm and FH-Door **without** power.
+- **Boot and comms-loss (option A):** rails start OFF after power-up, stay off until the hub commands them on; forced off after 5 s without the WiFi link.
+- **Power delivery — 5V-pin method:** each relay's NO feeds the downstream node's own 5V/VIN pin directly, node USB unplugged while powered this way. **Not yet wired or measured on FH's own hardware** — see `Firmware/FH-PowerBox/Schematic/Connections.md` once it exists.
+- **FH-HVAC and FH-Door's own supplies:** whether FH-HVAC or the FH-Door servo have a separate supply the way BSH-Elevator's motor and BSH-Door's servo do is **not recorded** — check before assuming this node's relay cuts everything on that system.
+
+**History — the old lights-and-fan design:** mirrored BSH-PowerBox's build order (DALI dropped Sep 28, 2026; two 1-channel modules Sep 30, 2026; changed-value hub-write rule Oct 21, 2026). That design is archived — see `Archive/README.md`.
 
 ## Wokwi Simulation (Phase A0)
-Simulate this system in Wokwi before the Phase A bench build (rule: `Firmware/WORKFLOW.md` Section 7). Same GPIO map as the table above.
 
-| Real part | Wokwi part | Type |
-|---|---|---|
-| Lights relay (GPIO 13) | `wokwi-relay-module` + `wokwi-led` as the "light" | Native |
-| Fan relay (GPIO 15) | `wokwi-relay-module` + `wokwi-led` as the "fan" | Native |
-| Lights override button (GPIO 4) | `wokwi-pushbutton` | Native |
-| Fan override button (GPIO 16) | `wokwi-pushbutton` | Native |
+Simulate this system in Wokwi before any real wiring (rule: `Firmware/WORKFLOW.md` Section 7). Same GPIO map as the table above — the simulation is copied from `Firmware/BSH-PowerBox/Wokwi/` into `Firmware/FH-PowerBox/Wokwi/`, same convention as every other FH system mirroring BSH (`Firmware/WORKFLOW.md` Section 7), with rail names changed to HVAC/FireAlarm/Door.
 
-FH mirrors BSH pin-for-pin, so FH uses the BSH simulation (`Firmware/BSH-PowerBox/Wokwi/`) as-is. When FH-PowerBox becomes the active system, copy that folder to `Firmware/FH-PowerBox/Wokwi/` and log the run in FH's own Build_Logs.
-
-Per-part detail (how to use it, what the simulation hides): the "In Wokwi (Phase A0)" section of each sheet in `FH_Sensors/`.
+Per-part detail: `FH_Sensors/09_Relay_Module.md`.

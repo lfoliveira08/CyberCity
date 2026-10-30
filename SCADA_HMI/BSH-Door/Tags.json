@@ -52,6 +52,7 @@
     },
     {
       "name": "Heartbeat",
+      "dataType": "Int2",
       "opcItemPath": "[BSH-Door]HR0",
       "opcServer": "Ignition OPC UA Server",
       "tagType": "AtomicTag",
@@ -59,6 +60,7 @@
     },
     {
       "name": "ReconnectCount",
+      "dataType": "Int2",
       "opcItemPath": "[BSH-Door]HR1",
       "opcServer": "Ignition OPC UA Server",
       "tagType": "AtomicTag",

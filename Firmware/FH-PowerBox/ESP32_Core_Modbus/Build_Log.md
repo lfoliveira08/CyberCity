@@ -34,3 +34,6 @@ the BSH build order at Luis's request (Oct 6, 2026).
 ## Troubleshooting Tips
 - Output ON at boot, or commands do the opposite: flip `RELAY_LIGHTS_ACTIVE_LOW` / `RELAY_FAN_ACTIVE_LOW` and re-flash.
 - Serial says `.14`: wrong sketch flashed.
+
+## 2026-10-28 (evening) -- power-rails sketch flashed and confirmed on WiFi
+- Luis flashed `FH_PowerBox_Node.ino` (power rails, redesigned the same day -- see `Firmware/FH_PowerBox_Bringup_Checklist.md`). Reported: WiFi joined at 192.168.50.24 and the heartbeat is ticking (no screenshot/values pasted, not seen by the agent). Not yet shown: the status line's rail states (expect all CUT at boot, option A), a rail toggled from Serial, or the OpenPLC side.

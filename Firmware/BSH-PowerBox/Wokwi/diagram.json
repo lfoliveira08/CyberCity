@@ -1,39 +1,49 @@
 {
   "version": 1,
-  "author": "Piranga — BSH-PowerBox (Phase A0) -- lights on GPIO13, not the strapping pin GPIO12; local override buttons on GPIO4/GPIO16",
+  "author": "Piranga — BSH-PowerBox (power rails, Phase A0) -- rebuilt Oct 28, 2026 from the prototype sim; lights/fan dropped. Rail relays on GPIO25/26/27 (Elevator/FireAlarm/Door); NO contact.",
   "editor": "wokwi",
   "parts": [
     {"type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {}},
-    {"type": "wokwi-relay-module", "id": "relayLights", "top": -110, "left": -260, "attrs": {}},
-    {"type": "wokwi-led", "id": "ledLights", "top": -170, "left": -330, "attrs": {"color": "yellow"}},
-    {"type": "wokwi-resistor", "id": "rLights", "top": -140, "left": -330, "attrs": {"value": "220"}},
-    {"type": "wokwi-pushbutton", "id": "btnLights", "top": -170, "left": -430, "attrs": {"color": "yellow"}},
-    {"type": "wokwi-relay-module", "id": "relayFan", "top": 60, "left": -260, "attrs": {}},
-    {"type": "wokwi-led", "id": "ledFan", "top": 120, "left": -330, "attrs": {"color": "blue"}},
-    {"type": "wokwi-resistor", "id": "rFan", "top": 90, "left": -330, "attrs": {"value": "220"}},
-    {"type": "wokwi-pushbutton", "id": "btnFan", "top": 120, "left": -430, "attrs": {"color": "blue"}}
+
+    {"type": "wokwi-relay-module", "id": "relayElev", "top": 60, "left": -260, "attrs": {}},
+    {"type": "wokwi-led", "id": "ledElev", "top": 120, "left": -330, "attrs": {"color": "green", "label": "Elevator 5V"}},
+    {"type": "wokwi-resistor", "id": "rElev", "top": 90, "left": -330, "attrs": {"value": "220"}},
+
+    {"type": "wokwi-relay-module", "id": "relayFire", "top": 230, "left": -260, "attrs": {}},
+    {"type": "wokwi-led", "id": "ledFire", "top": 290, "left": -330, "attrs": {"color": "red", "label": "FireAlarm 5V"}},
+    {"type": "wokwi-resistor", "id": "rFire", "top": 260, "left": -330, "attrs": {"value": "220"}},
+
+    {"type": "wokwi-relay-module", "id": "relayDoor", "top": 400, "left": -260, "attrs": {}},
+    {"type": "wokwi-led", "id": "ledDoor", "top": 460, "left": -330, "attrs": {"color": "blue", "label": "Door 5V"}},
+    {"type": "wokwi-resistor", "id": "rDoor", "top": 430, "left": -330, "attrs": {"value": "220"}}
   ],
   "connections": [
     ["esp:TX", "$serialMonitor:RX", "", []],
     ["esp:RX", "$serialMonitor:TX", "", []],
-    ["esp:13", "relayLights:IN", "yellow", []],
-    ["relayLights:VCC", "esp:5V", "red", []],
-    ["relayLights:GND", "esp:GND.1", "black", []],
-    ["esp:5V", "relayLights:COM", "red", []],
-    ["relayLights:NO", "ledLights:A", "green", []],
-    ["ledLights:C", "rLights:1", "green", []],
-    ["rLights:2", "esp:GND.2", "black", []],
-    ["esp:4", "btnLights:1.l", "cyan", []],
-    ["btnLights:2.l", "esp:GND.2", "black", []],
-    ["esp:15", "relayFan:IN", "purple", []],
-    ["relayFan:VCC", "esp:5V", "red", []],
-    ["relayFan:GND", "esp:GND.3", "black", []],
-    ["esp:5V", "relayFan:COM", "red", []],
-    ["relayFan:NO", "ledFan:A", "orange", []],
-    ["ledFan:C", "rFan:1", "orange", []],
-    ["rFan:2", "esp:GND.3", "black", []],
-    ["esp:16", "btnFan:1.l", "cyan", []],
-    ["btnFan:2.l", "esp:GND.3", "black", []]
+
+    ["esp:25", "relayElev:IN", "green", []],
+    ["relayElev:VCC", "esp:5V", "red", []],
+    ["relayElev:GND", "esp:GND.3", "black", []],
+    ["esp:5V", "relayElev:COM", "red", []],
+    ["relayElev:NO", "ledElev:A", "green", []],
+    ["ledElev:C", "rElev:1", "green", []],
+    ["rElev:2", "esp:GND.3", "black", []],
+
+    ["esp:26", "relayFire:IN", "red", []],
+    ["relayFire:VCC", "esp:5V", "red", []],
+    ["relayFire:GND", "esp:GND.3", "black", []],
+    ["esp:5V", "relayFire:COM", "red", []],
+    ["relayFire:NO", "ledFire:A", "red", []],
+    ["ledFire:C", "rFire:1", "red", []],
+    ["rFire:2", "esp:GND.3", "black", []],
+
+    ["esp:27", "relayDoor:IN", "blue", []],
+    ["relayDoor:VCC", "esp:5V", "red", []],
+    ["relayDoor:GND", "esp:GND.3", "black", []],
+    ["esp:5V", "relayDoor:COM", "red", []],
+    ["relayDoor:NO", "ledDoor:A", "blue", []],
+    ["ledDoor:C", "rDoor:1", "blue", []],
+    ["rDoor:2", "esp:GND.3", "black", []]
   ],
   "dependencies": {}
 }

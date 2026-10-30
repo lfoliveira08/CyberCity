@@ -1,0 +1,76 @@
+{
+  "name": "BSH",
+  "tagType": "Folder",
+  "tags": [
+    {
+      "name": "FireAlarm",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "dataType": "Int2",
+          "name": "Heartbeat",
+          "opcItemPath": "[BSH-FireAlarm]HR1",
+          "opcServer": "Ignition OPC UA Server",
+          "tagType": "AtomicTag",
+          "valueSource": "opc"
+        },
+        {
+          "dataType": "Boolean",
+          "name": "RemoteOnly",
+          "opcItemPath": "[BSH-FireAlarm]C1",
+          "opcServer": "Ignition OPC UA Server",
+          "tagType": "AtomicTag",
+          "valueSource": "opc"
+        },
+        {
+          "dataType": "Boolean",
+          "name": "Flame",
+          "opcItemPath": "[BSH-FireAlarm]C3",
+          "opcServer": "Ignition OPC UA Server",
+          "tagType": "AtomicTag",
+          "valueSource": "opc"
+        },
+        {
+          "dataType": "Boolean",
+          "name": "AlarmActivate",
+          "opcItemPath": "[BSH-FireAlarm]C0",
+          "opcServer": "Ignition OPC UA Server",
+          "tagType": "AtomicTag",
+          "valueSource": "opc"
+        },
+        {
+          "dataType": "Int2",
+          "name": "ReconnectCount",
+          "opcItemPath": "[BSH-FireAlarm]HR2",
+          "opcServer": "Ignition OPC UA Server",
+          "tagType": "AtomicTag",
+          "valueSource": "opc"
+        },
+        {
+          "dataType": "Int2",
+          "name": "GasRaw",
+          "opcItemPath": "[BSH-FireAlarm]HR0",
+          "opcServer": "Ignition OPC UA Server",
+          "tagType": "AtomicTag",
+          "valueSource": "opc"
+        },
+        {
+          "dataType": "Boolean",
+          "name": "ManualPull",
+          "opcItemPath": "[BSH-FireAlarm]C2",
+          "opcServer": "Ignition OPC UA Server",
+          "tagType": "AtomicTag",
+          "valueSource": "opc"
+        },
+        {
+          "dataType": "Boolean",
+          "name": "GasSmokeAlert",
+          "opcItemPath": "[BSH-FireAlarm]C4",
+          "opcServer": "Ignition OPC UA Server",
+          "tagType": "AtomicTag",
+          "valueSource": "opc"
+        }
+      ]
+    }
+  ]
+}

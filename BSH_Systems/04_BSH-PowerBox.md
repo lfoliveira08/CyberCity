@@ -1,59 +1,75 @@
 # BSH-PowerBox Node
 
-**IP Address:** 192.168.50.14
-**Field layer:** Plain relay (lights + fan) + local override push buttons, 2-channel relay module
+> **Redesigned Oct 28, 2026.** This node no longer drives lights and a fan — it switches power to the other three BSH systems (Elevator, FireAlarm, Door). The old lights-and-fan design is archived: see `Archive/README.md` (sketch, PLC files, `Fan_Relay/`, `Lights_Relay/`). Adoption record: `Prototype_PowerRails/ADOPTION_CHECKLIST.md`; decisions and bench results: `Logs/2026-10-28.md`.
+
+**IP Address:** 192.168.50.14 (unchanged; the ESP32 at this address is now the former spare board on a breadboard, not the original lights-and-fan board, which is set aside)
+**Field layer:** 3 relay channels (NO contact), one per downstream system, no local override buttons
 **Backhaul protocol:** Modbus TCP (direct — no bridge needed)
 **Dedicated PLC:** `OpenPLC-BSH-PowerBox` — its own Docker container at 192.168.50.114 (macvlan, running in the OpenPLC Docker VM 192.168.50.10 on the Proxmox server), Web UI on port 8080, Modbus server on port 502 for the SCADA layer. It polls this ESP32 directly at 192.168.50.14:502
 **PLC program:** `PLC_Logic/BSH-PowerBox/` (ladder diagram, register map, Structured Text program, build log)
 
 ## Role
-Controls building illumination and a fan, both plain on/off, under hub command or a local physical override switch per channel.
 
-## Components Used
-- 2-Channel Relay Module (lights + fan) — see `BSH_Sensors/09_Relay_Module.md`
-- Push Button ×2 (local lights/fan override switches) — see `BSH_Sensors/02_Push_Button.md`
+Switches power to the other three BSH systems — Elevator, FireAlarm and Door — each its own relay channel, under hub (SCADA/PLC) command. No local manual control; a Serial command is available for bench testing only, with no Serial connection in the finished build.
 
-## GPIO Pin Map
+**Why:** demonstrates that a "boring" infrastructure node (power distribution) is itself a viable attack target — cutting a rail is a different, heavier kind of manipulation than flipping lights, since it takes a whole downstream system offline. Idea raised by Luis Oct 27, 2026; adopted Oct 28, 2026 after bench testing.
+
+## Components used
+
+- 3 × 1-channel 5V relay module (Songle SRD-05VDC-SL-C type, or equivalent) — see `BSH_Sensors/09_Relay_Module.md`
+- No lights, no fan, no local override buttons (dropped Oct 28, 2026)
+
+## GPIO pin map
+
 | Pin | Function |
 |---|---|
-| GPIO 13 | Lights relay |
-| GPIO 15 | Fan relay |
-| GPIO 4 | Lights local override button |
-| GPIO 16 | Fan local override button |
+| GPIO 25 | Elevator rail relay IN |
+| GPIO 26 | FireAlarm rail relay IN |
+| GPIO 27 | Door rail relay IN |
 
-## Modbus Register Map
+25, 26 and 27 are ordinary ESP32 pins — not strapping, SPI-flash or input-only (`References/ESP-IDF/02-api-reference/peripherals-api/gpio-rtc-gpio.md`, lines 56-101). Boot-time relay behaviour on these pins has not been tested.
+
+## Modbus register map
+
 | Type | Address | Name | Meaning |
 |---|---|---|---|
-| Coil | Coil0 | LIGHTS_ON_CMD | Lights on/off (master-written command) |
-| Coil | Coil1 | FAN_CMD | Fan on/off (master-written command) |
-| Discrete Input | DI0 | LIGHTS_STATUS | Lights' actual physical state (honest feedback — may disagree with the last command if a local button moved it since) |
-| Discrete Input | DI1 | FAN_STATUS | Fan's actual physical state (same idea) |
-| Input Register | IR0 | HEARTBEAT | Counts up once per second (wraps at 65535). Frozen = node lost (added Oct 6, 2026) |
-| Input Register | IR1 | RECONNECT_COUNT | WiFi rejoins since boot; 0 after a reboot (added Oct 6, 2026) |
+| Coil | Coil0 | ELEV_RAIL_CMD | Elevator rail on/off (master-written command); 1 = powered |
+| Coil | Coil1 | FIRE_RAIL_CMD | FireAlarm rail on/off (master-written command) |
+| Coil | Coil2 | DOOR_RAIL_CMD | Door rail on/off (master-written command) |
+| Discrete Input | DI0 | ELEV_RAIL_STATUS | Elevator rail's commanded state as the ESP32 drives it — **not** a measured voltage |
+| Discrete Input | DI1 | FIRE_RAIL_STATUS | same, FireAlarm |
+| Discrete Input | DI2 | DOOR_RAIL_STATUS | same, Door |
+| Input Register | IR0 | HEARTBEAT | Counts up once per second (wraps at 65535). Frozen = node lost |
+| Input Register | IR1 | RECONNECT_COUNT | WiFi rejoins since boot; 0 after a reboot |
+
+No mismatch bits: with no local button and no voltage sense, a rail's command and status can never disagree, so a mismatch could never be true. **OpenPLC Input Register count for this node: 2 (unchanged); Coil and Discrete Input counts: 3 each (were 2).**
 
 ## Notes
-**Connection monitoring (Oct 6, 2026):** every node exposes `HEARTBEAT` (counts up once a second, wraps at 65535) and `RECONNECT_COUNT` (WiFi rejoins since boot, 0 after a reboot) so SCADA can tell when this ESP32 drops off WiFi -- OpenPLC keeps answering with stale values, so only a counter the ESP32 itself increments proves it is alive. See `Piranga_Workflow_v2.md` Section 14, Oct 6, 2026. **OpenPLC Input Register count for this node: 2.**
 
-**Local override buttons (Sep 29, 2026):** added a real physical push-button switch per channel — like an actual room light switch — alongside the existing remote Modbus command. See `BSH_Sensors/02_Push_Button.md` and the Sep 29, 2026 entry in `Piranga_Workflow_v2.md` Section 14 for the full rationale and the authority rule (whichever source, hub or button, acted most recently wins; the hub only regains authority on a *fresh* coil write, not merely by holding its old value; the buttons work even with no network at all). This also closes a gap `09_Relay_Module.md` used to flag — commands were previously open-loop with no feedback; `LIGHTS_STATUS`/`FAN_STATUS` (DI0/DI1) now report the real physical state honestly, so SCADA can see when a local button press has made reality disagree with the last command it sent.
+**Contact type — decided Oct 27, 2026: NO (normally open), fail-dark.** The relay coil off means no power; the coil must be actively energised for a rail to be powered. A PowerBox that is off, unflashed, or rebooting leaves the other three systems **without** power. This is the opposite of the old PowerBox's own fail-safe (lights/fan defaulted OFF but PowerBox staying up kept the building's own power on): here PowerBox being down takes three systems down with it. It also means `Piranga_Workflow_v2.md` Section 7's claim — that each ESP32+OpenPLC pair keeps running independently if the hub goes offline — no longer holds for the PowerBox: it is now a single point of failure for the other three BSH systems.
 
-**Authority rule changed (Oct 21, 2026, Phase C):** OpenPLC rewrites the command coils on every poll (about 100 ms), and the Oct 6 firmware counted every write, even an unchanged value, as a fresh hub command, so the PLC undid every local button press within one poll (seen on the bench Oct 21). The sketch now counts a write as a hub command only when its value differs from the last value the hub wrote (forgotten after a WiFi rejoin). A button press now sticks and the status/mismatch show it until SCADA sends a different command; SCADA cannot re-force the same value (it must send the opposite value, then the original). The old sketch is `Archive/BSH_PowerBox_Node_PhaseB_every-write-wins.ino`. Bench-tested on BSH with OpenPLC (lights and fan), see `PLC_Logic/BSH-PowerBox/Build_Log.md`. The older descriptions of the rule in this file and in the bring-up checklists describe the Oct 6 behavior.
+**Boot and comms-loss behaviour — decided Oct 28, 2026 (option A):** all three rails start **OFF** after a power-up, and stay off until the hub (SCADA, or a Modbus write before Ignition exists) commands them on. If nothing sends that command, the three systems stay dark. If the WiFi **link** is down for more than 5 seconds, all rails are forced off (same watchdog pattern as the old sketch); this detects WiFi link loss only, not a stopped PLC container or a silent master. After the link returns, rails stay off until the next fresh hub write (the ESP32 forgets the last hub value on reconnect, as before).
 
-**Design change (Sep 28, 2026):** this node originally used DALI for individually dimmable lighting — see the retired `BSH_Sensors/12_DALI_LED_Driver.md` and `References/GitHub/PowerBox_silahcen001_DALI-ESP32.md`. DALI was dropped in favor of a plain on/off relay for lights, the same pattern already used for the fan. This removes the project's only unverified field-bus library and its untested transceiver hardware; the trade-off is that Power Box no longer demonstrates individually addressable dimming or the "partial dim = something's off" cascade cue. See the Sep 28, 2026 entries in `Piranga_Workflow_v2.md` Section 14.
+**Power delivery — the 5V-pin method (decided Oct 28, 2026):** each relay's COM feeds from a 5V source and its NO feeds the downstream node's own 5V/VIN pin directly (not through the node's USB cable). The node's USB cable must be **unplugged** while powered this way — connecting both at once is unverified and avoided. On the current bench build, COM is fed from this PowerBox ESP32's own VIN pin, so all three nodes draw through this board's own 5V path and the USB source behind it; that path's current limit is not known and nothing has been measured. In a hub- or strip-fed final build, COM would come from that shared 5V supply instead. See `Schematic/Connections.md` for the as-built wiring and the open electrical questions.
 
-Power Box is now a plain Modbus-relay node — the same pattern already proven on Fire Alarm and Elevator — rather than the project's second-highest-risk node.
+**The Elevator motor and Door servo are not switched by this node.** They need an external 5V supply, separate from their ESP32 (`BSH_Sensors/01_L293D_Motor_Driver.md`, `BSH_Sensors/06_SG90_Servo.md`), reported as power banks on the bench. Cutting a rail here cuts only that node's own ESP32 — the motor/servo supply is untouched. Whether that is the intended scope of "the system is off" was raised but not resolved; see `Prototype_PowerRails/Wiring_DRAFT.md`.
 
-**GPIO correction (Sep 28, 2026):** the lights relay was originally assigned GPIO 12, carried over from the old DALI TX pin without re-checking it. GPIO 12 is an ESP32 strapping pin (MTDI, samples flash voltage at reset) — a relay module's onboard IN pull-up drags it HIGH during that boot-time window, which was suspected of causing inverted/unreliable behavior in the Phase A0 Wokwi test. Moved to GPIO 13, a plain GPIO with no boot-strapping role. **Update (Sep 29, 2026):** this move was worth keeping (GPIO 12 is a real hazard for any pulled-up peripheral), but it turned out not to be what actually caused that inversion — see the Wokwi Wokwi/README.md "Relay polarity" section and the Sep 29, 2026 entry in `Piranga_Workflow_v2.md` Section 14: the real cause was Wokwi's simulated relay module energizing on HIGH rather than LOW, on both channels, not a GPIO-specific issue at all. See `00_START_HERE.md` Section 7 for the still-valid general strapping-pin caveat.
+**History — the old lights-and-fan design (Sep 28 – Oct 21, 2026):** this node originally drove a DALI-dimmed light channel and a plain-relay fan channel (DALI dropped Sep 28, 2026), then two separate 1-channel relay modules with local override buttons (Sep 29–30, 2026) and the "changed-value" hub-write rule (Oct 21, 2026, carried forward unchanged into this design — see Authority rule below). That design is archived; see `Archive/README.md` for the retired sketch, PLC files and component folders. The GPIO-12-strapping-pin lesson from that build (see the project's general strapping-pin caveat, `00_START_HERE.md` Section 7) still applies to any future GPIO choice on this node.
+
+**Authority rule (unchanged from Oct 21, 2026):** OpenPLC rewrites the command coils on every poll (about 100 ms). The sketch counts a coil write as a fresh hub command only when its value differs from the last value the hub wrote (forgotten after a WiFi rejoin), so the hub cannot re-force the same value without first writing the opposite one. There is no local button here to contest authority with, so this mainly matters for the comms-loss/reconnect case above.
+
+**Connection monitoring (unchanged since Oct 6, 2026):** `HEARTBEAT` and `RECONNECT_COUNT` work the same as on every node — see `CLAUDE.md` §2.
 
 ## Wokwi Simulation (Phase A0)
-Simulate this system in Wokwi before the Phase A bench build (rule: `Firmware/WORKFLOW.md` Section 7). Same GPIO map as the table above.
+
+Simulate this system in Wokwi before any real wiring (rule: `Firmware/WORKFLOW.md` Section 7). Same GPIO map as the table above.
 
 | Real part | Wokwi part | Type |
 |---|---|---|
-| Lights relay (GPIO 13) | `wokwi-relay-module` + `wokwi-led` as the "light" | Native |
-| Fan relay (GPIO 15) | `wokwi-relay-module` + `wokwi-led` as the "fan" | Native |
-| Lights override button (GPIO 4) | `wokwi-pushbutton` | Native |
-| Fan override button (GPIO 16) | `wokwi-pushbutton` | Native |
+| Elevator rail relay (GPIO 25) | `wokwi-relay-module` + `wokwi-led` as the node | Native |
+| FireAlarm rail relay (GPIO 26) | same | Native |
+| Door rail relay (GPIO 27) | same | Native |
 
-Folder: `Firmware/BSH-PowerBox/Wokwi/` — built Sep 28, 2026, when BSH-PowerBox became the active system; buttons added Sep 29, 2026. What to try: cycle through lights and fan on/off from a Serial command or the button parts. Both relay channels are native Wokwi parts, so unlike the old DALI stand-in, this simulation can prove the whole node's logic, not just teach it. Also see the Wokwi folder's `README.md` for a real finding worth knowing before the bench build: Wokwi's simulated relay module turned out to energize on HIGH, not LOW — a simulator-only quirk, not something to carry over to the real firmware without your own bench verification.
+Folder: `Firmware/BSH-PowerBox/Wokwi/` — rebuilt Oct 28, 2026 from the prototype sim (`Prototype_PowerRails/Wokwi/`), lights removed. Controls: Serial `1`/`2`/`3` toggle a rail, `a` cuts all, `r` restores all. Relay polarity in Wokwi energises on HIGH; real boards must each be tested on their own bench.
 
-Per-part detail (how to use it, what the simulation hides): the "In Wokwi (Phase A0)" section of each sheet in `BSH_Sensors/`.
+Per-part detail: `BSH_Sensors/09_Relay_Module.md`.

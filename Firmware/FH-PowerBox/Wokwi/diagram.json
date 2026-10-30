@@ -1,0 +1,233 @@
+{
+  "version": 1,
+  "author": "Piranga \u2014 FH-PowerBox (power rails, Phase A0) -- mirrors BSH-PowerBox's sim Oct 28, 2026; rail names changed to HVAC/FireAlarm/Door. NO contact.",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-relay-module",
+      "id": "relayHvac",
+      "top": 60,
+      "left": -260,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledHvac",
+      "top": 120,
+      "left": -330,
+      "attrs": {
+        "color": "green",
+        "label": "FH-HVAC 5V"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rHvac",
+      "top": 90,
+      "left": -330,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-relay-module",
+      "id": "relayFire",
+      "top": 230,
+      "left": -260,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledFire",
+      "top": 290,
+      "left": -330,
+      "attrs": {
+        "color": "red",
+        "label": "FireAlarm 5V"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rFire",
+      "top": 260,
+      "left": -330,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-relay-module",
+      "id": "relayDoor",
+      "top": 400,
+      "left": -260,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledDoor",
+      "top": 460,
+      "left": -330,
+      "attrs": {
+        "color": "blue",
+        "label": "Door 5V"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rDoor",
+      "top": 430,
+      "left": -330,
+      "attrs": {
+        "value": "220"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "esp:TX",
+      "$serialMonitor:RX",
+      "",
+      []
+    ],
+    [
+      "esp:RX",
+      "$serialMonitor:TX",
+      "",
+      []
+    ],
+    [
+      "esp:25",
+      "relayHvac:IN",
+      "green",
+      []
+    ],
+    [
+      "relayHvac:VCC",
+      "esp:5V",
+      "red",
+      []
+    ],
+    [
+      "relayHvac:GND",
+      "esp:GND.3",
+      "black",
+      []
+    ],
+    [
+      "esp:5V",
+      "relayHvac:COM",
+      "red",
+      []
+    ],
+    [
+      "relayHvac:NO",
+      "ledHvac:A",
+      "green",
+      []
+    ],
+    [
+      "ledHvac:C",
+      "rHvac:1",
+      "green",
+      []
+    ],
+    [
+      "rHvac:2",
+      "esp:GND.3",
+      "black",
+      []
+    ],
+    [
+      "esp:26",
+      "relayFire:IN",
+      "red",
+      []
+    ],
+    [
+      "relayFire:VCC",
+      "esp:5V",
+      "red",
+      []
+    ],
+    [
+      "relayFire:GND",
+      "esp:GND.3",
+      "black",
+      []
+    ],
+    [
+      "esp:5V",
+      "relayFire:COM",
+      "red",
+      []
+    ],
+    [
+      "relayFire:NO",
+      "ledFire:A",
+      "red",
+      []
+    ],
+    [
+      "ledFire:C",
+      "rFire:1",
+      "red",
+      []
+    ],
+    [
+      "rFire:2",
+      "esp:GND.3",
+      "black",
+      []
+    ],
+    [
+      "esp:27",
+      "relayDoor:IN",
+      "blue",
+      []
+    ],
+    [
+      "relayDoor:VCC",
+      "esp:5V",
+      "red",
+      []
+    ],
+    [
+      "relayDoor:GND",
+      "esp:GND.3",
+      "black",
+      []
+    ],
+    [
+      "esp:5V",
+      "relayDoor:COM",
+      "red",
+      []
+    ],
+    [
+      "relayDoor:NO",
+      "ledDoor:A",
+      "blue",
+      []
+    ],
+    [
+      "ledDoor:C",
+      "rDoor:1",
+      "blue",
+      []
+    ],
+    [
+      "rDoor:2",
+      "esp:GND.3",
+      "black",
+      []
+    ]
+  ],
+  "dependencies": {}
+}

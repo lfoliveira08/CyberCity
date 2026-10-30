@@ -1,40 +1,25 @@
 {
   "version": 1,
-  "author": "Piranga — BSH-PowerBox PROPOSAL (power rails) -- DRAFT, not the as-built sim. Rail relays on GPIO25/26/27 are SIM-ONLY placeholders.",
+  "author": "Piranga — BSH-PowerBox PROTOTYPE (power rails) -- DRAFT, not the as-built sim. Lights dropped Oct 28. Rail relays on GPIO25/26/27 (Elevator/FireAlarm/Door); NO contact.",
   "editor": "wokwi",
   "parts": [
     {"type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {}},
 
-    {"type": "wokwi-relay-module", "id": "relayLights", "top": -110, "left": -260, "attrs": {}},
-    {"type": "wokwi-led", "id": "ledLights", "top": -170, "left": -330, "attrs": {"color": "yellow", "label": "Lights"}},
-    {"type": "wokwi-resistor", "id": "rLights", "top": -140, "left": -330, "attrs": {"value": "220"}},
-    {"type": "wokwi-pushbutton", "id": "btnLights", "top": -170, "left": -430, "attrs": {"color": "yellow"}},
-
     {"type": "wokwi-relay-module", "id": "relayElev", "top": 60, "left": -260, "attrs": {}},
-    {"type": "wokwi-led", "id": "ledElev", "top": 120, "left": -330, "attrs": {"color": "green", "label": "Elevator USB 5V"}},
+    {"type": "wokwi-led", "id": "ledElev", "top": 120, "left": -330, "attrs": {"color": "green", "label": "Elevator 5V"}},
     {"type": "wokwi-resistor", "id": "rElev", "top": 90, "left": -330, "attrs": {"value": "220"}},
 
     {"type": "wokwi-relay-module", "id": "relayFire", "top": 230, "left": -260, "attrs": {}},
-    {"type": "wokwi-led", "id": "ledFire", "top": 290, "left": -330, "attrs": {"color": "red", "label": "FireAlarm USB 5V"}},
+    {"type": "wokwi-led", "id": "ledFire", "top": 290, "left": -330, "attrs": {"color": "red", "label": "FireAlarm 5V"}},
     {"type": "wokwi-resistor", "id": "rFire", "top": 260, "left": -330, "attrs": {"value": "220"}},
 
     {"type": "wokwi-relay-module", "id": "relayDoor", "top": 400, "left": -260, "attrs": {}},
-    {"type": "wokwi-led", "id": "ledDoor", "top": 460, "left": -330, "attrs": {"color": "blue", "label": "Door USB 5V"}},
+    {"type": "wokwi-led", "id": "ledDoor", "top": 460, "left": -330, "attrs": {"color": "blue", "label": "Door 5V"}},
     {"type": "wokwi-resistor", "id": "rDoor", "top": 430, "left": -330, "attrs": {"value": "220"}}
   ],
   "connections": [
     ["esp:TX", "$serialMonitor:RX", "", []],
     ["esp:RX", "$serialMonitor:TX", "", []],
-
-    ["esp:13", "relayLights:IN", "yellow", []],
-    ["relayLights:VCC", "esp:5V", "red", []],
-    ["relayLights:GND", "esp:GND.1", "black", []],
-    ["esp:5V", "relayLights:COM", "red", []],
-    ["relayLights:NO", "ledLights:A", "green", []],
-    ["ledLights:C", "rLights:1", "green", []],
-    ["rLights:2", "esp:GND.2", "black", []],
-    ["esp:4", "btnLights:1.l", "cyan", []],
-    ["btnLights:2.l", "esp:GND.2", "black", []],
 
     ["esp:25", "relayElev:IN", "green", []],
     ["relayElev:VCC", "esp:5V", "red", []],

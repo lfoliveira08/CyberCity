@@ -7,7 +7,7 @@ This folder is the one home for the SCADA and HMI side of each system: the tag m
 
 The live Ignition project is stored on the Gateway (VM 101 `scada-hmi`, 192.168.50.30). This folder holds what is written down about it: documentation, tag import files, and exports. Never keep the only copy of anything in the Gateway.
 
-**Status (Oct 26, 2026):** Ignition 8.3.10 is installed and licensed (Oct 22). The empty project `CyberCity` exists. No Modbus device, tags, screens or cascade rules yet. Luis builds the SCADA himself in the Designer, guided step by step, so he learns it.
+**Status (Oct 29, 2026):** Ignition 8.3.10 is installed and licensed (Oct 22). The BSH-FireAlarm device and its 8 tags exist and were tested (see `../STATUS.md`); no UDT, screens or cascade rules yet. Luis builds the SCADA himself in the Designer, guided step by step, so he learns it.
 
 ## Ground truth for Ignition: use the local manual
 
@@ -34,7 +34,7 @@ SCADA_HMI/
 ## Conventions
 
 - Ignition talks only to the OpenPLC containers (192.168.50.111-.124, port 502), not to the ESP32s. Addresses come from the PLC's published block: `SCADA_*` coils and holding registers SCADA writes, `PUB_*` values SCADA reads (see each `PLC_Logic/<System>/Register_Map.md`).
-- Tag paths follow `<Bldg>/<System>/<Name>`, for example `BSH/FireAlarm/Heartbeat`. Proposed Oct 26, not yet settled; settle it in `Templates/` before importing all eight.
+- Tag paths follow `<Bldg>/<System>/<Name>`, for example `BSH/FireAlarm/Heartbeat`. In use on the pilot since Oct 29 but not formally confirmed; write it into `Templates/` before building the other seven.
 - One Device UDT shared by all eight nodes (heartbeat, reconnect count, status). Proposed, not built.
 - The ESP32 firmware owns safe-state behavior; the PLC forwards commands; cross-system cascade rules live here in SCADA.
 - If a register map changes, update `Tag_Map.md` and `Tags.json` in the same sitting.
@@ -45,7 +45,7 @@ SCADA_HMI/
 
 | System | ESP32 | OpenPLC container (Ignition device host) | Kind | Status |
 |---|---|---|---|---|
-| BSH-FireAlarm | 192.168.50.12 | 192.168.50.112 | Fire Alarm | Device added and heartbeat verified Oct 26; real tags not yet created (pilot node) |
+| BSH-FireAlarm | 192.168.50.12 | 192.168.50.112 | Fire Alarm | Device rebuilt and 8 tags built and tested Oct 29 (pilot node); see `../STATUS.md` |
 | BSH-Elevator | 192.168.50.11 | 192.168.50.111 | Elevator | Not started |
 | BSH-Door | 192.168.50.13 | 192.168.50.113 | Door/Gate | Not started |
 | BSH-PowerBox | 192.168.50.14 | 192.168.50.114 | Power Box | Not started |
@@ -56,7 +56,7 @@ SCADA_HMI/
 
 ## Open questions to settle on the first device
 
-1. ~~Modbus addressing in Ignition: 0-based or 1-based.~~ SETTLED Oct 26, 2026: `HR1` reads the heartbeat with default device settings (Unit ID and Zero-Based fields not inspected). Test with `HR1` (PUB_HEARTBEAT on BSH-FireAlarm); the heartbeat must tick about once per second. Also check the Zero-Based Addressing setting on the device.
+1. ~~Modbus addressing in Ignition: 0-based or 1-based.~~ SETTLED Oct 29, 2026 (supersedes the Oct 26 note): the Gateway default for Zero-based Addressing is OFF and then `HR1` is register 0. **Turn Zero-based Addressing ON on every device**, so Ignition addresses equal the PLC register-map numbers (`HR0` gas, `HR1` heartbeat). Proof: BSH-FireAlarm, `Logs/2026-10-29.md`.
 2. Unit ID the OpenPLC server answers to (0 is used on the slave side; confirm on the Ignition side).
 3. Tag naming rule and Device UDT (see Conventions).
 4. Whether the 72-hour license lease needs internet (question to Inductive open since Oct 22).

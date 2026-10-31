@@ -397,7 +397,7 @@ The original 12-week milestone table (Aug 24 – Dec 11) still applies as the ov
 
 | # | Deliverable | Status | Notes |
 |---|---|---|---|
-| 1 | Functional 3D-printed smart campus model | ⬜ Not started | BSH + FH buildings |
+| 1 | Functional 3D-printed smart campus model | 🟩 Done (Luis-reported Oct 30, 2026; not seen by the agent) | BSH + FH buildings |
 | 2 | 8 ESP32 nodes (firmware + wiring), 4 per building | 🟩 Firmware complete and bench-confirmed through Phase B on all 8 nodes (Oct 6-9, 2026): BSH Elevator, Fire Alarm, Door, PowerBox and FH HVAC, Fire Alarm, Door, PowerBox, each a Modbus TCP slave with heartbeat and reconnect counters, verified from a laptop. Phase C (OpenPLC and SCADA) started Oct 13, 2026: OpenPLC Docker VM, image, macvlan network and all 8 containers are running (Oct 14), no program loaded yet, SCADA VM (VM 101) built Oct 14 but no SCADA software yet | See Section 9 |
 | 3 | 8 OpenPLC instances configured in the Proxmox OpenPLC Docker VM | 🟩 All 8 containers running with their slave device and program (Oct 21, 2026); S7 and EtherNet/IP off confirmed by Luis on all 8 (night of Oct 21, not pasted) | See Section 10 and `PLC_Logic/README.md` |
 | 4 | Ladder logic programs for all 8 OpenPLC instances | 🟩 Built in the Editor and run on all 8 containers (Oct 19-21, 2026); Kali read tests passed, functional tests passed or reported as worked; direct-write, WiFi-drop and unplug checks still open (Oct 21, 2026) | Safe-state behavior + SCADA-coil pass-through, see Section 10. Files in `PLC_Logic/` (one folder per system) |

@@ -1,0 +1,70 @@
+{
+  "name": "PowerBox",
+  "tagType": "Folder",
+  "tags": [
+    {
+      "dataType": "Boolean",
+      "name": "HvacRailStatus",
+      "opcItemPath": "[FH-PowerBox]C3",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "FireRailCmd",
+      "opcItemPath": "[FH-PowerBox]C1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "FireRailStatus",
+      "opcItemPath": "[FH-PowerBox]C4",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Int2",
+      "name": "Heartbeat",
+      "opcItemPath": "[FH-PowerBox]HR0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "HvacRailCmd",
+      "opcItemPath": "[FH-PowerBox]C0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Int2",
+      "name": "ReconnectCount",
+      "opcItemPath": "[FH-PowerBox]HR1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "DoorRailCmd",
+      "opcItemPath": "[FH-PowerBox]C2",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "DoorRailStatus",
+      "opcItemPath": "[FH-PowerBox]C5",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    }
+  ]
+}

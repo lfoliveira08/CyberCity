@@ -1,0 +1,70 @@
+{
+  "name": "HVAC",
+  "tagType": "Folder",
+  "tags": [
+    {
+      "dataType": "Int2",
+      "name": "TargetTempC",
+      "opcItemPath": "[FH-HVAC]HR0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Int2",
+      "name": "TempC",
+      "opcItemPath": "[FH-HVAC]HR1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Int2",
+      "name": "Heartbeat",
+      "opcItemPath": "[FH-HVAC]HR3",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Int2",
+      "name": "ReconnectCount",
+      "opcItemPath": "[FH-HVAC]HR4",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "HvacEnable",
+      "opcItemPath": "[FH-HVAC]C0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "CompressorRunning",
+      "opcItemPath": "[FH-HVAC]C1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "HvacFault",
+      "opcItemPath": "[FH-HVAC]C2",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Int2",
+      "name": "HumidityPct",
+      "opcItemPath": "[FH-HVAC]HR2",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    }
+  ]
+}

@@ -28,6 +28,7 @@
     },
     {
       "name": "TargetTempC",
+      "dataType": "Int2",
       "opcItemPath": "[FH-HVAC]HR0",
       "opcServer": "Ignition OPC UA Server",
       "tagType": "AtomicTag",
@@ -35,6 +36,7 @@
     },
     {
       "name": "TempC",
+      "dataType": "Int2",
       "opcItemPath": "[FH-HVAC]HR1",
       "opcServer": "Ignition OPC UA Server",
       "tagType": "AtomicTag",
@@ -42,6 +44,7 @@
     },
     {
       "name": "HumidityPct",
+      "dataType": "Int2",
       "opcItemPath": "[FH-HVAC]HR2",
       "opcServer": "Ignition OPC UA Server",
       "tagType": "AtomicTag",
@@ -49,6 +52,7 @@
     },
     {
       "name": "Heartbeat",
+      "dataType": "Int2",
       "opcItemPath": "[FH-HVAC]HR3",
       "opcServer": "Ignition OPC UA Server",
       "tagType": "AtomicTag",
@@ -56,6 +60,7 @@
     },
     {
       "name": "ReconnectCount",
+      "dataType": "Int2",
       "opcItemPath": "[FH-HVAC]HR4",
       "opcServer": "Ignition OPC UA Server",
       "tagType": "AtomicTag",

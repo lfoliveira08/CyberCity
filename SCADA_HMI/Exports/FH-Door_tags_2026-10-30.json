@@ -1,0 +1,70 @@
+{
+  "name": "Door",
+  "tagType": "Folder",
+  "tags": [
+    {
+      "dataType": "Int2",
+      "name": "Heartbeat",
+      "opcItemPath": "[FH-Door]HR0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "RemoteOpenNoCard",
+      "opcItemPath": "[FH-Door]C2",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "IrDetected",
+      "opcItemPath": "[FH-Door]C3",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "DoorPosition",
+      "opcItemPath": "[FH-Door]C4",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "DoorCloseCmd",
+      "opcItemPath": "[FH-Door]C1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "AccessGranted",
+      "opcItemPath": "[FH-Door]C5",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "DoorOpenCmd",
+      "opcItemPath": "[FH-Door]C0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Int2",
+      "name": "ReconnectCount",
+      "opcItemPath": "[FH-Door]HR1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    }
+  ]
+}

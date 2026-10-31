@@ -9,6 +9,9 @@ References/ESP-IDF/
 # Conversion leftovers and archives
 *.zip
 
+# Ignition Gateway backups: can contain credentials (SCADA_HMI/Exports/README.md)
+*.gwbk
+
 # Credentials: never commit a local secrets file
 secrets.h
 .env

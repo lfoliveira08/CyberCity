@@ -1,0 +1,70 @@
+{
+  "name": "FireAlarm",
+  "tagType": "Folder",
+  "tags": [
+    {
+      "dataType": "Int2",
+      "name": "ReconnectCount",
+      "opcItemPath": "[FH-FireAlarm]HR2",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "RemoteOnly",
+      "opcItemPath": "[FH-FireAlarm]C1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Int2",
+      "name": "Heartbeat",
+      "opcItemPath": "[FH-FireAlarm]HR1",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "AlarmActivate",
+      "opcItemPath": "[FH-FireAlarm]C0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "GasSmokeAlert",
+      "opcItemPath": "[FH-FireAlarm]C4",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "ManualPull",
+      "opcItemPath": "[FH-FireAlarm]C2",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Int2",
+      "name": "GasRaw",
+      "opcItemPath": "[FH-FireAlarm]HR0",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Boolean",
+      "name": "Flame",
+      "opcItemPath": "[FH-FireAlarm]C3",
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    }
+  ]
+}

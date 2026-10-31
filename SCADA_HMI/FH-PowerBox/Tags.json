@@ -3,7 +3,7 @@
   "tagType": "Folder",
   "tags": [
     {
-      "name": "LightsOnCmd",
+      "name": "HvacRailCmd",
       "dataType": "Boolean",
       "opcItemPath": "[FH-PowerBox]C0",
       "opcServer": "Ignition OPC UA Server",
@@ -11,7 +11,7 @@
       "valueSource": "opc"
     },
     {
-      "name": "FanCmd",
+      "name": "FireRailCmd",
       "dataType": "Boolean",
       "opcItemPath": "[FH-PowerBox]C1",
       "opcServer": "Ignition OPC UA Server",
@@ -19,7 +19,7 @@
       "valueSource": "opc"
     },
     {
-      "name": "LightsMismatch",
+      "name": "DoorRailCmd",
       "dataType": "Boolean",
       "opcItemPath": "[FH-PowerBox]C2",
       "opcServer": "Ignition OPC UA Server",
@@ -27,7 +27,7 @@
       "valueSource": "opc"
     },
     {
-      "name": "FanMismatch",
+      "name": "HvacRailStatus",
       "dataType": "Boolean",
       "opcItemPath": "[FH-PowerBox]C3",
       "opcServer": "Ignition OPC UA Server",
@@ -35,7 +35,7 @@
       "valueSource": "opc"
     },
     {
-      "name": "LightsStatus",
+      "name": "FireRailStatus",
       "dataType": "Boolean",
       "opcItemPath": "[FH-PowerBox]C4",
       "opcServer": "Ignition OPC UA Server",
@@ -43,7 +43,7 @@
       "valueSource": "opc"
     },
     {
-      "name": "FanStatus",
+      "name": "DoorRailStatus",
       "dataType": "Boolean",
       "opcItemPath": "[FH-PowerBox]C5",
       "opcServer": "Ignition OPC UA Server",
@@ -52,6 +52,7 @@
     },
     {
       "name": "Heartbeat",
+      "dataType": "Int2",
       "opcItemPath": "[FH-PowerBox]HR0",
       "opcServer": "Ignition OPC UA Server",
       "tagType": "AtomicTag",
@@ -59,6 +60,7 @@
     },
     {
       "name": "ReconnectCount",
+      "dataType": "Int2",
       "opcItemPath": "[FH-PowerBox]HR1",
       "opcServer": "Ignition OPC UA Server",
       "tagType": "AtomicTag",

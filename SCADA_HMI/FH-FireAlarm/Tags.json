@@ -44,6 +44,7 @@
     },
     {
       "name": "GasRaw",
+      "dataType": "Int2",
       "opcItemPath": "[FH-FireAlarm]HR0",
       "opcServer": "Ignition OPC UA Server",
       "tagType": "AtomicTag",
@@ -51,6 +52,7 @@
     },
     {
       "name": "Heartbeat",
+      "dataType": "Int2",
       "opcItemPath": "[FH-FireAlarm]HR1",
       "opcServer": "Ignition OPC UA Server",
       "tagType": "AtomicTag",
@@ -58,6 +60,7 @@
     },
     {
       "name": "ReconnectCount",
+      "dataType": "Int2",
       "opcItemPath": "[FH-FireAlarm]HR2",
       "opcServer": "Ignition OPC UA Server",
       "tagType": "AtomicTag",

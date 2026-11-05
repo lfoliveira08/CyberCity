@@ -1,0 +1,55 @@
+{
+  "name": "Device",
+  "parameters": {
+    "DeviceName": {
+      "dataType": "String",
+      "value": null
+    },
+    "HeartbeatAddr": {
+      "dataType": "String",
+      "value": null
+    },
+    "ReconnectAddr": {
+      "dataType": "String",
+      "value": null
+    }
+  },
+  "tagType": "UdtType",
+  "tags": [
+    {
+      "dataType": "Int2",
+      "name": "ReconnectCount",
+      "opcItemPath": {
+        "bindType": "parameter",
+        "binding": "[{DeviceName}]{ReconnectAddr}"
+      },
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "dataType": "Int2",
+      "name": "Heartbeat",
+      "opcItemPath": {
+        "bindType": "parameter",
+        "binding": "[{DeviceName}]{HeartbeatAddr}"
+      },
+      "opcServer": "Ignition OPC UA Server",
+      "tagType": "AtomicTag",
+      "valueSource": "opc"
+    },
+    {
+      "expression": "secondsBetween(timestampOf({[.]Heartbeat}), now(1000))",
+      "name": "HeartbeatAge",
+      "tagType": "AtomicTag",
+      "valueSource": "expr"
+    },
+    {
+      "expression": "if(isGood({[.]Heartbeat}), if({[.]HeartbeatAge} \u003e\u003d 5, 2, if({[.]HeartbeatAge} \u003e\u003d 3, 1, 0)), 2)",
+      "name": "Status",
+      "tagType": "AtomicTag",
+      "valueSource": "expr"
+    }
+  ],
+  "typeId": null
+}

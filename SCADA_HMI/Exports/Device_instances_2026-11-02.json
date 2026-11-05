@@ -1,0 +1,238 @@
+{
+  "name": "Device",
+  "tagType": "Folder",
+  "tags": [
+    {
+      "name": "BSH-Elevator",
+      "parameters": {
+        "DeviceName": {
+          "dataType": "String",
+          "value": "BSH-Elevator"
+        },
+        "HeartbeatAddr": {
+          "dataType": "String",
+          "value": "HR1"
+        },
+        "ReconnectAddr": {
+          "dataType": "String",
+          "value": "HR2"
+        }
+      },
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "Heartbeat",
+          "tagType": "AtomicTag"
+        },
+        {
+          "name": "ReconnectCount",
+          "tagType": "AtomicTag"
+        }
+      ],
+      "typeId": "Device"
+    },
+    {
+      "name": "FH-Door",
+      "parameters": {
+        "DeviceName": {
+          "dataType": "String",
+          "value": "FH-Door"
+        },
+        "HeartbeatAddr": {
+          "dataType": "String",
+          "value": "HR0"
+        },
+        "ReconnectAddr": {
+          "dataType": "String",
+          "value": "HR1"
+        }
+      },
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "Heartbeat",
+          "tagType": "AtomicTag"
+        },
+        {
+          "name": "ReconnectCount",
+          "tagType": "AtomicTag"
+        }
+      ],
+      "typeId": "Device"
+    },
+    {
+      "name": "FH-HVAC",
+      "parameters": {
+        "DeviceName": {
+          "dataType": "String",
+          "value": "FH-HVAC"
+        },
+        "HeartbeatAddr": {
+          "dataType": "String",
+          "value": "HR3"
+        },
+        "ReconnectAddr": {
+          "dataType": "String",
+          "value": "HR4"
+        }
+      },
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "ReconnectCount",
+          "tagType": "AtomicTag"
+        },
+        {
+          "name": "Heartbeat",
+          "tagType": "AtomicTag"
+        }
+      ],
+      "typeId": "Device"
+    },
+    {
+      "name": "BSH-PowerBox",
+      "parameters": {
+        "DeviceName": {
+          "dataType": "String",
+          "value": "BSH-PowerBox"
+        },
+        "HeartbeatAddr": {
+          "dataType": "String",
+          "value": "HR0"
+        },
+        "ReconnectAddr": {
+          "dataType": "String",
+          "value": "HR1"
+        }
+      },
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "ReconnectCount",
+          "tagType": "AtomicTag"
+        },
+        {
+          "name": "Heartbeat",
+          "tagType": "AtomicTag"
+        }
+      ],
+      "typeId": "Device"
+    },
+    {
+      "name": "BSH-FireAlarm",
+      "parameters": {
+        "DeviceName": {
+          "dataType": "String",
+          "value": "BSH-FireAlarm"
+        },
+        "HeartbeatAddr": {
+          "dataType": "String",
+          "value": "HR1"
+        },
+        "ReconnectAddr": {
+          "dataType": "String",
+          "value": "HR2"
+        }
+      },
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "Heartbeat",
+          "tagType": "AtomicTag"
+        },
+        {
+          "name": "ReconnectCount",
+          "tagType": "AtomicTag"
+        }
+      ],
+      "typeId": "Device"
+    },
+    {
+      "name": "FH-PowerBox",
+      "parameters": {
+        "DeviceName": {
+          "dataType": "String",
+          "value": "FH-PowerBox"
+        },
+        "HeartbeatAddr": {
+          "dataType": "String",
+          "value": "HR0"
+        },
+        "ReconnectAddr": {
+          "dataType": "String",
+          "value": "HR1"
+        }
+      },
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "ReconnectCount",
+          "tagType": "AtomicTag"
+        },
+        {
+          "name": "Heartbeat",
+          "tagType": "AtomicTag"
+        }
+      ],
+      "typeId": "Device"
+    },
+    {
+      "name": "FH-FireAlarm",
+      "parameters": {
+        "DeviceName": {
+          "dataType": "String",
+          "value": "FH-FireAlarm"
+        },
+        "HeartbeatAddr": {
+          "dataType": "String",
+          "value": "HR1"
+        },
+        "ReconnectAddr": {
+          "dataType": "String",
+          "value": "HR2"
+        }
+      },
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "ReconnectCount",
+          "tagType": "AtomicTag"
+        },
+        {
+          "name": "Heartbeat",
+          "tagType": "AtomicTag"
+        }
+      ],
+      "typeId": "Device"
+    },
+    {
+      "name": "BSH-Door",
+      "parameters": {
+        "DeviceName": {
+          "dataType": "String",
+          "value": "BSH-Door"
+        },
+        "HeartbeatAddr": {
+          "dataType": "String",
+          "value": "HR0"
+        },
+        "ReconnectAddr": {
+          "dataType": "String",
+          "value": "HR1"
+        }
+      },
+      "tagType": "UdtInstance",
+      "tags": [
+        {
+          "name": "ReconnectCount",
+          "tagType": "AtomicTag"
+        },
+        {
+          "name": "Heartbeat",
+          "tagType": "AtomicTag"
+        }
+      ],
+      "typeId": "Device"
+    }
+  ]
+}

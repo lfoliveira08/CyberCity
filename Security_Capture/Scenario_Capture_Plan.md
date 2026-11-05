@@ -23,6 +23,49 @@ after -> stop. Log with `Capture_Log_Template.md`.
 | 9 | Node isolation / resilience | Mirror or PLC side | One container stops: the TCP session to it ends (FIN or RST), polls to that IP go unanswered or are reset, while the other 7 keep answering. Time between the stop and SCADA flagging it can be read directly | `tcp.flags.reset == 1 || tcp.analysis.retransmission` and `ip.addr == <stopped container>` |
 | 10 | Red / Blue exercise | Mirror (preferred) | Contains scenarios 3-5, 7 and 11 in one session; the Blue Team can use the capture afterwards to check what they missed. Keep a single running timeline in the log | all of the above |
 | 11 | HVAC spoofing / setpoint tampering (FH) | Attacker + PLC side | A write to `TARGET_TEMP_C` (HR0) from a foreign IP (FC 6 or 16), or the fabricated `TEMP_C` value, followed by `COMPRESSOR_RUNNING` not matching the temperature trend. Modbus input registers cannot be written with a standard FC; confirm in `FH_Systems/` how the spoof is delivered (holding-register write, or a PLC-side value) and capture that path | `modbus.func_code == 6 || modbus.func_code == 16` with `ip.addr == 192.168.50.121` |
+| 12 | PLC logic injection (OpenPLC web UI) — *added Nov 4, 2026; new, not in Piranga §11* | Attacker + PLC side | **Not a Modbus attack — the engineering channel, not the fieldbus.** A cleartext HTTP session on a container's port 8080 from the attacker IP: a login (the kept default OpenPLC credentials, readable with Follow HTTP Stream) and a program **upload + compile/reload**. On port 502 the normal poll **stops for a few seconds while the runtime reloads**, then the node runs the injected logic (e.g. a rung forcing `ALARM_ACTIVATE` on, or dropping a safety interlock). The Stuxnet analogue: reprogram the controller through its engineering interface | `tcp.port == 8080 && ip.addr == 192.168.50.112` for the management session (use **Follow HTTP Stream** for the cleartext login and the upload); `mbtcp && ip.addr == 192.168.50.112` for the reload gap and the changed behaviour |
+
+## Scenario 12 detail — PLC logic injection (added Nov 4, 2026)
+
+**New scenario, not in `Piranga_Workflow_v2.md` Section 11.** Added here Nov 4, 2026
+after Luis asked whether the OpenPLC ladder logic can be manipulated. It can — but
+through the OpenPLC **web management interface on port 8080**, not through Modbus. This
+is the highest-impact scenario in the set: full control-logic compromise, the direct
+analogue of how Stuxnet reprogrammed PLCs.
+
+**Why Modbus can't do it.** Standard Modbus TCP has no function to change a program;
+over port 502 an attacker only reads/writes the IO points the program already exposes
+(scenarios 4, 5, 7, 11). Changing the *logic* needs the engineering channel — OpenPLC's
+web UI. (`Piranga_Workflow_v2.md:305`: "Modbus has no authentication" is about data,
+not logic.)
+
+**The vector (from Kali `.40`):**
+1. Reach a container's `http://<container>:8080` (every instance exposes 8080 —
+   `Piranga_Workflow_v2.md:114-131`).
+2. Log in with the **kept default OpenPLC credentials** (default login kept per the
+   "OpenPLC web UI" note below and `Next_Steps.md`, Oct 13). Because it is plain HTTP,
+   the credentials can also be **sniffed** off the wire, so even a changed password
+   would not save it.
+3. Upload a malicious program, **Compile**, and the runtime reloads running it.
+4. The node now runs attacker logic until the original is restored.
+
+**Evidence to capture:** the cleartext login and the program-upload POST on port 8080
+(Follow HTTP Stream), plus — on port 502 — the brief poll outage during the reload and
+the node's changed behaviour afterwards. A good report pair: one shot of the HTTP stream
+showing credentials/upload with no encryption, one of the Modbus polling before/after.
+
+**Required restore step (not optional).** The upload **overwrites the running logic** on
+that container and reloads it (Modbus server down for a few seconds — an availability
+side effect worth noting). The known-good program is kept at
+`PLC_Logic/<System>/Program.st`; re-uploading and reloading it is a mandatory final step
+of this run. Pick **BSH-FireAlarm (container `.112`)** as the worked example, consistent
+with the learning slice; the attack applies to all eight containers.
+
+**Accuracy / not verified.** There is **no OpenPLC manual in `References/`** (only Ignition
+and ESP-IDF are vendored), so the Programs → upload → Compile → reload flow above is
+well-known OpenPLC v3 behaviour, **not cited from a project doc**. Confirm the exact page
+flow and the HTTP request shape against the live `:8080` during the run; do not script it
+blind. Closed lab only; time-box it and restore.
 
 ## Also worth capturing
 

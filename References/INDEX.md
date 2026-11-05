@@ -69,7 +69,7 @@ then edit the note.
 
 | Repo | System | What it is | Status | Note |
 |---|---|---|---|---|
-| [emelianov/modbus-esp8266](https://github.com/emelianov/modbus-esp8266) (`ModbusIP_ESP8266`) | All 10 nodes | Modbus TCP slave library for ESP32/ESP8266 | **Adopted** (Phase B backhaul) | `AllNodes_emelianov_modbus-esp8266.md` |
+| [emelianov/modbus-esp8266](https://github.com/emelianov/modbus-esp8266) (`ModbusIP_ESP8266`) | All 8 nodes | Modbus TCP slave library for ESP32/ESP8266 | **Adopted** (Phase B backhaul) | `AllNodes_emelianov_modbus-esp8266.md` |
 | [miguelbalboa/rfid](https://github.com/miguelbalboa/rfid) (`MFRC522`) | Door | RC522 RFID reader library | **Adopted** | `Door_miguelbalboa_rfid.md` |
 | [silahcen001/DALI-ESP32](https://github.com/silahcen001/DALI-ESP32) (`DaliController`) | PowerBox | DALI master library | **Rejected** — Sep 28, 2026, dropped in favor of a plain relay (Power Box no longer uses any field-bus library) | `PowerBox_silahcen001_DALI-ESP32.md` |
 | `ESP32Servo` (Arduino Library Manager) | Door | Servo library (standard `Servo.h` doesn't support the ESP32) | **Adopted** | `Door_ESP32Servo.md` |

@@ -220,7 +220,7 @@ gets flashed by mistake. There is one home for each kind of file:*
 | Component reference sheet | `BSH_Sensors/` or `FH_Sensors/` | One per building, mirrored |
 | Retired files | `Archive/` | Never build from these; see `Archive/README.md` |
 | Wireshark/pcap evidence for the Section 11 attack scenarios | `Security_Capture/` | One home for this activity (added Oct 14, 2026): `README.md`, `Capture_Setup.md`, `Scenario_Capture_Plan.md`, `Capture_Log_Template.md`, `Captures/` |
-| Attack scripts and attack reports for the Section 11 scenarios (run from the Kali VM) | `Kali/` | Created Oct 20, 2026; **not in use until the attack-scenario session**. `README.md` only for now. Pcap evidence stays in `Security_Capture/` |
+| Attack scripts and attack reports for the Section 11 scenarios (run from the Kali VM) | `Security_Capture/Kali/` | Created Oct 20, 2026 (moved under `Security_Capture/` Nov 7, 2026); **not in use until the attack-scenario session**. Pcap evidence stays in `Security_Capture/` |
 | Daily decisions and lessons learned | `Logs/` | One file per working day, `YYYY-MM-DD.md`, plus `INDEX.md` and `README.md` (the rules). Added Oct 15, 2026; continues `Piranga_Workflow_v2.md` Section 14, which is frozen as history up to Oct 14, 2026 |
 | SCADA/HMI tag maps, screens and cascade rules (Ignition) | `SCADA_HMI/` | `README.md`, `Setup/`, `Templates/`, `Cascade/`, `Campus_Map/`, `Exports/`, and one folder per system (`README.md`, `Tag_Map.md`, `Tags.json`, `HMI_View.md`, `Build_Log.md`). The live project stays on the Gateway (VM 101); this folder holds docs, import files and dated exports. Added Oct 26, 2026 |
 

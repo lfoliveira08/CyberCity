@@ -18,6 +18,12 @@ when.
 |---|---|
 | `Capture_Setup.md` | Where the Linux machine sits, what it can and cannot see, interface, capture filter, display filters, clock, ring-buffer settings |
 | `Scenario_Capture_Plan.md` | Per scenario: what to capture, what the traffic should show, which filter proves it |
+| `Threat_Model_Scope.md` | The report's threat model and scope: the assumed attacker, in-scope vs out-of-scope ATT&CK tactics with rationale, and the attack-tier statement |
+| `Real_World_Incidents.md` | Background for Deliverables 6/10: documented real-world ICS incidents, what each teaches, the lab scenario it maps to, and sources to cite |
+| `ATTACK_ICS_Mapping.md` | MITRE ATT&CK for ICS mapping for Deliverables 6/10: each scenario → tactic → technique ID → mitigation M-code, with a mitigation glossary |
+| `Scenarios.md` | The detailed scenario catalog: each scenario's target, Modbus object/FC, action, expected effect, the real-world attack it models, ATT&CK IDs, CVEs and capture filter |
+| `References.md` | Citations for Deliverables 6/10: the MITRE ATT&CK links, CISA advisories, primary incident reports, and every CVE tied to its scenario |
+| `Kali/` | Kali-side work (moved here Nov 7, 2026): attack runbooks and reports, plus `Kali/Scripts/` — the lab-only flash-drive script policy + manifest (scripts never committed; a `.gitignore` blocks them) |
 | `Capture_Log_Template.md` | Copy this for every run; it ties the pcap to the actions and timestamps |
 | `Captures/` | The `.pcapng` files and filled-in logs (see `Captures/README.md` for naming) |
 
@@ -41,4 +47,4 @@ when.
 
 ## Related folder
 
-Attack scripts and attack reports (what was run from the Kali VM) go in `Kali/` (added Oct 20, 2026, not in use until the attack-scenario session). A report there refers to its pcap here by file name.
+Attack scripts and attack reports (what was run from the Kali VM) go in the `Kali/` subfolder (created Oct 20, 2026; **moved under `Security_Capture/` on Nov 7, 2026**; not in use until the attack-scenario session). A report there refers to its pcap here by file name.

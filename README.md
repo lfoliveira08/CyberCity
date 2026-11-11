@@ -111,7 +111,7 @@ Defined in [`Piranga_Workflow_v2.md`](Piranga_Workflow_v2.md), Section 11:
 10. Red/blue team exercise
 11. HVAC sensor spoofing and setpoint tampering (FH)
 
-Scenario 6 was dropped on Oct 5, 2026. Network captures go in [`Security_Capture/`](Security_Capture/) and attack scripts in [`Kali/`](Kali/).
+Scenario 6 was dropped on Oct 5, 2026. Network captures go in [`Security_Capture/`](Security_Capture/) and attack scripts in [`Security_Capture/Kali/`](Security_Capture/Kali/).
 
 ## Repository layout
 
@@ -122,7 +122,7 @@ Scenario 6 was dropped on Oct 5, 2026. Network captures go in [`Security_Capture
 | [`SCADA_HMI/`](SCADA_HMI/) | Ignition tag maps, tag exports, screens and cascade rules |
 | [`BSH_Systems/`](BSH_Systems/), [`FH_Systems/`](FH_Systems/) | Design document for each system |
 | [`BSH_Sensors/`](BSH_Sensors/), [`FH_Sensors/`](FH_Sensors/) | Component reference sheets |
-| [`Security_Capture/`](Security_Capture/), [`Kali/`](Kali/) | Packet captures and attack scripts |
+| [`Security_Capture/`](Security_Capture/) | Packet captures and attack scripts (Kali-side work in `Security_Capture/Kali/`) |
 | [`Logs/`](Logs/) | One decision-and-lessons log per working day |
 | [`References/`](References/) | Datasheets, guides and notes |
 | `Archive/` | Retired designs, kept as history only |

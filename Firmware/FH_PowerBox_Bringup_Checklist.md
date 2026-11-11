@@ -67,7 +67,7 @@ Same approach as BSH-PowerBox: no formal standalone Phase A planned — go strai
 
 1. Fill in real Wi-Fi credentials in your own copy of `FH_PowerBox_Node.ino` and flash.
 2. Confirm the Serial Monitor prints `Connected. IP address: 192.168.50.24`. **Not done.**
-3. From a laptop or the Kali VM, use `Kali/modbus_coil_tool.py` (standard library only, no install needed):
+3. From a laptop or the Kali VM, use `modbus_coil_tool.py` (standard library only, no install needed):
    - Write Coil 0 (`HVAC_RAIL_CMD`) = 1 — the FH-HVAC rail should power on, Discrete Input 0 should read back 1. **Not done.**
    - Disconnect Wi-Fi with a rail on — confirm all three rails default to OFF after about 5 s. **Not done.**
 4. **Connection-monitor check:** `HEARTBEAT` counts up about once a second; `RECONNECT_COUNT` reads 0 after boot, 1 after a WiFi drop/rejoin. **Not done.**
@@ -85,7 +85,7 @@ Same approach as BSH-PowerBox: no formal standalone Phase A planned — go strai
 1. Slave device on container 192.168.50.124: **Generic Modbus TCP Device**, IP = this ESP32's (192.168.50.24), slave ID 0, port 502. Coil count = 3, discrete input count = 3 (were 2 each), input register count = 2 (unchanged). **Not yet done on this container.**
 2. Ladder: 8 rungs, same shape as `PLC_Logic/BSH-PowerBox/Ladder_Diagram.md` with HVAC in place of Elevator — **Luis builds these himself in the OpenPLC Editor project `FH-PowerBox-ESP32/`, editing it in place**, same as BSH-PowerBox. **Not started.**
 3. Upload and compile `Program.st` (regenerated from the Editor build once it exists) on container .124. **Not started.**
-4. On-command test: write a SCADA coil from `Kali/modbus_coil_tool.py` and watch the rail power through the real chain. **Not started.**
+4. On-command test: write a SCADA coil from `modbus_coil_tool.py` and watch the rail power through the real chain. **Not started.**
 5. SCADA (Ignition) tags and screen for this node: **not started.**
 
 ---

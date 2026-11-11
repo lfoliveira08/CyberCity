@@ -159,3 +159,28 @@ RAM allocated: 18 GB of 30 GB. `local-lvm` is over-provisioned (about 115 GiB vi
 2. Is SCT5 your own router or a shared lab one, and what is the Wi-Fi AP the ESP32s use?
 3. Laptop model, and which USB data cables you own.
 4. Elevator display: the bring-up checklist says 16x2 I2C LCD, Section 8 of the workflow says an I2C **OLED** was substituted (Sep 25 note). Which is on the bench?
+
+## 6. Cost (ESTIMATES, USD)
+
+**None of these are purchase records.** The electronics figures are the agent's rough US hobby-retail guesses (Nov 4); the PLA weight is Luis-reported, its price is assumed; the H2C figure is a launch list price found by web search. Replace each with the real amount paid when known. Prices change.
+
+| Group | Est. cost | Basis |
+|---|---|---|
+| 8 ESP32 DevKits | ~$56 | ~$7 each |
+| 7 relay modules | ~$17 | ~$2.5 each |
+| Sensors: 2 flame, 2 gas, 2 IR, 2 reed, 1 DHT11 | ~$18 | |
+| 2 RC522 readers plus cards | ~$8 | |
+| 2 SG90 servos | ~$6 | |
+| Elevator: L293D, DC motor, LCD | ~$9 | |
+| HVAC fan and diode | ~$3 | |
+| 2 buzzers, 5 buttons, 5 RGB LEDs, resistors | ~$7 | |
+| 8 breadboards plus jumpers | ~$30 | |
+| 8 USB data cables | ~$24 | |
+| 3 power supplies (elevator motor, 2 servos) | ~$18 | |
+| **Node electronics subtotal** | **~$195** | range about $150-250 |
+| PLA, 29 kg total (about 4 kg failed prints) | ~$580-725 | assumed $20-25/kg; about $100 of it failures |
+| **Electronics + PLA** | **~$775-920** | |
+| Bambu Lab H2C printer (base AMS Combo) | ~$2,399 | US list price from web search (All3DP); Ultimate Set ~$2,899. **Not known whether it is yours, the school's, or which bundle** |
+| **With the printer** | **~$3,200-3,300** | ~$3,700-3,800 with the Ultimate Set |
+
+Not counted: the `pve` PC (repurposed), router SCT5, Wi-Fi AP, laptop, spares, shipping and tax. The Ignition Capstone license is provided through the course, so no cost to Luis as far as the docs show; software is otherwise free.

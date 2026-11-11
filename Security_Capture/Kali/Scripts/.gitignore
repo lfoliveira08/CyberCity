@@ -1,0 +1,9 @@
+# Attack scripts now live here in the repo (decision Nov 8, 2026, supersedes the
+# Nov 7 flash-drive-only rule — see Logs/2026-11-08.md). Scripts ARE tracked.
+# Keep OUT of git: captures, logs, and anything that could hold a secret.
+*.pcap
+*.pcapng
+*.log
+*.key
+*.pem
+*.env

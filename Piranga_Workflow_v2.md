@@ -140,7 +140,7 @@ The "hub" is no longer a single physical machine. It is a **Proxmox VE server**,
 |---|---|---|
 | OpenPLC Docker VM | Docker host for the 8 OpenPLC containers (macvlan, `.111`-`.124`) | 192.168.50.10 |
 | SCADA/HMI VM | Ignition SCADA layer (license confirmed Oct 19, 2026), HMI, event log, cascade rules | 192.168.50.30 (VM 101) |
-| Attacker/analysis VM `Kali` (VM 102) | Modbus-client tests and Section 11 attack scenarios (Kali 2026.2); its scripts and reports go in the folder `Kali/` once the attack scenarios start | 192.168.50.40 |
+| Attacker/analysis VM `Kali` (VM 102) | Modbus-client tests and Section 11 attack scenarios (Kali 2026.2); its scripts and reports go in the folder `Security_Capture/Kali/` (moved there Nov 7, 2026) once the attack scenarios start | 192.168.50.40 |
 
 The containers-not-VMs decision of Sep 22 still stands for the PLCs themselves (one container per OpenPLC, not one VM per PLC). Proxmox adds VMs one level above that: a VM for the Docker host and a separate VM for SCADA/HMI. Keeping SCADA in its own VM also avoids the macvlan limitation that a Docker host cannot reach its own macvlan containers.
 

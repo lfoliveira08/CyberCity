@@ -141,7 +141,7 @@ done in the systems, while performing the Section 11 vulnerability scenarios.
 Everything about that -- where the capture runs, filters, naming, the per-run
 log -- lives in `Security_Capture/`. See `Security_Capture/README.md` first.
 
-**`Kali/` (added Oct 20, 2026)** will hold the attack scripts and attack reports run from the Kali VM (VM 102, 192.168.50.40). It exists but is not in use until the attack-scenario session; see `Kali/README.md`. The pcap evidence stays in `Security_Capture/`.
+**`Security_Capture/Kali/` (added Oct 20, 2026; moved under `Security_Capture/` Nov 7, 2026)** will hold the attack scripts and attack reports run from the Kali VM (VM 102, 192.168.50.40). It exists but is not in use until the attack-scenario session; see `Security_Capture/Kali/README.md`. The pcap evidence stays in `Security_Capture/`.
 
 **`BOM/` (added Nov 4, 2026)** holds the bill of materials: node parts, servers and software, 3D-printed structures and PLA. It summarises the bring-up checklists, sensor sheets and `Proxmox_Build_Log.md`; those stay the source of truth. Draft, not counted on the bench; see `BOM/README.md`.
 

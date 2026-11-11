@@ -69,7 +69,7 @@ Simulation doesn't prove the wiring is electrically safe — current draw, relay
 
 1. Fill in real Wi-Fi credentials in your own copy of `BSH_PowerBox_Node.ino` and flash.
 2. Confirm the Serial Monitor prints `Connected. IP address: 192.168.50.14`. **Done** (Luis, Oct 28, 2026 — pasted Serial output: `wifi=up`, heartbeat counting).
-3. From a laptop or the Kali VM on the same Wi-Fi/subnet, use a Modbus TCP client (`Kali/modbus_coil_tool.py`, standard library only):
+3. From a laptop or the Kali VM on the same Wi-Fi/subnet, use a Modbus TCP client (`modbus_coil_tool.py`, standard library only):
    - Write Coil 0 (`ELEV_RAIL_CMD`) = 1 — the Elevator rail should power on, and Discrete Input 0 (`ELEV_RAIL_STATUS`) should read back 1. **Done via the PLC's own coils on container .114** (see Phase C below), not yet tested writing this ESP32's coils directly.
    - Disconnect Wi-Fi (or otherwise simulate comm loss) with a rail on — confirm all three rails default to OFF once the watchdog timeout (5 s) elapses. **Not yet confirmed with a measured timing; the rail did reset to off during bench testing but the cause (WiFi drop vs. a PLC restart) was not pinned down** (`Logs/2026-10-28.md`).
 4. **Connection-monitor check:** read Input Register 0 (`HEARTBEAT`) twice a few seconds apart — it must increase by about 1 per second. **Done** (reported counting). Read Input Register 1 (`RECONNECT_COUNT`) — must read 0 right after boot. Switch WiFi off ~15 s and back on: heartbeat resumes, `RECONNECT_COUNT` reads 1. Press reset: both registers go back to 0. **Not yet run as a deliberate, timed test.**
@@ -88,7 +88,7 @@ Simulation doesn't prove the wiring is electrically safe — current draw, relay
 2. Ladder: 8 rungs, built in the OpenPLC Editor project `BSH-PowerBox-ESP32/` (edited in place, keeping the project's history) — 3 command forwards, 3 status publishes, heartbeat and reconnect count. **Done** (Oct 28, 2026, 18:25 — checked against the saved Editor project; `Program.st` regenerated from it).
 3. Upload and compile `Program.st` on container .114. **Done, reported clean compile** (no compile log text captured yet).
 4. Confirm OpenPLC's Monitoring page matches live values, including the heartbeat counting. **Done** (reported).
-5. On-command test: write a SCADA coil (`%QX0.0` etc.) from a Modbus client and watch the rail power through the real chain. **Confirmed once, Elevator rail, via `Kali/modbus_coil_tool.py`** — coil 0 and coil 3 both read back 1 after the write, and the relay's onboard LED lit. FireAlarm and Door rails **not yet individually confirmed this way**.
+5. On-command test: write a SCADA coil (`%QX0.0` etc.) from a Modbus client and watch the rail power through the real chain. **Confirmed once, Elevator rail, via `modbus_coil_tool.py`** — coil 0 and coil 3 both read back 1 after the write, and the relay's onboard LED lit. FireAlarm and Door rails **not yet individually confirmed this way**.
 6. SCADA (Ignition) tags and screen for this node: **not started** (adoption Step 5).
 
 ---

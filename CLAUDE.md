@@ -54,7 +54,7 @@ All `192.168.50.x`. Infrastructure: `pve` .143 (Proxmox) · VM 100 `openplc-dock
 | OpenPLC ladder/ST, register maps | `PLC_Logic/<System>/` | the Editor's `build/` output |
 | Ignition tags, screens, cascade | `SCADA_HMI/<System>/` (+ its `CLAUDE.md`) | `References/Ignition/` |
 | Sensors, components | `BSH_Sensors/`, `FH_Sensors/` | — |
-| Attack scenarios, captures | `Security_Capture/`, `Kali/` | — |
+| Attack scenarios, captures | `Security_Capture/` (Kali-side work in `Security_Capture/Kali/`) | — |
 | Bill of materials, costs | `BOM/` (summarises the docs above; the source docs win) | — |
 
 ## 4. Ignition: the manual is ground truth

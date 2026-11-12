@@ -117,6 +117,7 @@ Scenario 6 was dropped on Oct 5, 2026. Network captures go in [`Security_Capture
 
 | Folder | Contents |
 |---|---|
+| [`docs/`](docs/) | **Project wiki** — reader-friendly pages: architecture, network plan, SCADA, security scenarios, rebuild guide, roadmap |
 | [`Firmware/`](Firmware/) | ESP32 sketches, wiring, Wokwi simulations and bench-test notes, one folder per system; [`Firmware/WORKFLOW.md`](Firmware/WORKFLOW.md) is the build process |
 | [`PLC_Logic/`](PLC_Logic/) | OpenPLC programs, ladder diagrams and Modbus register maps, one folder per system |
 | [`SCADA_HMI/`](SCADA_HMI/) | Ignition tag maps, tag exports, screens and cascade rules |
@@ -127,7 +128,7 @@ Scenario 6 was dropped on Oct 5, 2026. Network captures go in [`Security_Capture
 | [`References/`](References/) | Datasheets, guides and notes |
 | `Archive/` | Retired designs, kept as history only |
 
-Start with [`00_START_HERE.md`](00_START_HERE.md), then [`STATUS.md`](STATUS.md). [`Piranga_Workflow_v2.md`](Piranga_Workflow_v2.md) is the master design document.
+New here? Read the [project wiki in `docs/`](docs/README.md). Start with [`00_START_HERE.md`](00_START_HERE.md), then [`STATUS.md`](STATUS.md). [`Piranga_Workflow_v2.md`](Piranga_Workflow_v2.md) is the master design document.
 
 ## Getting started
 

@@ -156,7 +156,9 @@ This is a solo capstone project, and issues and ideas are welcome. Work is done 
 
 ## License
 
-To be decided.
+Released under the [MIT License](LICENSE).
+
+The license covers the original material in this repository (firmware, PLC programs, scripts and documents written for this project). It does **not** cover third-party files kept under `References/` (vendor manuals, datasheets and books), which stay under their own copyright and terms.
 
 ## Author
 

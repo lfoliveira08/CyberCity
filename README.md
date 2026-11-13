@@ -16,6 +16,8 @@ Two buildings, **BSH** and **Founder's Hall (FH)**, with four subsystems each. E
 
 There are no protocol bridges anywhere: one ESP32 ⇄ one OpenPLC container ⇄ one Ignition gateway. Ignition never talks to an ESP32 directly.
 
+The layout follows the **Purdue Model**: field devices (L0), ESP32 nodes with their dedicated OpenPLC controllers (L1) and Ignition SCADA/HMI (L2). The lab has no L3/L4 and its network is flat. See [Purdue Model mapping](docs/Architecture.md#purdue-model-mapping).
+
 ## Architecture
 
 ```mermaid

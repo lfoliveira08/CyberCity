@@ -10,7 +10,7 @@ A reader-friendly guide to the CyberCity ICS/SCADA cybersecurity testbed. These 
 
 | Page | What it covers |
 |---|---|
-| [Architecture](Architecture.md) | The two buildings, eight nodes, the ESP32 → OpenPLC → Ignition data path, with a diagram |
+| [Architecture](Architecture.md) | The two buildings, eight nodes, the ESP32 → OpenPLC → Ignition data path, and the Purdue Model mapping, with diagrams |
 | [Network & IP plan](Network-and-IP.md) | Every host, VM, container and port on `192.168.50.0/24` |
 | [SCADA / HMI](SCADA.md) | The Ignition layer: devices, the Device UDT, Campus_Map, alarms |
 | [Security scenarios](Security-Scenarios.md) | The attack and defence scenarios and how evidence is captured |

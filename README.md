@@ -50,6 +50,25 @@ flowchart LR
 
 All hosts sit on `192.168.50.0/24`. The Proxmox host `pve` is `192.168.50.143` and runs the three VMs above.
 
+### Purdue Model
+
+The same system, drawn by Purdue level. Kali sits outside the model as the attacker.
+
+```mermaid
+flowchart TB
+    L4["L4/L5 Enterprise and internet<br/>NOT BUILT (only the Ignition licence lease needs internet)"]
+    L3["L3 Site operations<br/>NOT BUILT (no MES or historian)"]
+    L2["L2 Supervisory<br/>Ignition Gateway, VM 101 (.30)<br/>tags, Campus_Map, alarms, cascade rules"]
+    L1["L1 Basic control<br/>8 OpenPLC containers (.111-.124)<br/>+ 8 ESP32 nodes (.11-.24)"]
+    L0["L0 Field devices<br/>sensors and actuators on each node"]
+
+    L4 -.-> L3 -.-> L2
+    L2 -- "Modbus TCP 502" --- L1
+    L1 -- "wired I/O" --- L0
+```
+
+The lab has no L3 or L4/L5, and its network is flat: every level shares `192.168.50.0/24` with no zones between them. The full level table, the gaps against a real deployment and how the attack scenarios line up are on the [Purdue Model mapping](docs/Architecture.md#purdue-model-mapping) page.
+
 | Slot | BSH | FH |
 |---|---|---|
 | 1 | **Elevator** (3 floors, L293D motor, buttons, display) | **HVAC** zone unit (DHT11, relay, setpoint) |

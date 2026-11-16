@@ -24,3 +24,9 @@ build/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Attack runbooks and raw packet captures stay off GitHub (Luis, Nov 16, 2026).
+# Keep them on the local disk or the lab USB only.
+Security_Capture/Kali/*_Runbook.md
+Security_Capture/Captures/*.pcap
+Security_Capture/Captures/*.pcapng

@@ -1,6 +1,8 @@
-# Attack scripts now live here in the repo (decision Nov 8, 2026, supersedes the
-# Nov 7 flash-drive-only rule — see Logs/2026-11-08.md). Scripts ARE tracked.
-# Keep OUT of git: captures, logs, and anything that could hold a secret.
+# Attack scripts stay OFF GitHub (Luis, Nov 16, 2026: he had recon_scan.py removed
+# from the repo; supersedes the Nov 8 "scripts live in the repo" decision).
+# Keep scripts on the local disk or the lab USB only.
+*.py
+# Also keep out of git: captures, logs, and anything that could hold a secret.
 *.pcap
 *.pcapng
 *.log

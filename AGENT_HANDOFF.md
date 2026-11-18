@@ -28,7 +28,7 @@ git --git-dir=$HOME/mnt/git-data/cybercity.git --work-tree=$HOME/mnt/CyberCity l
 ```
 **Done when:** both commands return real output. Then add the working form of the command to `CLAUDE.md` §6 and delete the "not reachable" warning there. This command has **never been run successfully** — it is derived, not tested. If it fails, report the exact error rather than improvising a second repo.
 
-- [ ] T1 done
+- [x] T1 done (2026-11-15, this session) — **different fix than the one above.** The derived `--git-dir=$HOME/mnt/...`/`--work-tree=$HOME/mnt/...` command was not tried as written (this session's shell is a Windows path, not the `~/mnt/` Linux layout it assumes). Instead, plain `git status --short` / `git log --oneline -5` / `git branch --show-current`, run from `C:\Users\lfoli\OneDrive\Área de Trabalho\CyberCity` with no `--git-dir`/`--work-tree` flags, worked directly and returned real output (develop branch, real commit history, correct per-file status). `.git` here is still the same `gitdir: C:/Users/lfoli/git-data/cybercity.git` pointer file (unchanged); what changed is that `C:\Users\lfoli\git-data` is reachable from this session's shell (confirmed: `ls "/c/Users/lfoli/git-data/cybercity.git"` succeeds) — Luis must have connected it as a session folder per this task's instruction to Luis. **Not yet done:** adding a working command form to `CLAUDE.md` §6 — holding off because the form that worked here (no flags) is specific to this session's path resolution and may not hold in a differently-configured agent shell (e.g. one that really is `~/mnt/...`-rooted); a future session should confirm plain `git` commands work for it too before CLAUDE.md is rewritten, rather than assuming this result generalizes.
 
 ---
 

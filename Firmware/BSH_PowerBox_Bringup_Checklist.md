@@ -4,6 +4,8 @@
 
 **Redesigned Oct 28, 2026.** This node no longer drives lights and a fan — it switches power to the other three BSH systems (Elevator, FireAlarm, Door). Built and bench-tested first as a prototype on a spare ESP32 (`Prototype_PowerRails/`), then adopted into this path the same day. The old checklist (lights + fan, Phase A complete Oct 5, 2026) described the design now archived — see `Archive/README.md`.
 
+> **Elevator rail superseded Nov 17, 2026** — the checklist items below about the Elevator rail (GPIO 25, `ELEV_RAIL_CMD`) describe how it was built and tested at the time; they're left as history, not corrected. As of Nov 17 that rail is wired to nothing — the Elevator brownout-looped under motor load through it and was moved to a permanent USB 5V supply. See `Firmware/BSH-PowerBox/Schematic/Connections.md` and `STATUS.md`.
+
 Firmware for this node: `BSH_PowerBox_Node.ino` (same folder as this file).
 
 ---

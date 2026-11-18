@@ -39,7 +39,7 @@
 #include <ModbusIP_ESP8266.h>
 
 const char* ssid     = "SCT5";
-const char* password = "S3n!0rC@p";
+const char* password = "YOUR_WIFI_PASSWORD";
 
 IPAddress ip(192, 168, 50, 22);
 IPAddress gateway(192, 168, 50, 1);
@@ -107,9 +107,70 @@ void setRgb(bool r, bool g, bool b) {
 }
 
 void calibrateGasSensor() {
+  // FH's MQ-4 was found (2026-11-16, Kali/Ignition bench session) to still be
+  // climbing well past a 2s calibration window -- a fixed baseline grabbed
+  // that early false-alarms for minutes. Fix: wait for the reading to stop
+  // moving before calibrating, instead of trusting a fixed delay.
+  // STABLE_WINDOW_COUNTS/STABLE_READINGS_NEEDED/WARMUP_TIMEOUT_MS are
+  // first-pass placeholders -- tune from the warm-up Serial log on this
+  // hardware, same as GAS_ALERT_MARGIN below.
+  const int STABLE_WINDOW_COUNTS        = 15;     // max swing between two readings to count as "settled"
+  const int STABLE_READINGS_NEEDED      = 5;      // consecutive settled readings (seconds) required
+  const unsigned long WARMUP_TIMEOUT_MS = 120000; // give up and calibrate anyway rather than hang forever
+
+  Serial.println("Waiting for gas/smoke sensor to warm up (keep sensor in clean air)...");
+  int lastReading = analogRead(PIN_GAS);
+  int stableCount = 0;
+  unsigned long warmupStart = millis();
+
+  while (stableCount < STABLE_READINGS_NEEDED && (millis() - warmupStart) < WARMUP_TIMEOUT_MS) {
+    // Keep answering Modbus during the wait -- otherwise the PLC sees this
+    // node go quiet for the whole warm-up (same symptom as the WiFi-order
+    // bug this was meant to fix). 10x 100ms + mb.task() beats one delay(1000).
+    // 2026-11-16, second pass: mb.task() alone wasn't enough -- Ignition's
+    // Status is driven by HEARTBEAT staleness (Device UDT rule), and
+    // heartbeat only ticks in loop(), which hasn't started yet. Confirmed on
+    // the bench: Status blipped 1 then 2 during this wait, back to 0 once
+    // loop() resumed. Tick heartbeat here too, once per outer pass (~1 Hz,
+    // same cadence as loop()), so SCADA sees this node as alive throughout.
+    for (int i = 0; i < 10; i++) {
+      mb.task();
+      delay(100);
+    }
+    heartbeat++;
+    mb.Ireg(IREG_HEARTBEAT, heartbeat);
+    int reading = analogRead(PIN_GAS);
+    int delta = abs(reading - lastReading);
+    Serial.print("  warm-up reading=");
+    Serial.print(reading);
+    Serial.print(" delta=");
+    Serial.print(delta);
+    if (delta < STABLE_WINDOW_COUNTS) {
+      stableCount++;
+      Serial.print("  settled(");
+      Serial.print(stableCount);
+      Serial.println(")");
+    } else {
+      stableCount = 0;
+      Serial.println("  still drifting, reset settle count");
+    }
+    lastReading = reading;
+  }
+  if ((millis() - warmupStart) >= WARMUP_TIMEOUT_MS) {
+    Serial.println("WARNING: gas sensor never settled within the warm-up timeout -- calibrating anyway.");
+  }
+
   Serial.println("Calibrating gas/smoke baseline (keep sensor in clean air, ~2s)...");
   long total = 0;
   for (int i = 0; i < GAS_CALIBRATION_SAMPLES; i++) {
+    mb.task();  // keep answering Modbus through this ~2s averaging pass too
+    // ~2s total (20 x 100ms) is under the 3s yellow threshold on its own,
+    // but tick heartbeat at the 1s mark anyway so it never drifts stale
+    // even if GAS_CALIBRATION_INTERVAL_MS is changed later.
+    if (i == 9) {
+      heartbeat++;
+      mb.Ireg(IREG_HEARTBEAT, heartbeat);
+    }
     total += analogRead(PIN_GAS);
     if (GAS_CALIBRATION_INTERVAL_MS > 0) delay(GAS_CALIBRATION_INTERVAL_MS);
   }
@@ -137,8 +198,11 @@ void setup() {
   digitalWrite(PIN_BUZZER, LOW);
   setRgb(false, true, false);   // boot state: steady green = normal
 
-  calibrateGasSensor();
-
+  // 2026-11-16: join WiFi and bring Modbus up FIRST, before the gas warm-up
+  // wait, which can now take up to 120s (see calibrateGasSensor()). With the
+  // old 2-second calibration the order didn't matter; now, calibrating first
+  // meant OpenPLC saw this node as "disconnected" for the whole warm-up on
+  // every boot/reflash. Connect and start serving Modbus, THEN calibrate.
   WiFi.mode(WIFI_STA);
   WiFi.config(ip, gateway, subnet);
   WiFi.begin(ssid, password);
@@ -166,6 +230,12 @@ void setup() {
   mb.addIreg(IREG_RECONNECT_COUNT, 0);
   wifiWasUp = (WiFi.status() == WL_CONNECTED);
   mb.addCoil(COIL_ALARM_ACTIVATE, false);
+
+  // Modbus is already answering (gasRaw=0 / gasSmokeAlert=false until this
+  // finishes) by the time this runs -- calibrateGasSensor() now calls
+  // mb.task() itself throughout the warm-up wait, so the PLC keeps seeing
+  // this node connected the whole time instead of going quiet.
+  calibrateGasSensor();
 
   Serial.println("Setup complete. Modbus slave ready.");
   Serial.println();

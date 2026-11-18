@@ -210,7 +210,7 @@ gets flashed by mistake. There is one home for each kind of file:*
 |---|---|---|
 | A node's current firmware | `Firmware/<Bldg>-<System>/<Bldg>_<System>_Node/<Bldg>_<System>_Node.ino` | One per node. Holds the Phase A standalone sketch now, replaced in place by the WiFi+Modbus version when Phase B starts — the path never changes |
 | Simulation | `Firmware/<Bldg>-<System>/Wokwi/` | `diagram.json`, `sketch.ino`, `README.md`, optional `libraries.txt` |
-| A node's schematic | `Firmware/<Bldg>-<System>/Schematic/` | `Connections.md` (the connection list the drawing comes from) and `<Bldg>-<System>_Schematic_Draft.pdf` (generated drawing, not a Fritzing file). Added Oct 12, 2026 |
+| A node's schematic | `Firmware/<Bldg>-<System>/Schematic/` | `Connections.md` (the connection list the drawing comes from) and the Fritzing exports `<Bldg>-<System>_Schematic.fzz` (editable source), `..._schematic.{pdf,png,svg}`, `..._breadboard.{pdf,png,svg}`, `..._pcb.svg`. Added Oct 12, 2026; replaced with Fritzing drawings Nov 15, 2026 (built by Luis's partner Jeraldini) |
 | Per-component wiring + log | `Firmware/<Bldg>-<System>/<Component>/` | `Wiring.md`, `Build_Log.md`, optional `BenchTest.ino` (Section 3) |
 | Board/WiFi/Modbus bring-up | `Firmware/<Bldg>-<System>/ESP32_Core_Modbus/` | `Build_Log.md` only |
 | Completion report | `Firmware/<Bldg>-<System>/SYSTEM_REPORT.md` | Written when Phase A completes (Section 4) |

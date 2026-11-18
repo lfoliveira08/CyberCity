@@ -18,7 +18,7 @@ Status key: **Doc** = a checklist or sensor sheet lists it · **Bench** = a log 
 | 3 | 220 ohm resistor | Doc | one per RGB channel |
 | 1 | Push button (pull station) | Doc | GPIO 4, internal pull-up |
 | 1 | Flame sensor module (3-pin, LM393) | Doc | GPIO 18, active LOW. **The pilot checklist's parts table omits it**; it is in the sensor sheet and the FH checklist |
-| 1 | Gas/smoke sensor module | **Open** | **BSH bench part is an MQ-9, not the documented MQ-2** (`MQ-2_Gas_Smoke_Sensor/Build_Log.md`, Sep 17). FH module model: not recorded. AO on GPIO 34; DO wired to GPIO 19 on BSH, unused |
+| 1 | Gas/smoke sensor module | **Open** | **BSH bench part is an MQ-9, not the documented MQ-2** (`MQ-2_Gas_Smoke_Sensor/Build_Log.md`, Sep 17). **FH module identified 2026-11-16 (Luis) as an MQ-4**, on the board swapped in that day -- see `Firmware/FH-FireAlarm/ESP32_Core_Modbus/Build_Log.md`. AO on GPIO 34; DO wired to GPIO 19 on BSH, unused. BSH AO voltage check still not done (item 2 below) |
 | 0-1 | 1k + 2k resistor (AO divider) | **Open** | needed only if AO exceeds 3.3 V; the AO voltage check was **still pending** in that log (Sep 17), no later record found |
 | 1 | Breadboard + jumpers, USB data cable | Doc | |
 
@@ -85,7 +85,7 @@ Dropped Oct 28: lights, fan, push buttons. Rail wiring and how each downstream n
 | Push buttons | 5 | 1 per FireAlarm, 3 Elevator |
 | Active buzzers | 2 | |
 | Flame sensor modules | 2 | |
-| Gas sensor modules | 2 | MQ-9 on BSH |
+| Gas sensor modules | 2 | MQ-9 on BSH, MQ-4 on FH (identified 2026-11-16) |
 | RC522 readers / SG90 servos / IR modules / reed switches | 2 each | |
 | 10 kohm resistors | 2 | Door pull-ups |
 | RFID cards | 2+ | |
@@ -99,7 +99,7 @@ Not in any bring-up checklist: jumper wire counts, a shared bench supply, spares
 
 ## 3. To settle before this is final (Luis)
 
-1. Gas module on FH: MQ-2, MQ-9 or other? And did the BSH AO voltage check (under 3.3 V) ever happen?
+1. ~~Gas module on FH: MQ-2, MQ-9 or other?~~ **Settled 2026-11-16: MQ-4** (Luis, on the board swapped in that day). Did the BSH AO voltage check (under 3.3 V) ever happen? Still open, and now also open for FH's MQ-4.
 2. HVAC sensor: read the printed model off the part (DHT11 / DHT22 / other).
 3. Which ESP32 boards you actually own: model, 30 vs 38 pin, spares.
 4. Supplies: what feeds the elevator motor and the two servos.

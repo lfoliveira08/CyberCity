@@ -30,3 +30,7 @@ desktop.ini
 Security_Capture/Kali/*_Runbook.md
 Security_Capture/Captures/*.pcap
 Security_Capture/Captures/*.pcapng
+Security_Capture/Attack_Execution_Playbook.md
+
+# Claude-session output scratch, not project content
+Claude outputs/

@@ -7,7 +7,8 @@ decision), reversing the Nov 7 "flash-drive only" rule. See `Logs/2026-11-08.md`
 
 The **runnable attack scripts** for the scenarios in `Security_Capture/Scenarios.md` live **in
 this folder, tracked by git**, alongside the manifest below — one file per scenario, written in
-**Python 3** (standard library where possible). They reach
+**Python 3**, each **self-contained** (reimplements the minimal Modbus it needs, standard library
+only — see "Script design" below). They reach
 GitHub only when Luis commits and pushes (git is unreachable from an agent shell, so Claude never
 pushes); the repo is private.
 
@@ -38,23 +39,30 @@ The `.gitignore` here tracks the scripts but keeps out captures (`*.pcap*`), log
 | Scenario | Script file | Purpose | Base |
 |---|---|---|---|
 | Recon | `recon_scan.py` | port/Modbus scan of `192.168.50.0/24`, find `:502` servers | nmap (via subprocess) |
-| 3 — Unauthorized door-open | _tbd_ | FC 5 write `DOOR_OPEN_CMD` coil 0 → `.113` (revised Nov 8, 2026 — replaces RFID clone) | `modbus_coil_tool.py` |
-| 4 — False fire alarm | _tbd_ | FC 5 write `ALARM_ACTIVATE` coil 0 → `.112` | `modbus_coil_tool.py` |
-| 5 — Elevator lockout | _tbd_ | FC 5 `ELEVATOR_DISABLE` coil 3 → `.111` (+ timed loop for the persistent variant) | `modbus_coil_tool.py` |
-| 7 — Power box | _tbd_ | FC 5 rail coil → `.114`/`.124` | `modbus_coil_tool.py` |
-| 9 — Node isolation / DoS | _tbd_ | connection/flood DoS of one node | hping3 / custom |
-| 11 — HVAC setpoint | _tbd_ | FC 6/16 `TARGET_TEMP_C` HR 0 → `.121` | (holding-register tool, to write) |
-| 12 — PLC logic injection | n/a (web-UI procedure) | upload modified `Program.st` via `:8080` | browser / curl — see `../Scenario12_PLC_Logic_Injection_Runbook.md` |
-| 13 — ESP32 bricking (spare board) | n/a (local flash) | `esptool` flash erase (soft-brick) + reflash recovery; eFuse permanent brick documented-not-performed | esptool — see `../Scenario13_ESP32_Bricking_Runbook.md` |
-| 14 — IRONGATE combined MITM (false view) | _tbd_ (**gated** on the Nov 9, 2026 Docker/L2 net check) | ARP-spoof both links + a minimal Modbus value-rewriting proxy per position (A: ESP32 `.12`↔container `.112`; B: container `.112`↔Ignition `.30`) — demonstration-level, keep the rewrite rules minimal (rule 5) | ettercap/bettercap + custom proxy — runbook TBD after Nov 9 |
+| 3 — Unauthorized door-open | `s03_door_open_inject.py` | FC 5 write `DOOR_OPEN_CMD` coil 0 → `.113` (before/after coil read around it); revised Nov 8, 2026 — replaces RFID clone | self-contained (stdlib FC 1/5) |
+| 4 — False fire alarm | `s04_false_alarm.py` | FC 5 write `ALARM_ACTIVATE` coil 0 → `.112`; before/after coil read; `restore` arg silences it | self-contained (stdlib FC 1/5) |
+| 5 — Elevator lockout | `s05_elevator_lockout.py` | FC 5 `ELEVATOR_DISABLE` coil 3 → `.111`; `persistent [S]` re-asserts every S s (Industroyer-style), `restore` clears; before/after read | self-contained (stdlib FC 1/5) |
+| 6 — Building blackout | `s06_blackout.py` | **FC 15** Write Multiple Coils 0–2 = 0 → `.114`/`.124` (cut all rails in one frame); `restore` powers all on; before/after read. Repurposes dropped slot 6 (Nov 15, 2026) | self-contained (stdlib FC 1/15) |
+| 7 — Power box | `s07_powerbox.py` | FC 5 rail coil (0 ELEV / 1 FIRE / 2 DOOR) → `.114` (default) or `.124`; `0`=cut / `1`=power; before/after read | self-contained (stdlib FC 1/5) |
+| 9 — Node isolation / DoS | `s09_dos.py` | hold N TCP connections to a node's `:502` to exhaust ModbusIP slots (default `.14`, N=16, 30 s, auto-release); isolates one node, others unaffected | self-contained (stdlib sockets); `hping3` noted as the flood alternative |
+| 10 — Red/Blue composite | `s10_redblue.py` | runs S3/S4/S5/S6/S7/S11 in sequence on one timeline for one pcap; `restore` undoes what it can | drives the s0x scripts (no new technique) |
+| 11 — HVAC setpoint | `s11_hvac.py` | FC 6 write `TARGET_TEMP_C` HR 0 → `.121` (tenths-degC; default 900 = 90 C); FC 3 before/after read; `restore` → 240 | self-contained (stdlib FC 1/3/6) |
+| 12 — PLC logic injection | `s12_web_inject.py` (demo scaffold) | `:8080` web-UI: `creds` (login+upload) / `cookie` (session-cookie replay); endpoints TODO-confirm vs live; **NOT** a weaponized XSS | `requests` — see `../Scenario12_PLC_Logic_Injection_Runbook.md` |
+| 13 — ESP32 bricking (spare board) | `s13_brick.py` | wraps `esptool` erase (soft-brick) + reflash recovery; spare-board confirm prompt; **never** the eFuse step | esptool — see `../Scenario13_ESP32_Bricking_Runbook.md` |
+| 14 — IRONGATE combined MITM (false view) | `s14_mitm_proxy.py` (scaffold, **gated**) | minimal Modbus value-rewriting relay (`rewrite_response` hook) — demonstration-level (rule 5); ARP spoof via bettercap/ettercap (external) + iptables REDIRECT; **gated** on the Docker/L2 network check; runbook `../Scenario14_IRONGATE_MITM_Runbook.md` | stdlib relay + bettercap/ettercap |
 
 Fill in the real file names as scripts are created here.
 
-## The base tool
+## Script design — self-contained per scenario (decided Nov 15, 2026)
 
-`modbus_coil_tool.py` (read/write a single coil, standard library) is the shared base tool for the
-coil-write scenarios (#3/#4/#5/#7). It was briefly moved to a flash drive on Nov 7, 2026 and removed
-from the working tree; under the Nov 8 decision it belongs **here in this folder** again. A copy
-still sits at `Prototype_PowerRails/BenchTest/modbus_coil_tool.py`, and the original is in git
-history (`git show <rev>:Kali/modbus_coil_tool.py`) — **Luis to confirm which copy is canonical**,
-then place it here. (See `Logs/2026-11-08.md`.)
+Each scenario script is **self-contained**: it implements the little Modbus/TCP it needs (FC 1 read
+coils, FC 5 write single coil) inline, standard library only — no external tool, no install. This
+**supersedes the Nov 8 "thin wrapper that calls `modbus_coil_tool.py`" idea**: Luis's call, so each
+script fully shows what it does (better for the report) and runs anywhere on its own. The ~12-line
+Modbus block is copied into each coil scenario (#3/#4/#5/#7); the FC 6/16 scenarios (#11) add a
+holding-register write the same way.
+
+`modbus_coil_tool.py` stays in this folder as an **optional standalone interactive tool** (handy for
+ad-hoc `read`/`write` at the shell), but the scenario scripts no longer depend on it. A copy also sits
+at `Prototype_PowerRails/BenchTest/modbus_coil_tool.py`, and the original is in git history
+(`git show <rev>:Kali/modbus_coil_tool.py`). (See `Logs/2026-11-15.md`.)

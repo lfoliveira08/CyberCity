@@ -1,6 +1,8 @@
 # Relay Modules -- BSH-PowerBox Power Rails
 
 > **Redesigned Oct 28, 2026.** This sheet used to describe the lights + fan relays; the old version, and the old `Fan_Relay/`/`Lights_Relay/` build folders, are archived (`Archive/README.md`, Oct 28, 2026 rows).
+>
+> **Elevator rail unused as of Nov 17, 2026** — the relay itself is still in place (GPIO 25) but switches nothing now; the Elevator brownout-looped under motor load through it and moved to permanent USB power. See `Firmware/BSH-PowerBox/Schematic/Connections.md`.
 
 **Used in:** BSH-PowerBox node (3 power-rail channels — Elevator, FireAlarm, Door)
 

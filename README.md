@@ -71,7 +71,7 @@ The lab has no L3 or L4/L5, and its network is flat: every level shares `192.168
 
 | Slot | BSH | FH |
 |---|---|---|
-| 1 | **Elevator** (3 floors, L293D motor, buttons, display) | **HVAC** zone unit (DHT11, relay, setpoint) |
+| 1 | **Elevator** (3 floors, L293D motor, buttons, display) | **HVAC** zone unit (DHT11, relay, setpoint; readings don't match a DHT11 — open item, see `STATUS.md`) |
 | 2 | **Fire Alarm** (buzzer, RGB, pull station, flame, gas; MQ-9 on BSH) | Fire Alarm, mirrored |
 | 3 | **Door** (RC522 RFID, servo, IR, reed switch) | Door, mirrored |
 | 4 | **Power Box** (relays that switch power rails to the other systems in its building) | Power Box, mirrored |
@@ -95,7 +95,7 @@ Each node exposes `HEARTBEAT` and `RECONNECT_COUNT` as its last two Input Regist
 
 ## Status
 
-As of **Oct 27, 2026** (the live version is [`STATUS.md`](STATUS.md)):
+This section is a snapshot and will drift; the live version is [`STATUS.md`](STATUS.md):
 
 | Layer | State |
 |---|---|

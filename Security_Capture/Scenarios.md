@@ -116,6 +116,38 @@ note for the report — see Background.)*
 - **CVE:** none (Modbus no-auth). *(Later phase, real AB PLC: CVE-2020-6111.)*
 - **Capture filter:** `modbus.func_code == 5 && ip.addr == 192.168.50.111` (periodic write = the tell)
 
+## Scenario 6 — Building-wide power cut (FC 15 Write Multiple Coils)
+
+*(Repurposed Nov 15, 2026 — the original "Backup power ATS" was dropped Oct 5, 2026; this reuses
+slot 6 as a distinct FC-15 scenario. Scenario 7 cuts one rail with FC 5; this cuts all three at once.
+**Target switched to FH as the primary example Nov 17, 2026** — see note below.)*
+
+- **Goal:** drop a whole building's nodes in a single coordinated command.
+- **Target:** **FH-PowerBox `192.168.50.24` / container `192.168.50.124` (rail coils 0–2) — primary
+  example.** BSH-PowerBox `.14`/`.114` mirrors the same coils but is **no longer usable for this
+  scenario** (see note below).
+- **Object (write):** rail coils **0 `HVAC_RAIL_CMD`, 1 `FIRE_RAIL_CMD`, 2 `DOOR_RAIL_CMD`** (FH
+  naming) written together with **FC 15 Write Multiple Coils** (0 = cut, 1 = power).
+  `PLC_Logic/FH-PowerBox/Register_Map.md` (confirm names there; BSH's equivalent map uses
+  `ELEV_RAIL_CMD` instead of `HVAC_RAIL_CMD` for coil 0, verified Oct 28).
+- **Action:** `s06_blackout.py 192.168.50.124` — one FC 15 frame setting coils 0–2 = 0 on the FH
+  container; `restore` powers all three on. (The script's default host is still `.114`; pass
+  `.124` explicitly, or swap the default — see note below.)
+- **Expected:** all three FH nodes lose power together; their heartbeats freeze in SCADA at once
+  (contrast #7, which drops one).
+- **Real-world attack:** **Ukraine 2015** (operators opened multiple breakers) and **Industroyer**
+  (coordinated multi-point commands).
+- **ATT&CK:** T1692.001 (old T0855) · T0831 · impact **T0826 Loss of Availability**
+- **CVE:** none — Modbus no-auth design weakness.
+- **Capture filter:** `modbus.func_code == 15 && ip.addr == 192.168.50.124`
+
+**Note (Nov 17, 2026):** BSH-PowerBox's coil 0 (`ELEV_RAIL_CMD`) no longer actually powers anything — the
+BSH-Elevator node brownout-looped when powered through its PowerBox relay rail (heavy DC-motor load on
+a weak source) and was moved to permanent USB power instead. Cutting all three BSH rails would now only
+take down 2 of 3 nodes (FireAlarm, Door), not a true "whole building" blackout — so FH, where all three
+rails still actually power their nodes, is the scenario's primary target going forward. BSH is still a
+valid demo of "2 of 3 nodes drop," just not the full-blackout story. See `STATUS.md` and `Logs/2026-11-17.md`.
+
 ## Scenario 7 — Power box manipulation
 
 - **Goal:** cut (or force) a building's power rail to a node from an unexpected host — a
@@ -125,8 +157,10 @@ note for the report — see Background.)*
   **Coil 2** `DOOR_RAIL_CMD` (FC 5; 1 = node powered, NO relay, no inversion). Container
   `SCADA_*_RAIL_CMD` at `%QX0.0`–`%QX0.2` (`BSH-PowerBox/Register_Map.md §3`, verified Oct 28).
   FH-PowerBox mirrors it (HVAC/FireAlarm/Door rails) — **confirm names in `FH-PowerBox/Register_Map.md`.**
-- **Action:** write a rail coil 0 (cut) or 1 (force), e.g. `... write 192.168.50.114 0 0` to drop
-  the Elevator rail.
+- **Action:** write a rail coil 0 or 1 (cut or force), e.g. `... write 192.168.50.114 1 0` to drop
+  **the FireAlarm rail** — **the worked example as of Nov 17, 2026**. **Coil 0 (Elevator) is no
+  longer a valid example** (see Scenario 6's note — the elevator is on permanent USB power and its
+  rail no longer controls anything real); Coil 2 (Door) also still works as an example.
 - **Expected:** the targeted node loses/gains power; its relay LED and `*_RAIL_STATUS` (DI) follow;
   the powered node goes offline in SCADA (heartbeat freezes).
 - **Real-world attack:** **Ukraine 2015** — opening breakers to cut power.
@@ -140,8 +174,10 @@ note for the report — see Background.)*
 - **Target:** BSH-Door event → SCADA → BSH-FireAlarm + FH-FireAlarm (`.112` + `.122`).
 - **Objects:** door `ACCESS_GRANTED`/`IR_DETECTED` (read) then `ALARM_ACTIVATE` Coil 0 writes
   to both fire nodes. *(Note: the IR-without-card cascade was dropped Nov 3; the live cascade is
-  the pull-station → rail-off rule — see `Logs/2026-11-03.md`. This scenario captures whichever
-  automated multi-node write chain is in place.)*
+  the pull-station rule — see `Logs/2026-11-03.md`. As of Nov 17, the BSH side writes
+  `BSH/Elevator/ElevatorDisable` = True (not a rail coil — see Scenario 6/7 notes); the FH side
+  still cuts `FH/PowerBox/HvacRailCmd`. This scenario captures whichever automated multi-node
+  write chain is in place.)*
 - **Expected:** the **order and timing** of the two writes is the evidence.
 - **Real-world attack:** **Industroyer** — automated multi-point commands; **Stuxnet** — orchestration.
 - **ATT&CK:** T1692.001 (old T0855) · T0831 · **CVE:** none
@@ -302,6 +338,7 @@ Nothing run.)*
 | 3 | Unauthorized door-open (Modbus) | Maroochy 2000 | T1692.001 · T0827 | — |
 | 4 | False fire alarm | TRITON / Maroochy | T1692.001 · T0880 | — |
 | 5 | Elevator lockout | Industroyer / Ukraine 2015 | T1692.001 · T0827 | (later: CVE-2020-6111) |
+| 6 | Building blackout (FC 15 multi-coil) | Ukraine 2015 / Industroyer | T1692.001 · T0826 | — |
 | 7 | Power box | Ukraine 2015 | T1692.001 · T0826 | — |
 | 8 | Cross-building cascade | Industroyer / Stuxnet | T1692.001 · T0831 | — |
 | 9 | Node isolation / DoS | Industroyer SIPROTEC DoS | T0814 | CVE-2015-5374 (reference only) |

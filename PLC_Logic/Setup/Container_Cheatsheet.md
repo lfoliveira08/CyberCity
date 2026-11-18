@@ -76,6 +76,20 @@ Check all 8 web UIs from the **laptop** (PowerShell). Expect `HTTP 200` for each
 
 Containers have `--restart unless-stopped`: they start again by themselves when the VM or Docker restarts, unless you stopped them yourself with `docker stop`.
 
+### After the Proxmox host or the Docker VM restarts (Nov 16, 2026)
+
+- **The containers come back by themselves, but their PLC programs can come back stopped.** Bench result on Nov 16: after a full Proxmox shutdown, `docker ps` showed all 8 containers Up, port 8080 answered on all 8, and port 502 was closed on all 8. A container with a stopped PLC has no Modbus server, so Ignition shows its device Disconnected. Open `http://192.168.50.<ip>:8080` and check the dashboard says Running; press **Start PLC** if not. If the dashboard already says Running but 502 is still closed, check **Settings** (Modbus server enabled, port 502), save, then Start PLC again.
+- **Which ones to start:** only the containers whose ESP32 is powered. A running PLC with an unpowered ESP32 just logs `Device ... is disconnected` and gives Ignition stale values.
+- **Check port 502 from the laptop, never from the Docker VM.** From the VM, `nc` to `.111`-`.124` times out on every port because of the macvlan host limit above, so it looks like "everything is down" when it is not. Laptop PowerShell:
+
+```powershell
+111,112,113,114,121,122,123,124 | % { "$_ : " + (Test-NetConnection 192.168.50.$_ -Port 502 -WarningAction SilentlyContinue).TcpTestSucceeded }
+```
+
+  `True` = PLC running. `False` with 8080 `True` (same command, `-Port 8080`) = container up, PLC stopped.
+- **Ignition Gateway:** it was reachable on `http://192.168.50.30:8088` after the restart without any manual step (Luis-reported, one restart).
+- **Black Proxmox console on VM 100 (fixed Nov 16, 2026):** the VM was fine (ping and SSH worked); only the console was black. Ruled out: Display type (Default/VGA), idle blanking (`consoleblank` = 0), kernel `console=` arguments (none). The VM booted to `graphical.target` with no text login on the console, and writing to `/dev/tty1` plus `chvt 1` showed text, so the console itself worked. Most likely the graphical session was not drawing in the noVNC window (display-manager status not checked). Fix applied by Luis on the VM: `sudo systemctl set-default multi-user.target` and `sudo systemctl isolate multi-user.target`; the console then showed `OpenPLC-Docker login:`. To undo: `sudo systemctl set-default graphical.target`.
+
 ## 4. One container at a time
 
 Run the Docker commands on the Docker VM and the laptop check in PowerShell on the laptop.

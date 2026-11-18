@@ -50,7 +50,7 @@
 
 ## Fritzing notes
 
-Not yet re-drawn for this design. The old schematic PDF in this folder (`FH-PowerBox_Schematic_Draft.pdf`) still shows the lights-and-fan wiring -- treat it as historical until a new drawing exists.
+Re-drawn Nov 15, 2026 in Fritzing (by Jeraldini): `FH-PowerBox_Schematic_schematic.{pdf,png,svg}` shows the current power-rails design (3x relay rails on GPIO 25/26/27, mirroring BSH-PowerBox) — not the old lights-and-fan wiring. The old `_Draft.pdf` (lights-and-fan) has been removed from this folder.
 
 ## Files that belong in this folder
 

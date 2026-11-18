@@ -1,0 +1,691 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Created with Fritzing (https://fritzing.org/) -->
+<svg xmlns="http://www.w3.org/2000/svg" baseProfile="tiny" height="6.92003in" version="1.2" viewBox="0 0 9000 6920.03" width="9in" x="0in"  xmlns:svg="http://www.w3.org/2000/svg" y="0in">
+ <g id="watermark" >
+  <g >
+   <g >
+    <path d="M8656.5,6833.92c-8.38889,0,-15.7083,4.51389,-19.75,11.2361l-38.8333,0l55,-56.5417c2.02778,-2.02778,4.01389,-4.47222,5.94444,-7.23611c2.06944,-3.08333,3.16667,-6.65278,3.16667,-10.6667c0,-3.875,-1.34722,-7.19444,-3.98611,-9.86111c-2.63889,-2.61111,-6.16667,-3.98611,-10.4722,-3.98611l-64.3889,0c-4.23611,0,-7.70833,0.833333,-10.3056,2.36111c-3.04167,1.80556,-4.58333,5.11111,-4.58333,9.81944c0,4.56944,1.54167,7.80556,4.58333,9.61111c2.61111,1.54167,6.08333,2.33333,10.3056,2.33333l43.7222,0l-55.1944,56.75c-2.02778,2.04167,-4.01389,4.375,-5.90278,7c-2.125,2.94444,-3.19444,6.55556,-3.19444,10.7083c0,3.88889,1.33333,7.23611,4,9.875c2.61111,2.61111,6.13889,3.95833,10.4722,3.95833l59.9306,0c4.06944,6.48611,11.2778,10.7778,19.4444,10.7778c12.7222,0,23.0556,-10.3333,23.0556,-23.0694C8679.54,6844.26,8669.19,6833.92,8656.5,6833.92zM8656.5,6865.35c-4.63889,0,-8.38889,-3.76389,-8.38889,-8.38889c0,-4.625,3.75,-8.38889,8.38889,-8.38889c4.61111,0,8.38889,3.76389,8.38889,8.38889C8664.88,6861.61,8661.11,6865.35,8656.5,6865.35z" fill="#8C8C8C" />
+    <path d="M8421.18,6694.44c-12.6944,0,-23.0417,10.3472,-23.0417,23.0556c0,12.7222,10.3472,23.0556,23.0417,23.0556s23.0278,-10.3333,23.0278,-23.0556C8444.24,6704.79,8433.9,6694.44,8421.18,6694.44zM8421.19,6725.88c-4.625,0,-8.38889,-3.75,-8.38889,-8.375s3.76389,-8.375,8.38889,-8.375c4.59722,0,8.38889,3.75,8.38889,8.375S8425.79,6725.88,8421.19,6725.88z" fill="#8C8C8C" />
+    <path d="M8539.53,6759.19c-2.68056,-1.54167,-6.09722,-2.34722,-10.1667,-2.34722l-20.3472,0L8509.01,6721.82c0,-4.05556,-0.791667,-7.47222,-2.30556,-10.125C8505.46,6709.51,8502.78,6706.94,8497.08,6706.94c-4.72222,0,-8.02778,1.61111,-9.84722,4.75c-1.51389,2.68056,-2.31944,6.08333,-2.31944,10.125l0,35.0139l-6.68056,0c-4.09722,0,-7.48611,0.833333,-10.1528,2.34722c-3.16667,1.79167,-4.73611,5.11111,-4.73611,9.83333c0,5.72222,2.56944,8.375,4.73611,9.61111c2.66667,1.54167,6.08333,2.33333,10.1528,2.33333l6.68056,0l0,60.5833c0,3.84722,0.361111,7.40278,1.125,10.6667c0.777778,3.41667,2.13889,6.44444,4.13889,8.95833c2.02778,2.58333,4.79167,4.61111,8.26389,6.05556c3.34722,1.36111,7.70833,2.02778,12.9167,2.02778l12.4444,0c4.05556,0,7.48611,-0.75,10.1528,-2.30556c2.13889,-1.23611,4.73611,-3.90278,4.73611,-9.625c0,-4.69444,-1.58333,-8.02778,-4.73611,-9.84722c-2.66667,-1.51389,-6.09722,-2.33333,-10.1528,-2.33333l-11.4028,0c-1.91667,0,-2.63889,-0.263889,-2.875,-0.333333c-0.194444,-0.472222,-0.486111,-1.43056,-0.486111,-3.20833L8509.04,6780.97l20.3472,0c4.09722,0,7.51389,-0.791667,10.1944,-2.33333c2.11111,-1.25,4.72222,-3.88889,4.72222,-9.61111C8544.25,6764.31,8542.68,6760.99,8539.53,6759.19z" fill="#8C8C8C" />
+    <path d="M8422.1,6756.83l-16.5417,0c-4.05556,0,-7.47222,0.819444,-10.1528,2.34722c-3.13889,1.79167,-4.73611,5.11111,-4.73611,9.83333c0,5.72222,2.61111,8.38889,4.73611,9.59722c2.68056,1.56944,6.09722,2.33333,10.1528,2.33333l7.55556,0l0,74.4722c0,4.06944,0.791667,7.48611,2.31944,10.1389c1.81944,3.15278,5.09722,4.73611,9.83333,4.73611c5.70833,0,8.38889,-2.59722,9.61111,-4.73611c1.54167,-2.65278,2.33333,-6.08333,2.33333,-10.1389L8437.21,6771.94c0,-5.36111,-1.16667,-9.11111,-3.55556,-11.5278C8431.22,6758.03,8427.47,6756.83,8422.1,6756.83z" fill="#8C8C8C" />
+    <path d="M8368.83,6759.19c-2.68056,-1.54167,-6.11111,-2.34722,-10.1667,-2.34722l-8.38889,0c-3.47222,0,-6.91667,0.875,-10.1944,2.59722c-3.13889,1.65278,-6.01389,3.76389,-8.55556,6.29167l-8.94444,8.38889l0,-3.43056c0,-4.04167,-0.763889,-7.47222,-2.33333,-10.125c-1.77778,-3.16667,-5.11111,-4.72222,-9.81944,-4.72222c-5.69444,0,-8.38889,2.55556,-9.625,4.72222c-1.52778,2.65278,-2.31944,6.08333,-2.31944,10.125l0,66.6806c-6.59722,4.06944,-10.9861,11.3333,-10.9861,19.6111c0,12.7361,10.3472,23.0694,23.0278,23.0694c12.7222,0,23.0556,-10.3333,23.0556,-23.0694c0,-8.27778,-4.40278,-15.5417,-11,-19.6111l0,-30.6944l24.1389,-21.7222c1.38889,-1.25,2.76389,-2.27778,4.125,-3.01389c1.16667,-0.625,2.41667,-0.930556,3.80556,-0.930556l4,0c4.05556,0,7.48611,-0.777778,10.1667,-2.34722c2.15278,-1.22222,4.70833,-3.875,4.70833,-9.59722C8373.56,6764.31,8371.96,6760.99,8368.83,6759.19zM8310.51,6865.35c-4.61111,0,-8.375,-3.76389,-8.375,-8.38889c0,-4.625,3.76389,-8.38889,8.375,-8.38889c4.625,0,8.38889,3.76389,8.38889,8.38889C8318.9,6861.61,8315.14,6865.35,8310.51,6865.35z" fill="#8C8C8C" />
+    <path d="M8275.56,6710.32c-2.68056,-1.54167,-6.11111,-2.31944,-10.1528,-2.31944l-8.19444,0c-2.77778,0,-5.40278,0.0555556,-7.80556,0.222222c-2.44444,0.125,-4.79167,0.486111,-7.02778,0.972222c-2.33333,0.569444,-4.66667,1.51389,-6.88889,2.80556c-2.19444,1.29167,-4.43056,3.08333,-6.66667,5.30556c-4.63889,4.36111,-7.69444,9.11111,-9.05556,14.125c-1.30556,4.83333,-1.98611,10.2083,-1.98611,15.9861l0,9.41667l-6.70833,0c-4.05556,0,-7.48611,0.819444,-10.1389,2.34722c-3.15278,1.80556,-4.75,5.125,-4.75,9.83333c0,5.72222,2.56944,8.38889,4.73611,9.625c2.65278,1.54167,6.08333,2.30556,10.1389,2.30556l6.70833,0l0,74.4722c0,4.06944,0.791667,7.48611,2.31944,10.1389c1.80556,3.15278,5.09722,4.73611,9.83333,4.73611c5.70833,0,8.375,-2.59722,9.61111,-4.73611c1.54167,-2.65278,2.33333,-6.08333,2.33333,-10.1389l0,-74.4444l12.7778,0c4.06944,0,7.5,-0.791667,10.1667,-2.33333c2.15278,-1.25,4.72222,-3.88889,4.72222,-9.61111c0,-4.72222,-1.58333,-8.04167,-4.72222,-9.83333c-2.625,-1.54167,-6.05556,-2.36111,-10.125,-2.36111l-12.7778,0l0,-9.41667c0,-3.02778,0.263889,-5.69444,0.777778,-7.93056c0.444444,-1.95833,1.43056,-3.625,3.02778,-5.09722l0.0277778,-0.0555556l0.0277778,-0.0277778c1.13889,-1.13889,2.44444,-1.75,4.02778,-1.88889c2.08333,-0.208333,4.70833,-0.305556,7.83333,-0.305556l7.77778,0c4.04167,0,7.48611,-0.805556,10.1528,-2.33333c2.13889,-1.22222,4.70833,-3.90278,4.70833,-9.625C8280.28,6715.44,8278.68,6712.13,8275.56,6710.32z" fill="#8C8C8C" />
+    <path d="M8997.68,6760.56c-1.23611,-2.16667,-3.91667,-4.72222,-9.625,-4.72222c-4.70833,0,-8.02778,1.56944,-9.81944,4.72222c-1.08333,1.84722,-1.76389,4.06944,-2.11111,6.625l-0.291667,-0.291667c-3,-3.27778,-6.47222,-5.83333,-10.375,-7.48611c-3.84722,-1.65278,-7.81944,-2.54167,-11.7917,-2.54167l-9.84722,0c-3.45833,0,-6.47222,0.208333,-8.88889,0.569444c-2.52778,0.361111,-4.88889,1.02778,-7.08333,1.94444c-2.19444,0.916667,-4.34722,2.08333,-6.375,3.52778c-1.93056,1.34722,-4.20833,3.13889,-6.75,5.23611c-2.61111,2.16667,-4.75,4.19444,-6.43056,6.02778c-1.76389,1.95833,-3.19444,4.06944,-4.25,6.31944c-0.958333,2.22222,-1.69444,4.68056,-2.04167,7.26389c-0.361111,2.47222,-0.569444,5.43056,-0.569444,8.76389l0,33.1389c0,3.33333,0.208333,6.26389,0.569444,8.76389c0.347222,2.61111,1.08333,5.01389,2.04167,7.23611c1.02778,2.27778,2.48611,4.41667,4.25,6.34722c1.65278,1.79167,3.80556,3.80556,6.43056,6.01389c2.58333,2.125,4.86111,3.88889,6.75,5.26389c2.02778,1.43056,4.15278,2.61111,6.375,3.52778c2.19444,0.902778,4.56944,1.55556,7.08333,1.94444c2.41667,0.361111,5.40278,0.541667,8.88889,0.541667l9.84722,0c4.13889,0,8.20833,-0.916667,12.0833,-2.76389c3.38889,-1.58333,6.83333,-4.04167,10.1389,-7.26389l0,19.9167c0,2.5,-0.347222,4.63889,-1,6.45833c-0.597222,1.65278,-2.20833,3.58333,-4.77778,5.63889c-2.13889,1.76389,-4.29167,3.01389,-6.34722,3.66667c-2.08333,0.680556,-4.73611,1.02778,-7.81944,1.02778l-30.5972,0c-4.06944,0,-7.47222,0.763889,-10.1667,2.30556c-2.11111,1.22222,-4.72222,3.91667,-4.72222,9.61111c0,4.73611,1.59722,8.04167,4.72222,9.86111c2.69444,1.51389,6.09722,2.31944,10.1667,2.31944l32.3056,0c3.43056,0,6.43056,-0.208333,8.86111,-0.569444c2.48611,-0.361111,4.875,-1.01389,7.125,-1.94444c2.125,-0.888889,4.30556,-2.08333,6.31944,-3.52778c1.98611,-1.40278,4.23611,-3.15278,6.76389,-5.26389c2.56944,-2.125,4.76389,-4.15278,6.43056,-5.98611c1.77778,-1.95833,3.18056,-4.08333,4.22222,-6.33333c0.986111,-2.25,1.70833,-4.69444,2.05556,-7.26389c0.347222,-2.52778,0.569444,-5.45833,0.569444,-8.76389l0,-109.694C9000,6766.64,8999.25,6763.21,8997.68,6760.56zM8975.89,6822.5c0,2.61111,-0.861111,4.86111,-2.61111,6.80556c-2.08333,2.38889,-5.47222,5.59722,-9.94444,9.52778l-0.0277778,0.0416667l-0.0277778,0.0555556c-1.93056,1.80556,-4.04167,3.29167,-6.29167,4.51389c-2.05556,1.13889,-4.51389,1.68056,-7.30556,1.68056L8945.5,6845.13c-3.08333,0,-5.69444,-0.291667,-7.81944,-1c-2.05556,-0.680556,-4.18056,-1.90278,-6.29167,-3.66667c-3.20833,-2.58333,-4.375,-4.47222,-4.80556,-5.61111c-0.680556,-1.81944,-1,-3.95833,-1,-6.45833l0,-30.6389c0,-2.5,0.319444,-4.66667,1,-6.48611c0.402778,-1.13889,1.56944,-3.01389,4.80556,-5.59722c2.11111,-1.76389,4.23611,-3,6.29167,-3.68056c2.125,-0.680556,4.75,-1,7.81944,-1l4.18056,0c2.94444,0,5.38889,0.513889,7.30556,1.56944c2.11111,1.13889,4.27778,2.65278,6.34722,4.5c4.47222,4.06944,7.83333,7.34722,9.94444,9.72222c1.77778,2.02778,2.61111,4.22222,2.61111,6.83333L8975.89,6822.5z" fill="#8C8C8C" />
+    <path d="M8720.19,6694.44c-12.6944,0,-23.0556,10.3472,-23.0556,23.0556c0,12.7222,10.3611,23.0556,23.0556,23.0556s23.0556,-10.3333,23.0556,-23.0556C8743.25,6704.79,8732.89,6694.44,8720.19,6694.44zM8720.19,6725.88c-4.61111,0,-8.38889,-3.75,-8.38889,-8.375s3.76389,-8.375,8.38889,-8.375s8.38889,3.75,8.38889,8.375C8728.58,6722.13,8724.81,6725.88,8720.19,6725.88z" fill="#8C8C8C" />
+    <path d="M8868.61,6837.06l-1.48611,-47.4861c-0.152778,-2.47222,-0.291667,-4.69444,-0.430556,-6.79167c-0.138889,-2.25,-0.513889,-4.47222,-1.13889,-6.61111c-0.625,-2.19444,-1.52778,-4.29167,-2.75,-6.29167c-1.29167,-2.02778,-3,-4.01389,-5.13889,-5.83333c-3.125,-2.66667,-6.15278,-4.63889,-8.97222,-5.77778c-2.875,-1.16667,-6.40278,-1.76389,-10.4722,-1.76389l-14.0556,0c-3.59722,0,-6.95833,0.805556,-9.94444,2.27778c-2.73611,1.36111,-5.41667,2.81944,-7.94444,4.375l-0.0416667,0.0277778l-0.0416667,0.0416667l-11.625,7.70833l0,-0.569444c0,-4.04167,-0.791667,-7.48611,-2.33333,-10.1806c-1.79167,-3.13889,-5.09722,-4.70833,-9.81944,-4.70833c-5.70833,0,-8.38889,2.56944,-9.625,4.70833c-1.51389,2.69444,-2.33333,6.08333,-2.33333,10.1806l0,84.7083c0,4.09722,0.819444,7.48611,2.33333,10.1944c1.25,2.125,3.91667,4.69444,9.625,4.69444c4.72222,0,8.02778,-1.58333,9.81944,-4.69444c1.54167,-2.70833,2.33333,-6.09722,2.33333,-10.1944L8794.57,6799.03l27.125,-16.875c0.555556,-0.333333,1.13889,-0.666667,1.68056,-0.875c0.430556,-0.222222,0.972222,-0.347222,1.59722,-0.430556c0.680556,-0.166667,1.625,-0.222222,2.70833,-0.222222l5.02778,0c2.61111,0,4.63889,0.291667,6.04167,0.819444c1.13889,0.402778,1.98611,1.05556,2.5,1.98611c0.694444,1.08333,1.11111,2.5,1.36111,4.20833c0.277778,1.93056,0.472222,4.29167,0.625,7l1.33333,43.0139c-6.34722,4.125,-10.5833,11.2639,-10.5833,19.3611c0,12.7361,10.3611,23.0694,23.0556,23.0694c12.7222,0,23.0556,-10.3333,23.0556,-23.0694C8880.08,6848.51,8875.46,6841.04,8868.61,6837.06zM8857.03,6865.35c-4.63889,0,-8.36111,-3.76389,-8.36111,-8.38889c0,-4.625,3.72222,-8.38889,8.36111,-8.38889c4.625,0,8.38889,3.76389,8.38889,8.38889C8865.43,6861.61,8861.65,6865.35,8857.03,6865.35z" fill="#8C8C8C" />
+    <path d="M8721.07,6756.83l-16.5694,0c-4.06944,0,-7.48611,0.819444,-10.1528,2.34722c-3.13889,1.79167,-4.73611,5.11111,-4.73611,9.83333c0,5.72222,2.58333,8.38889,4.73611,9.59722c2.66667,1.56944,6.08333,2.33333,10.1528,2.33333l7.56944,0l0,74.4722c0,4.06944,0.763889,7.48611,2.33333,10.1389c1.76389,3.15278,5.06944,4.73611,9.81944,4.73611c5.69444,0,8.38889,-2.59722,9.59722,-4.73611c1.54167,-2.65278,2.36111,-6.08333,2.36111,-10.1389L8736.18,6771.94c0,-5.36111,-1.18056,-9.11111,-3.59722,-11.5278C8730.19,6758.03,8726.4,6756.83,8721.07,6756.83z" fill="#8C8C8C" />
+   </g>
+  </g>
+ </g>
+ <g partID="1120">
+  <g transform="translate(800,6300)">
+   <g id="schematic" >
+    <rect fill="#f8fafc" height="255.556" rx="44.4444" stroke="#1e293b" stroke-width="20" width="6955.56" x="22.2222"  y="22.2222"/>
+    <line stroke="#1e293b" stroke-width="33.3333" x1="650" x2="6880"  y1="150" y2="150"/>
+    <rect fill="#1e293b" height="211.111" rx="33.3333" width="580" x="44.4444"  y="44.4444"/>
+    <text fill="#ffffff" font-family="Arial, sans-serif" font-size="80" font-weight="bold" text-anchor="middle" x="330"  y="185">GND</text>
+    <circle cx="800" cy="150" fill="#444" id="connector0pin" r="20" />
+    <g fill="none" height="11.1111" id="connector0terminal" width="11.1111" x="794.444"  y="144.444"/>
+    <circle cx="1600" cy="150" fill="#444" id="connector1pin" r="20" />
+    <g fill="none" height="11.1111" id="connector1terminal" width="11.1111" x="1594.44"  y="144.444"/>
+    <circle cx="2400" cy="150" fill="#444" id="connector2pin" r="20" />
+    <g fill="none" height="11.1111" id="connector2terminal" width="11.1111" x="2394.44"  y="144.444"/>
+    <circle cx="3200" cy="150" fill="#444" id="connector3pin" r="20" />
+    <g fill="none" height="11.1111" id="connector3terminal" width="11.1111" x="3194.44"  y="144.444"/>
+    <circle cx="4000" cy="150" fill="#444" id="connector4pin" r="20" />
+    <g fill="none" height="11.1111" id="connector4terminal" width="11.1111" x="3994.44"  y="144.444"/>
+    <circle cx="4800" cy="150" fill="#444" id="connector5pin" r="20" />
+    <g fill="none" height="11.1111" id="connector5terminal" width="11.1111" x="4794.44"  y="144.444"/>
+    <circle cx="5600" cy="150" fill="#444" id="connector6pin" r="20" />
+    <g fill="none" height="11.1111" id="connector6terminal" width="11.1111" x="5594.44"  y="144.444"/>
+    <circle cx="6400" cy="150" fill="#444" id="connector7pin" r="20" />
+    <g fill="none" height="11.1111" id="connector7terminal" width="11.1111" x="6394.44"  y="144.444"/>
+   </g>
+  </g>
+ </g>
+ <g partID="1110">
+  <g transform="translate(800,5900)">
+   <g id="schematic" >
+    <rect fill="#f8fafc" height="255.556" rx="44.4444" stroke="#ea580c" stroke-width="20" width="6955.56" x="22.2222"  y="22.2222"/>
+    <line stroke="#ea580c" stroke-width="33.3333" x1="650" x2="6880"  y1="150" y2="150"/>
+    <rect fill="#ea580c" height="211.111" rx="33.3333" width="580" x="44.4444"  y="44.4444"/>
+    <text fill="#ffffff" font-family="Arial, sans-serif" font-size="80" font-weight="bold" text-anchor="middle" x="330"  y="185">3.3V</text>
+    <circle cx="800" cy="150" fill="#444" id="connector0pin" r="20" />
+    <g fill="none" height="11.1111" id="connector0terminal" width="11.1111" x="794.444"  y="144.444"/>
+    <circle cx="1600" cy="150" fill="#444" id="connector1pin" r="20" />
+    <g fill="none" height="11.1111" id="connector1terminal" width="11.1111" x="1594.44"  y="144.444"/>
+    <circle cx="2400" cy="150" fill="#444" id="connector2pin" r="20" />
+    <g fill="none" height="11.1111" id="connector2terminal" width="11.1111" x="2394.44"  y="144.444"/>
+    <circle cx="3200" cy="150" fill="#444" id="connector3pin" r="20" />
+    <g fill="none" height="11.1111" id="connector3terminal" width="11.1111" x="3194.44"  y="144.444"/>
+    <circle cx="4000" cy="150" fill="#444" id="connector4pin" r="20" />
+    <g fill="none" height="11.1111" id="connector4terminal" width="11.1111" x="3994.44"  y="144.444"/>
+    <circle cx="4800" cy="150" fill="#444" id="connector5pin" r="20" />
+    <g fill="none" height="11.1111" id="connector5terminal" width="11.1111" x="4794.44"  y="144.444"/>
+    <circle cx="5600" cy="150" fill="#444" id="connector6pin" r="20" />
+    <g fill="none" height="11.1111" id="connector6terminal" width="11.1111" x="5594.44"  y="144.444"/>
+    <circle cx="6400" cy="150" fill="#444" id="connector7pin" r="20" />
+    <g fill="none" height="11.1111" id="connector7terminal" width="11.1111" x="6394.44"  y="144.444"/>
+   </g>
+  </g>
+ </g>
+ <g partID="1100">
+  <g transform="translate(800,5500)">
+   <g id="schematic" >
+    <rect fill="#f8fafc" height="255.556" rx="44.4444" stroke="#dc2626" stroke-width="20" width="6955.56" x="22.2222"  y="22.2222"/>
+    <line stroke="#dc2626" stroke-width="33.3333" x1="650" x2="6880"  y1="150" y2="150"/>
+    <rect fill="#dc2626" height="211.111" rx="33.3333" width="580" x="44.4444"  y="44.4444"/>
+    <text fill="#ffffff" font-family="Arial, sans-serif" font-size="80" font-weight="bold" text-anchor="middle" x="330"  y="185">5V (VIN)</text>
+    <circle cx="800" cy="150" fill="#444" id="connector0pin" r="20" />
+    <g fill="none" height="11.1111" id="connector0terminal" width="11.1111" x="794.444"  y="144.444"/>
+    <circle cx="1600" cy="150" fill="#444" id="connector1pin" r="20" />
+    <g fill="none" height="11.1111" id="connector1terminal" width="11.1111" x="1594.44"  y="144.444"/>
+    <circle cx="2400" cy="150" fill="#444" id="connector2pin" r="20" />
+    <g fill="none" height="11.1111" id="connector2terminal" width="11.1111" x="2394.44"  y="144.444"/>
+    <circle cx="3200" cy="150" fill="#444" id="connector3pin" r="20" />
+    <g fill="none" height="11.1111" id="connector3terminal" width="11.1111" x="3194.44"  y="144.444"/>
+    <circle cx="4000" cy="150" fill="#444" id="connector4pin" r="20" />
+    <g fill="none" height="11.1111" id="connector4terminal" width="11.1111" x="3994.44"  y="144.444"/>
+    <circle cx="4800" cy="150" fill="#444" id="connector5pin" r="20" />
+    <g fill="none" height="11.1111" id="connector5terminal" width="11.1111" x="4794.44"  y="144.444"/>
+    <circle cx="5600" cy="150" fill="#444" id="connector6pin" r="20" />
+    <g fill="none" height="11.1111" id="connector6terminal" width="11.1111" x="5594.44"  y="144.444"/>
+    <circle cx="6400" cy="150" fill="#444" id="connector7pin" r="20" />
+    <g fill="none" height="11.1111" id="connector7terminal" width="11.1111" x="6394.44"  y="144.444"/>
+   </g>
+  </g>
+ </g>
+ <g partID="1090">
+  <g transform="translate(7200,3600)">
+   <g id="schematic" >
+    <rect fill="#ffffff" height="800" stroke="#0f172a" stroke-width="16.6667" width="1000" x="150"  y="50"/>
+    <rect fill="#0f172a" height="170" width="1000" x="150"  y="50"/>
+    <text fill="#ffffff" font-family="Arial, sans-serif" font-size="75.5556" font-weight="bold" text-anchor="middle" x="650"  y="165">Pull-Station (GPIO 4)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="0" x2="150"  y1="300" y2="300"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" x="200"  y="330">S (GPIO 4)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="0" x2="150"  y1="500" y2="500"/>
+    <text fill="#ea580c" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" x="200"  y="530">V (3.3V)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="0" x2="150"  y1="700" y2="700"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" x="200"  y="730">G (GND)</text>
+    <circle cx="0" cy="300" fill="#444" id="connector0pin" r="20" />
+    <g fill="none" height="11.1111" id="connector0terminal" width="11.1111" x="-5.55556"  y="294.444"/>
+    <circle cx="0" cy="500" fill="#444" id="connector1pin" r="20" />
+    <g fill="none" height="11.1111" id="connector1terminal" width="11.1111" x="-5.55556"  y="494.444"/>
+    <circle cx="0" cy="700" fill="#444" id="connector2pin" r="20" />
+    <g fill="none" height="11.1111" id="connector2terminal" width="11.1111" x="-5.55556"  y="694.444"/>
+   </g>
+  </g>
+ </g>
+ <g partID="1080">
+  <g transform="translate(7200,2400)">
+   <g id="schematic" >
+    <rect fill="#ffffff" height="800" stroke="#0f172a" stroke-width="16.6667" width="1000" x="150"  y="50"/>
+    <rect fill="#0f172a" height="170" width="1000" x="150"  y="50"/>
+    <text fill="#ffffff" font-family="Arial, sans-serif" font-size="75.5556" font-weight="bold" text-anchor="middle" x="650"  y="165">Flame Sensor (LM393)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="0" x2="150"  y1="300" y2="300"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" x="200"  y="330">D0 (GPIO 18)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="0" x2="150"  y1="500" y2="500"/>
+    <text fill="#ea580c" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" x="200"  y="530">VCC (3.3V/5V)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="0" x2="150"  y1="700" y2="700"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" x="200"  y="730">GND</text>
+    <circle cx="0" cy="300" fill="#444" id="connector0pin" r="20" />
+    <g fill="none" height="11.1111" id="connector0terminal" width="11.1111" x="-5.55556"  y="294.444"/>
+    <circle cx="0" cy="500" fill="#444" id="connector1pin" r="20" />
+    <g fill="none" height="11.1111" id="connector1terminal" width="11.1111" x="-5.55556"  y="494.444"/>
+    <circle cx="0" cy="700" fill="#444" id="connector2pin" r="20" />
+    <g fill="none" height="11.1111" id="connector2terminal" width="11.1111" x="-5.55556"  y="694.444"/>
+   </g>
+  </g>
+ </g>
+ <g partID="1070">
+  <g transform="translate(7200,1400)">
+   <g id="schematic" >
+    <rect fill="#ffffff" height="600" stroke="#0f172a" stroke-width="16.6667" width="900" x="150"  y="50"/>
+    <rect fill="#0f172a" height="170" width="900" x="150"  y="50"/>
+    <text fill="#ffffff" font-family="Arial, sans-serif" font-size="75.5556" font-weight="bold" text-anchor="middle" x="600"  y="165">Active Buzzer</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="0" x2="150"  y1="300" y2="300"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" x="200"  y="330">+ (SIG / 23)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="0" x2="150"  y1="500" y2="500"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" x="200"  y="530">- (GND)</text>
+    <circle cx="0" cy="300" fill="#444" id="connector0pin" r="20" />
+    <g fill="none" height="11.1111" id="connector0terminal" width="11.1111" x="-5.55556"  y="294.444"/>
+    <circle cx="0" cy="500" fill="#444" id="connector1pin" r="20" />
+    <g fill="none" height="11.1111" id="connector1terminal" width="11.1111" x="-5.55556"  y="494.444"/>
+   </g>
+  </g>
+ </g>
+ <g partID="1060">
+  <g transform="translate(1600,3500)">
+   <g id="schematic" >
+    <line stroke="#0f172a" stroke-width="16.6667" x1="0" x2="120"  y1="100" y2="100"/>
+    <rect fill="#ffffff" height="120" stroke="#0f172a" stroke-width="16.6667" width="360" x="120"  y="40"/>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="480" x2="600"  y1="100" y2="100"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="68.8889" font-weight="bold" text-anchor="middle" x="300"  y="22">220&#x3a9;</text>
+    <circle cx="0" cy="100" fill="#444" id="connector0pin" r="20" />
+    <g fill="none" height="11.1111" id="connector0terminal" width="11.1111" x="-5.55556"  y="94.4444"/>
+    <circle cx="600" cy="100" fill="#444" id="connector1pin" r="20" />
+    <g fill="none" height="11.1111" id="connector1terminal" width="11.1111" x="594.444"  y="94.4444"/>
+   </g>
+  </g>
+ </g>
+ <g partID="1050">
+  <g transform="translate(1600,3300)">
+   <g id="schematic" >
+    <line stroke="#0f172a" stroke-width="16.6667" x1="0" x2="120"  y1="100" y2="100"/>
+    <rect fill="#ffffff" height="120" stroke="#0f172a" stroke-width="16.6667" width="360" x="120"  y="40"/>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="480" x2="600"  y1="100" y2="100"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="68.8889" font-weight="bold" text-anchor="middle" x="300"  y="22">220&#x3a9;</text>
+    <circle cx="0" cy="100" fill="#444" id="connector0pin" r="20" />
+    <g fill="none" height="11.1111" id="connector0terminal" width="11.1111" x="-5.55556"  y="94.4444"/>
+    <circle cx="600" cy="100" fill="#444" id="connector1pin" r="20" />
+    <g fill="none" height="11.1111" id="connector1terminal" width="11.1111" x="594.444"  y="94.4444"/>
+   </g>
+  </g>
+ </g>
+ <g partID="1040">
+  <g transform="translate(1600,3100)">
+   <g id="schematic" >
+    <line stroke="#0f172a" stroke-width="16.6667" x1="0" x2="120"  y1="100" y2="100"/>
+    <rect fill="#ffffff" height="120" stroke="#0f172a" stroke-width="16.6667" width="360" x="120"  y="40"/>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="480" x2="600"  y1="100" y2="100"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="68.8889" font-weight="bold" text-anchor="middle" x="300"  y="22">220&#x3a9;</text>
+    <circle cx="0" cy="100" fill="#444" id="connector0pin" r="20" />
+    <g fill="none" height="11.1111" id="connector0terminal" width="11.1111" x="-5.55556"  y="94.4444"/>
+    <circle cx="600" cy="100" fill="#444" id="connector1pin" r="20" />
+    <g fill="none" height="11.1111" id="connector1terminal" width="11.1111" x="594.444"  y="94.4444"/>
+   </g>
+  </g>
+ </g>
+ <g partID="1030">
+  <g transform="translate(200,2900)">
+   <g id="schematic" >
+    <rect fill="#ffffff" height="1000" stroke="#0f172a" stroke-width="16.6667" width="800" x="50"  y="50"/>
+    <rect fill="#0f172a" height="180" width="800" x="50"  y="50"/>
+    <text fill="#ffffff" font-family="Arial, sans-serif" font-size="77.7778" font-weight="bold" text-anchor="middle" x="450"  y="170">RGB LED (CC)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="850" x2="1000"  y1="300" y2="300"/>
+    <text fill="#dc2626" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" text-anchor="end" x="800"  y="330">R (Anode)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="850" x2="1000"  y1="500" y2="500"/>
+    <text fill="#16a34a" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" text-anchor="end" x="800"  y="530">G (Anode)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="850" x2="1000"  y1="700" y2="700"/>
+    <text fill="#2563eb" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" text-anchor="end" x="800"  y="730">B (Anode)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="850" x2="1000"  y1="900" y2="900"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" text-anchor="end" x="800"  y="930">K (GND)</text>
+    <circle cx="1000" cy="300" fill="#444" id="connector0pin" r="20" />
+    <g fill="none" height="11.1111" id="connector0terminal" width="11.1111" x="994.444"  y="294.444"/>
+    <circle cx="1000" cy="500" fill="#444" id="connector1pin" r="20" />
+    <g fill="none" height="11.1111" id="connector1terminal" width="11.1111" x="994.444"  y="494.444"/>
+    <circle cx="1000" cy="700" fill="#444" id="connector2pin" r="20" />
+    <g fill="none" height="11.1111" id="connector2terminal" width="11.1111" x="994.444"  y="694.444"/>
+    <circle cx="1000" cy="900" fill="#444" id="connector3pin" r="20" />
+    <g fill="none" height="11.1111" id="connector3terminal" width="11.1111" x="994.444"  y="894.444"/>
+   </g>
+  </g>
+ </g>
+ <g partID="1020">
+  <g transform="translate(200,1400)">
+   <g id="schematic" >
+    <rect fill="#ffffff" height="1000" stroke="#0f172a" stroke-width="16.6667" width="1000" x="50"  y="50"/>
+    <rect fill="#0f172a" height="170" width="1000" x="50"  y="50"/>
+    <text fill="#ffffff" font-family="Arial, sans-serif" font-size="70" font-weight="bold" text-anchor="middle" x="550"  y="165">MQ-2 / MQ-9 Gas Sensor</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="1050" x2="1200"  y1="300" y2="300"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" text-anchor="end" x="1000"  y="330">AO (GPIO 34)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="1050" x2="1200"  y1="500" y2="500"/>
+    <text fill="#475569" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" text-anchor="end" x="1000"  y="530">DO (GPIO 19)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="1050" x2="1200"  y1="700" y2="700"/>
+    <text fill="#dc2626" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" text-anchor="end" x="1000"  y="730">VCC (5V)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="1050" x2="1200"  y1="900" y2="900"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="72.2222" font-weight="bold" text-anchor="end" x="1000"  y="930">GND</text>
+    <circle cx="1200" cy="300" fill="#444" id="connector0pin" r="20" />
+    <g fill="none" height="11.1111" id="connector0terminal" width="11.1111" x="1194.44"  y="294.444"/>
+    <circle cx="1200" cy="500" fill="#444" id="connector1pin" r="20" />
+    <g fill="none" height="11.1111" id="connector1terminal" width="11.1111" x="1194.44"  y="494.444"/>
+    <circle cx="1200" cy="700" fill="#444" id="connector2pin" r="20" />
+    <g fill="none" height="11.1111" id="connector2terminal" width="11.1111" x="1194.44"  y="694.444"/>
+    <circle cx="1200" cy="900" fill="#444" id="connector3pin" r="20" />
+    <g fill="none" height="11.1111" id="connector3terminal" width="11.1111" x="1194.44"  y="894.444"/>
+   </g>
+  </g>
+ </g>
+ <g partID="1010">
+  <g transform="translate(3200,1300)">
+   <g id="schematic" >
+    <rect fill="#ffffff" height="3550" stroke="#0f172a" stroke-width="22.2222" width="1800" x="300"  y="80"/>
+    <rect fill="#0f172a" height="380" width="1800" x="300"  y="80"/>
+    <text fill="#ffffff" font-family="Arial, sans-serif" font-size="91.1111" font-weight="bold" text-anchor="middle" x="1200"  y="240">FH-FireAlarm</text>
+    <text fill="#93c5fd" font-family="Arial, sans-serif" font-size="77.7778" text-anchor="middle" x="1200"  y="390">ESP32 30-Pin (192.168.50.22)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="600" y2="600"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="626.667">16: EN/RST</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="800" y2="800"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="826.667">17: GPIO36 (VP)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="1000" y2="1000"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="1026.67">18: GPIO39 (VN)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="1200" y2="1200"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="1226.67">19: GPIO34 (ADC1)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="1400" y2="1400"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="1426.67">20: GPIO35 (ADC1)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="1600" y2="1600"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="1626.67">21: GPIO32 (ADC1)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="1800" y2="1800"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="1826.67">22: GPIO33 (ADC1)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="2000" y2="2000"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="2026.67">23: GPIO25</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="2200" y2="2200"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="2226.67">24: GPIO26</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="2400" y2="2400"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="2426.67">25: GPIO27</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="2600" y2="2600"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="2626.67">26: GPIO14</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="2800" y2="2800"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="2826.67">27: GPIO12 (Strap)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="3000" y2="3000"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="3026.67">28: GPIO13</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="3200" y2="3200"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="3226.67">29: GND</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="200" x2="300"  y1="3400" y2="3400"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" x="350"  y="3426.67">30: VIN (5V)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="600" y2="600"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="626.667">15: GPIO23 (MOSI)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="800" y2="800"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="826.667">14: GPIO22 (SCL)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="1000" y2="1000"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="1026.67">13: GPIO1 (TX0)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="1200" y2="1200"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="1226.67">12: GPIO3 (RX0)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="1400" y2="1400"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="1426.67">11: GPIO21 (SDA)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="1600" y2="1600"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="1626.67">10: GPIO19 (MISO)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="1800" y2="1800"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="1826.67">9: GPIO18 (SCK)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="2000" y2="2000"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="2026.67">8: GPIO5 (Strap)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="2200" y2="2200"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="2226.67">7: GPIO17 (TX2)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="2400" y2="2400"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="2426.67">6: GPIO16 (RX2)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="2600" y2="2600"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="2626.67">5: GPIO4</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="2800" y2="2800"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="2826.67">4: GPIO2 (Strap)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="3000" y2="3000"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="3026.67">3: GPIO15 (Strap)</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="3200" y2="3200"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="3226.67">2: GND</text>
+    <line stroke="#0f172a" stroke-width="16.6667" x1="2100" x2="2200"  y1="3400" y2="3400"/>
+    <text fill="#0f172a" font-family="Arial, sans-serif" font-size="71.1111" font-weight="bold" text-anchor="end" x="2050"  y="3426.67">1: 3.3V</text>
+    <circle cx="200" cy="600" fill="#444" id="connector0pin" r="20" />
+    <g fill="none" height="11.1111" id="connector0terminal" width="11.1111" x="194.444"  y="594.444"/>
+    <circle cx="200" cy="800" fill="#444" id="connector1pin" r="20" />
+    <g fill="none" height="11.1111" id="connector1terminal" width="11.1111" x="194.444"  y="794.444"/>
+    <circle cx="200" cy="1000" fill="#444" id="connector2pin" r="20" />
+    <g fill="none" height="11.1111" id="connector2terminal" width="11.1111" x="194.444"  y="994.444"/>
+    <circle cx="200" cy="1200" fill="#444" id="connector3pin" r="20" />
+    <g fill="none" height="11.1111" id="connector3terminal" width="11.1111" x="194.444"  y="1194.44"/>
+    <circle cx="200" cy="1400" fill="#444" id="connector4pin" r="20" />
+    <g fill="none" height="11.1111" id="connector4terminal" width="11.1111" x="194.444"  y="1394.44"/>
+    <circle cx="200" cy="1600" fill="#444" id="connector5pin" r="20" />
+    <g fill="none" height="11.1111" id="connector5terminal" width="11.1111" x="194.444"  y="1594.44"/>
+    <circle cx="200" cy="1800" fill="#444" id="connector6pin" r="20" />
+    <g fill="none" height="11.1111" id="connector6terminal" width="11.1111" x="194.444"  y="1794.44"/>
+    <circle cx="200" cy="2000" fill="#444" id="connector7pin" r="20" />
+    <g fill="none" height="11.1111" id="connector7terminal" width="11.1111" x="194.444"  y="1994.44"/>
+    <circle cx="200" cy="2200" fill="#444" id="connector8pin" r="20" />
+    <g fill="none" height="11.1111" id="connector8terminal" width="11.1111" x="194.444"  y="2194.44"/>
+    <circle cx="200" cy="2400" fill="#444" id="connector9pin" r="20" />
+    <g fill="none" height="11.1111" id="connector9terminal" width="11.1111" x="194.444"  y="2394.44"/>
+    <circle cx="200" cy="2600" fill="#444" id="connector10pin" r="20" />
+    <g fill="none" height="11.1111" id="connector10terminal" width="11.1111" x="194.444"  y="2594.44"/>
+    <circle cx="200" cy="2800" fill="#444" id="connector11pin" r="20" />
+    <g fill="none" height="11.1111" id="connector11terminal" width="11.1111" x="194.444"  y="2794.44"/>
+    <circle cx="200" cy="3000" fill="#444" id="connector12pin" r="20" />
+    <g fill="none" height="11.1111" id="connector12terminal" width="11.1111" x="194.444"  y="2994.44"/>
+    <circle cx="200" cy="3200" fill="#444" id="connector13pin" r="20" />
+    <g fill="none" height="11.1111" id="connector13terminal" width="11.1111" x="194.444"  y="3194.44"/>
+    <circle cx="200" cy="3400" fill="#444" id="connector14pin" r="20" />
+    <g fill="none" height="11.1111" id="connector14terminal" width="11.1111" x="194.444"  y="3394.44"/>
+    <circle cx="2200" cy="600" fill="#444" id="connector15pin" r="20" />
+    <g fill="none" height="11.1111" id="connector15terminal" width="11.1111" x="2194.44"  y="594.444"/>
+    <circle cx="2200" cy="800" fill="#444" id="connector16pin" r="20" />
+    <g fill="none" height="11.1111" id="connector16terminal" width="11.1111" x="2194.44"  y="794.444"/>
+    <circle cx="2200" cy="1000" fill="#444" id="connector17pin" r="20" />
+    <g fill="none" height="11.1111" id="connector17terminal" width="11.1111" x="2194.44"  y="994.444"/>
+    <circle cx="2200" cy="1200" fill="#444" id="connector18pin" r="20" />
+    <g fill="none" height="11.1111" id="connector18terminal" width="11.1111" x="2194.44"  y="1194.44"/>
+    <circle cx="2200" cy="1400" fill="#444" id="connector19pin" r="20" />
+    <g fill="none" height="11.1111" id="connector19terminal" width="11.1111" x="2194.44"  y="1394.44"/>
+    <circle cx="2200" cy="1600" fill="#444" id="connector20pin" r="20" />
+    <g fill="none" height="11.1111" id="connector20terminal" width="11.1111" x="2194.44"  y="1594.44"/>
+    <circle cx="2200" cy="1800" fill="#444" id="connector21pin" r="20" />
+    <g fill="none" height="11.1111" id="connector21terminal" width="11.1111" x="2194.44"  y="1794.44"/>
+    <circle cx="2200" cy="2000" fill="#444" id="connector22pin" r="20" />
+    <g fill="none" height="11.1111" id="connector22terminal" width="11.1111" x="2194.44"  y="1994.44"/>
+    <circle cx="2200" cy="2200" fill="#444" id="connector23pin" r="20" />
+    <g fill="none" height="11.1111" id="connector23terminal" width="11.1111" x="2194.44"  y="2194.44"/>
+    <circle cx="2200" cy="2400" fill="#444" id="connector24pin" r="20" />
+    <g fill="none" height="11.1111" id="connector24terminal" width="11.1111" x="2194.44"  y="2394.44"/>
+    <circle cx="2200" cy="2600" fill="#444" id="connector25pin" r="20" />
+    <g fill="none" height="11.1111" id="connector25terminal" width="11.1111" x="2194.44"  y="2594.44"/>
+    <circle cx="2200" cy="2800" fill="#444" id="connector26pin" r="20" />
+    <g fill="none" height="11.1111" id="connector26terminal" width="11.1111" x="2194.44"  y="2794.44"/>
+    <circle cx="2200" cy="3000" fill="#444" id="connector27pin" r="20" />
+    <g fill="none" height="11.1111" id="connector27terminal" width="11.1111" x="2194.44"  y="2994.44"/>
+    <circle cx="2200" cy="3200" fill="#444" id="connector28pin" r="20" />
+    <g fill="none" height="11.1111" id="connector28terminal" width="11.1111" x="2194.44"  y="3194.44"/>
+    <circle cx="2200" cy="3400" fill="#444" id="connector29pin" r="20" />
+    <g fill="none" height="11.1111" id="connector29terminal" width="11.1111" x="2194.44"  y="3394.44"/>
+   </g>
+  </g>
+ </g>
+ <g partID="1000">
+  <g id="schematic" >
+   <rect fill="#f8fafc" height="900" rx="66.6667" stroke="#334155" stroke-width="16.6667" width="9000" x="0"  y="0"/>
+   <rect fill="#0f172a" height="266.667" rx="66.6667" width="9000" x="0"  y="0"/>
+   <text fill="#ffffff" font-family="Arial, sans-serif" font-size="122.222" font-weight="bold" x="133.333"  y="177.778">FH-FireAlarm Node &#x2014; Complete Fritzing Wiring &amp; Schematic</text>
+   <text fill="#93c5fd" font-family="Arial, sans-serif" font-size="105.556" text-anchor="end" x="8866.67"  y="177.778">ESP32 IP: 192.168.50.22 | OpenPLC: 192.168.50.122:502</text>
+   <rect fill="#e2e8f0" height="155.556" rx="33.3333" width="8822.22" x="88.8889"  y="300"/>
+   <text fill="#0f172a" font-family="Arial, sans-serif" font-size="88.8889" font-weight="bold" x="177.778"  y="411.111">WIRING LEGEND:</text>
+   <circle cx="1222.22" cy="377.778" fill="#dc2626" r="44.4444" />
+   <text fill="#1e293b" font-family="Arial, sans-serif" font-size="88.8889" font-weight="bold" x="1311.11"  y="411.111">5V / VIN Rail</text>
+   <circle cx="2166.67" cy="377.778" fill="#ea580c" r="44.4444" />
+   <text fill="#1e293b" font-family="Arial, sans-serif" font-size="88.8889" font-weight="bold" x="2255.56"  y="411.111">3.3V Rail</text>
+   <circle cx="2944.44" cy="377.778" fill="#1e293b" r="44.4444" />
+   <text fill="#1e293b" font-family="Arial, sans-serif" font-size="88.8889" font-weight="bold" x="3033.33"  y="411.111">Common GND</text>
+   <circle cx="3944.44" cy="377.778" fill="#2563eb" r="44.4444" />
+   <text fill="#1e293b" font-family="Arial, sans-serif" font-size="88.8889" font-weight="bold" x="4033.33"  y="411.111">GPIO / SPI / I2C / PWM / ADC Signals</text>
+   <text fill="#1e293b" font-family="Arial, sans-serif" font-size="88.8889" x="133.333"  y="577.778">1. Pull Station (GPIO 4): Bench uses 3-pin Keyestudio Button Module (onboard pull-up, plain INPUT, active-LOW). Docs also list 2-pin button w/ INPUT_PULLUP.</text>
+   <text fill="#1e293b" font-family="Arial, sans-serif" font-size="88.8889" x="133.333"  y="711.111">2. Gas Sensor (MQ-2 / MQ-9 Gas Sensor): AO -> GPIO 34 (ADC1), DO -> GPIO 19 (wired for future use, unused by firmware), VCC -> 5V (VIN). Verify AO &lt;= 3.3V (add 1k/2k divider if >3.3V).</text>
+   <text fill="#1e293b" font-family="Arial, sans-serif" font-size="88.8889" x="133.333"  y="844.444">3. Flame Sensor (LM393): D0 -> GPIO 18 (active-LOW), VCC -> 3.3V (or 5V per module rating). RGB LED: R=GPIO 25, G=GPIO 26, B=GPIO 27 via 3x 220 ohm; Buzzer: GPIO 23.</text>
+   <circle cx="50" cy="50" fill="#444" id="connector0pin" r="20" />
+   <g fill="none" height="11.1111" id="connector0terminal" width="11.1111" x="44.4444"  y="44.4444"/>
+  </g>
+ </g>
+ <g partID="2460">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="7200" x2="7200" y1="5400" y2="6450"/>
+ </g>
+ <circle cx="7200" cy="5400" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2450">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="7000" x2="7200" y1="5400" y2="5400"/>
+ </g>
+ <circle cx="7000" cy="5400" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="7200" cy="5400" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2440">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="7000" x2="7000" y1="4300" y2="5400"/>
+ </g>
+ <circle cx="7000" cy="4300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="7000" cy="5400" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2430">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="7200" x2="7000" y1="4300" y2="4300"/>
+ </g>
+ <circle cx="7000" cy="4300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2380">
+  <line stroke="#ea580c" stroke-linecap="round" stroke-width="12.5" x1="6400" x2="6400" y1="4100" y2="6050"/>
+ </g>
+ <circle cx="6400" cy="4100" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2370">
+  <line stroke="#ea580c" stroke-linecap="round" stroke-width="12.5" x1="7200" x2="6400" y1="4100" y2="4100"/>
+ </g>
+ <circle cx="6400" cy="4100" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2340">
+  <line stroke="#16a34a" stroke-linecap="round" stroke-width="12.5" x1="7200" x2="5400" y1="3900" y2="3900"/>
+ </g>
+ <g partID="2320">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="6400" x2="6400" y1="5300" y2="6450"/>
+ </g>
+ <circle cx="6400" cy="5300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2310">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="6900" x2="6400" y1="5300" y2="5300"/>
+ </g>
+ <circle cx="6900" cy="5300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="6400" cy="5300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2300">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="6900" x2="6900" y1="3100" y2="5300"/>
+ </g>
+ <circle cx="6900" cy="3100" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="6900" cy="5300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2290">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="7200" x2="6900" y1="3100" y2="3100"/>
+ </g>
+ <circle cx="6900" cy="3100" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2240">
+  <line stroke="#ea580c" stroke-linecap="round" stroke-width="12.5" x1="5600" x2="5600" y1="5800" y2="6050"/>
+ </g>
+ <circle cx="5600" cy="5800" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2230">
+  <line stroke="#ea580c" stroke-linecap="round" stroke-width="12.5" x1="6500" x2="5600" y1="5800" y2="5800"/>
+ </g>
+ <circle cx="6500" cy="5800" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="5600" cy="5800" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2220">
+  <line stroke="#ea580c" stroke-linecap="round" stroke-width="12.5" x1="6500" x2="6500" y1="2900" y2="5800"/>
+ </g>
+ <circle cx="6500" cy="2900" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="6500" cy="5800" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2210">
+  <line stroke="#ea580c" stroke-linecap="round" stroke-width="12.5" x1="7200" x2="6500" y1="2900" y2="2900"/>
+ </g>
+ <circle cx="6500" cy="2900" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2160">
+  <line stroke="#2563eb" stroke-linecap="round" stroke-width="12.5" x1="6100" x2="5400" y1="3100" y2="3100"/>
+ </g>
+ <circle cx="6100" cy="3100" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2150">
+  <line stroke="#2563eb" stroke-linecap="round" stroke-width="12.5" x1="6100" x2="6100" y1="2700" y2="3100"/>
+ </g>
+ <circle cx="6100" cy="2700" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="6100" cy="3100" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2140">
+  <line stroke="#2563eb" stroke-linecap="round" stroke-width="12.5" x1="7200" x2="6100" y1="2700" y2="2700"/>
+ </g>
+ <circle cx="6100" cy="2700" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2100">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="5600" x2="5600" y1="5200" y2="6450"/>
+ </g>
+ <circle cx="5600" cy="5200" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2090">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="6800" x2="5600" y1="5200" y2="5200"/>
+ </g>
+ <circle cx="6800" cy="5200" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="5600" cy="5200" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2080">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="6800" x2="6800" y1="1900" y2="5200"/>
+ </g>
+ <circle cx="6800" cy="1900" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="6800" cy="5200" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2070">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="7200" x2="6800" y1="1900" y2="1900"/>
+ </g>
+ <circle cx="6800" cy="1900" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2020">
+  <line stroke="#9333ea" stroke-linecap="round" stroke-width="12.5" x1="6200" x2="5400" y1="1900" y2="1900"/>
+ </g>
+ <circle cx="6200" cy="1900" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2010">
+  <line stroke="#9333ea" stroke-linecap="round" stroke-width="12.5" x1="6200" x2="6200" y1="1700" y2="1900"/>
+ </g>
+ <circle cx="6200" cy="1700" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="6200" cy="1900" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="2000">
+  <line stroke="#9333ea" stroke-linecap="round" stroke-width="12.5" x1="7200" x2="6200" y1="1700" y2="1700"/>
+ </g>
+ <circle cx="6200" cy="1700" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1960">
+  <line stroke="#ea580c" stroke-linecap="round" stroke-width="12.5" x1="4800" x2="4800" y1="5350" y2="6050"/>
+ </g>
+ <circle cx="4800" cy="5350" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1950">
+  <line stroke="#ea580c" stroke-linecap="round" stroke-width="12.5" x1="5700" x2="4800" y1="5350" y2="5350"/>
+ </g>
+ <circle cx="5700" cy="5350" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="4800" cy="5350" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1940">
+  <line stroke="#ea580c" stroke-linecap="round" stroke-width="12.5" x1="5700" x2="5700" y1="4700" y2="5350"/>
+ </g>
+ <circle cx="5700" cy="4700" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="5700" cy="5350" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1930">
+  <line stroke="#ea580c" stroke-linecap="round" stroke-width="12.5" x1="5400" x2="5700" y1="4700" y2="4700"/>
+ </g>
+ <circle cx="5700" cy="4700" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1880">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="4800" x2="4800" y1="5200" y2="6450"/>
+ </g>
+ <circle cx="4800" cy="5200" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1870">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="5600" x2="4800" y1="5200" y2="5200"/>
+ </g>
+ <circle cx="5600" cy="5200" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="4800" cy="5200" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1860">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="5600" x2="5600" y1="4500" y2="5200"/>
+ </g>
+ <circle cx="5600" cy="4500" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="5600" cy="5200" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1850">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="5400" x2="5600" y1="4500" y2="4500"/>
+ </g>
+ <circle cx="5600" cy="4500" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1800">
+  <line stroke="#dc2626" stroke-linecap="round" stroke-width="12.5" x1="3200" x2="3200" y1="5350" y2="5650"/>
+ </g>
+ <circle cx="3200" cy="5350" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1790">
+  <line stroke="#dc2626" stroke-linecap="round" stroke-width="12.5" x1="3000" x2="3200" y1="5350" y2="5350"/>
+ </g>
+ <circle cx="3000" cy="5350" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="3200" cy="5350" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1780">
+  <line stroke="#dc2626" stroke-linecap="round" stroke-width="12.5" x1="3000" x2="3000" y1="4700" y2="5350"/>
+ </g>
+ <circle cx="3000" cy="4700" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="3000" cy="5350" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1770">
+  <line stroke="#dc2626" stroke-linecap="round" stroke-width="12.5" x1="3400" x2="3000" y1="4700" y2="4700"/>
+ </g>
+ <circle cx="3000" cy="4700" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1720">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="3200" x2="3200" y1="4500" y2="6450"/>
+ </g>
+ <circle cx="3200" cy="4500" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1710">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="3400" x2="3200" y1="4500" y2="4500"/>
+ </g>
+ <circle cx="3200" cy="4500" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1680">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="2400" x2="2400" y1="3800" y2="6450"/>
+ </g>
+ <circle cx="2400" cy="3800" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1670">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="1200" x2="2400" y1="3800" y2="3800"/>
+ </g>
+ <circle cx="2400" cy="3800" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1640">
+  <line stroke="#2563eb" stroke-linecap="round" stroke-width="12.5" x1="2600" x2="3400" y1="3700" y2="3700"/>
+ </g>
+ <circle cx="2600" cy="3700" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1630">
+  <line stroke="#2563eb" stroke-linecap="round" stroke-width="12.5" x1="2600" x2="2600" y1="3600" y2="3700"/>
+ </g>
+ <circle cx="2600" cy="3600" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="2600" cy="3700" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1620">
+  <line stroke="#2563eb" stroke-linecap="round" stroke-width="12.5" x1="2200" x2="2600" y1="3600" y2="3600"/>
+ </g>
+ <circle cx="2600" cy="3600" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1580">
+  <line stroke="#16a34a" stroke-linecap="round" stroke-width="12.5" x1="2700" x2="3400" y1="3500" y2="3500"/>
+ </g>
+ <circle cx="2700" cy="3500" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1570">
+  <line stroke="#16a34a" stroke-linecap="round" stroke-width="12.5" x1="2700" x2="2700" y1="3400" y2="3500"/>
+ </g>
+ <circle cx="2700" cy="3400" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="2700" cy="3500" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1560">
+  <line stroke="#16a34a" stroke-linecap="round" stroke-width="12.5" x1="2200" x2="2700" y1="3400" y2="3400"/>
+ </g>
+ <circle cx="2700" cy="3400" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1520">
+  <line stroke="#ef4444" stroke-linecap="round" stroke-width="12.5" x1="2800" x2="3400" y1="3300" y2="3300"/>
+ </g>
+ <circle cx="2800" cy="3300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1510">
+  <line stroke="#ef4444" stroke-linecap="round" stroke-width="12.5" x1="2800" x2="2800" y1="3200" y2="3300"/>
+ </g>
+ <circle cx="2800" cy="3200" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="2800" cy="3300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1500">
+  <line stroke="#ef4444" stroke-linecap="round" stroke-width="12.5" x1="2200" x2="2800" y1="3200" y2="3200"/>
+ </g>
+ <circle cx="2800" cy="3200" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1460">
+  <line stroke="#2563eb" stroke-linecap="round" stroke-width="12.5" x1="1200" x2="1600" y1="3600" y2="3600"/>
+ </g>
+ <g partID="1440">
+  <line stroke="#16a34a" stroke-linecap="round" stroke-width="12.5" x1="1200" x2="1600" y1="3400" y2="3400"/>
+ </g>
+ <g partID="1420">
+  <line stroke="#ef4444" stroke-linecap="round" stroke-width="12.5" x1="1200" x2="1600" y1="3200" y2="3200"/>
+ </g>
+ <g partID="1400">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="1600" x2="1600" y1="5300" y2="6450"/>
+ </g>
+ <circle cx="1600" cy="5300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1390">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="1450" x2="1600" y1="5300" y2="5300"/>
+ </g>
+ <circle cx="1450" cy="5300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="1600" cy="5300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1380">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="1450" x2="1450" y1="2300" y2="5300"/>
+ </g>
+ <circle cx="1450" cy="2300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="1450" cy="5300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1370">
+  <line stroke="#1e293b" stroke-linecap="round" stroke-width="12.5" x1="1400" x2="1450" y1="2300" y2="2300"/>
+ </g>
+ <circle cx="1450" cy="2300" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1320">
+  <line stroke="#dc2626" stroke-linecap="round" stroke-width="12.5" x1="1600" x2="1600" y1="2100" y2="5650"/>
+ </g>
+ <circle cx="1600" cy="2100" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1310">
+  <line stroke="#dc2626" stroke-linecap="round" stroke-width="12.5" x1="1400" x2="1600" y1="2100" y2="2100"/>
+ </g>
+ <circle cx="1600" cy="2100" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1280">
+  <line stroke="#0891b2" stroke-linecap="round" stroke-width="12.5" x1="5900" x2="5400" y1="2900" y2="2900"/>
+ </g>
+ <circle cx="5900" cy="2900" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1270">
+  <line stroke="#0891b2" stroke-linecap="round" stroke-width="12.5" x1="5900" x2="5900" y1="1100" y2="2900"/>
+ </g>
+ <circle cx="5900" cy="1100" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="5900" cy="2900" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1260">
+  <line stroke="#0891b2" stroke-linecap="round" stroke-width="12.5" x1="2500" x2="5900" y1="1100" y2="1100"/>
+ </g>
+ <circle cx="2500" cy="1100" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="5900" cy="1100" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1250">
+  <line stroke="#0891b2" stroke-linecap="round" stroke-width="12.5" x1="2500" x2="2500" y1="1900" y2="1100"/>
+ </g>
+ <circle cx="2500" cy="1900" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="2500" cy="1100" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1240">
+  <line stroke="#0891b2" stroke-linecap="round" stroke-width="12.5" x1="1400" x2="2500" y1="1900" y2="1900"/>
+ </g>
+ <circle cx="2500" cy="1900" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1180">
+  <line stroke="#ca8a04" stroke-linecap="round" stroke-width="12.5" x1="2700" x2="3400" y1="2500" y2="2500"/>
+ </g>
+ <circle cx="2700" cy="2500" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1170">
+  <line stroke="#ca8a04" stroke-linecap="round" stroke-width="12.5" x1="2700" x2="2700" y1="1700" y2="2500"/>
+ </g>
+ <circle cx="2700" cy="1700" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <circle cx="2700" cy="2500" fill="black" r="10" stroke="none" stroke-width="0"/>
+ <g partID="1160">
+  <line stroke="#ca8a04" stroke-linecap="round" stroke-width="12.5" x1="1400" x2="2700" y1="1700" y2="1700"/>
+ </g>
+ <circle cx="2700" cy="1700" fill="black" r="10" stroke="none" stroke-width="0"/>
+</svg>

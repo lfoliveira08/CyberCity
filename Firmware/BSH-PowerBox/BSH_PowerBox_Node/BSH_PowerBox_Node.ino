@@ -70,7 +70,7 @@
 // WiFi + static IP (must match Piranga_Workflow_v2.md Section 6)
 // ---------------------------------------------------------------------------
 const char* ssid     = "SCT5";      // placeholder, set locally
-const char* password = "S3n!0rC@p";  // placeholder, set locally
+const char* password = "YOUR_WIFI_PASSWORD";  // placeholder, set locally
 
 IPAddress ip(192, 168, 50, 14);
 IPAddress gateway(192, 168, 50, 1);

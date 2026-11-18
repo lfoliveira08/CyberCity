@@ -60,7 +60,7 @@
 // WiFi configuration
 // ---------------------------------------------------------------------------
 const char* ssid     = "SCT5";
-const char* password = "S3n!0rC@p";
+const char* password = "YOUR_WIFI_PASSWORD";  // placeholder, set locally
 
 // ---------------------------------------------------------------------------
 // Static IP -- must match Piranga_Workflow_v2.md Section 6 (Network/IP map)

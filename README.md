@@ -34,13 +34,13 @@ flowchart LR
         F3["Door .23"]
         F4["PowerBox .24"]
     end
-    subgraph VM100["VM 100 openplc-docker (192.168.50.10)"]
+    subgraph VM100["VM 100 openplc-docker (10.0.0.10)"]
         P1["8 OpenPLC containers<br/>.111-.114 and .121-.124"]
     end
-    subgraph VM101["VM 101 scada-hmi (192.168.50.30)"]
+    subgraph VM101["VM 101 scada-hmi (10.0.0.30)"]
         S["Ignition 8.3 Gateway<br/>tags, HMI, cascade rules"]
     end
-    K["VM 102 Kali (192.168.50.40)<br/>attack scripts and capture"]
+    K["VM 102 Kali (10.0.0.40)<br/>attack scripts and capture"]
 
     B1 & B2 & B3 & B4 -- "Modbus TCP 502" --- P1
     F1 & F2 & F3 & F4 -- "Modbus TCP 502" --- P1
@@ -48,7 +48,7 @@ flowchart LR
     K -. "scenarios" .-> P1
 ```
 
-All hosts sit on `192.168.50.0/24`. The Proxmox host `pve` is `192.168.50.143` and runs the three VMs above.
+All hosts sit on a single flat `/24` subnet (address scheme redacted here; see the private project docs). The Proxmox host `pve` runs the three VMs above.
 
 ### Purdue Model
 
@@ -67,7 +67,7 @@ flowchart TB
     L1 -- "wired I/O" --- L0
 ```
 
-The lab has no L3 or L4/L5, and its network is flat: every level shares `192.168.50.0/24` with no zones between them. The full level table, the gaps against a real deployment and how the attack scenarios line up are on the [Purdue Model mapping](docs/Architecture.md#purdue-model-mapping) page.
+The lab has no L3 or L4/L5, and its network is flat: every level shares one `/24` subnet with no zones between them. The full level table, the gaps against a real deployment and how the attack scenarios line up are on the [Purdue Model mapping](docs/Architecture.md#purdue-model-mapping) page.
 
 | Slot | BSH | FH |
 |---|---|---|
@@ -80,16 +80,18 @@ Founder's Hall is not a full mirror of BSH: it has an HVAC unit instead of an el
 
 ### Node and address plan
 
+Addresses below use a placeholder subnet (`10.0.0.x`); the real lab subnet is kept in the private project docs.
+
 | Node | ESP32 | OpenPLC container |
 |---|---|---|
-| BSH-Elevator | 192.168.50.11 | 192.168.50.111 |
-| BSH-FireAlarm | 192.168.50.12 | 192.168.50.112 |
-| BSH-Door | 192.168.50.13 | 192.168.50.113 |
-| BSH-PowerBox | 192.168.50.14 | 192.168.50.114 |
-| FH-HVAC | 192.168.50.21 | 192.168.50.121 |
-| FH-FireAlarm | 192.168.50.22 | 192.168.50.122 |
-| FH-Door | 192.168.50.23 | 192.168.50.123 |
-| FH-PowerBox | 192.168.50.24 | 192.168.50.124 |
+| BSH-Elevator | 10.0.0.11 | 10.0.0.111 |
+| BSH-FireAlarm | 10.0.0.12 | 10.0.0.112 |
+| BSH-Door | 10.0.0.13 | 10.0.0.113 |
+| BSH-PowerBox | 10.0.0.14 | 10.0.0.114 |
+| FH-HVAC | 10.0.0.21 | 10.0.0.121 |
+| FH-FireAlarm | 10.0.0.22 | 10.0.0.122 |
+| FH-Door | 10.0.0.23 | 10.0.0.123 |
+| FH-PowerBox | 10.0.0.24 | 10.0.0.124 |
 
 Each node exposes `HEARTBEAT` and `RECONNECT_COUNT` as its last two Input Registers, so a stalled node is visible from the SCADA.
 

@@ -40,7 +40,7 @@
 #include <ModbusIP_ESP8266.h>
 
 const char* ssid     = "SCT5";
-const char* password = "S3n!0rC@p";
+const char* password = "YOUR_WIFI_PASSWORD";  // placeholder, set locally
 
 IPAddress ip(192, 168, 50, 12);
 IPAddress gateway(192, 168, 50, 1);

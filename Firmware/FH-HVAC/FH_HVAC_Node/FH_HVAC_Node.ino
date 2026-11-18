@@ -50,7 +50,7 @@
 
 // ---------- WiFi (same network as the other nodes) ----------
 const char* ssid     = "SCT5";
-const char* password = "S3n!0rC@p";
+const char* password = "YOUR_WIFI_PASSWORD";  // placeholder, set locally
 
 // ---------- Static IP -- must match Piranga_Workflow_v2.md Section 6 ----------
 IPAddress ip(192, 168, 50, 21);

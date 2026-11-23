@@ -188,12 +188,28 @@ valid demo of "2 of 3 nodes drop," just not the full-blackout story. See `STATUS
 - **Goal:** take one node/subsystem offline and show the other seven keep answering; measure
   how fast SCADA flags it.
 - **Target:** any ESP32 (`.1x`/`.2x`) or container (`.11x`/`.12x`) on :502.
-- **Vectors:** (a) **connection-slot exhaustion** — hold the ESP32's small number of Modbus-TCP
-  client slots (Emelianov `ModbusIP_ESP8266`; exact `MODBUSIP_MAX_CLIENTS` **to confirm in the
-  library header**); (b) SYN/packet flood (`hping3`); (c) malformed-frame fuzzing; (d) stop the
-  container. Time-box and watch recovery.
-- **Expected:** HEARTBEAT freezes for that node; SCADA `Status` → yellow → red; `NodeOffline`
-  alarm fires (the alarm you built Nov 3). The other seven unaffected.
+- **Vectors:** (a) **connection-slot exhaustion** — **tried and ruled out, Nov 23, 2026**: held 10
+  distinct source IPs against `.14` for 45s via `s09_dos.py`'s `SOURCE_IPS` mode; a packet capture
+  proved zero rejections the whole window, contradicting the generic `MODBUSIP_MAX_CLIENTS=8` read
+  from the library's GitHub `master` — this device's real behavior tolerates more, or the OpenPLC
+  master doesn't hold a persistent slot to starve out. (b) **SYN/packet flood (`hping3`)** —
+  **tried, Nov 23, 2026, and it works, but NOT as scoped** (see below). (c) malformed-frame
+  fuzzing — not tried. (d) stop the container — not tried.
+- **Expected (original scope):** HEARTBEAT freezes for that node; SCADA `Status` → yellow → red;
+  `NodeOffline` alarm fires. The other seven unaffected.
+- **Actual result (vector b, verified Nov 23, 2026):** two live `hping3` floods against `.14`
+  (40s @ ~65k pkt/s and 131s @ ~94k pkt/s; ~99.999% of SYNs went unanswered both times) caused
+  **ALL EIGHT Campus_Map dots to go red and Ignition's own web UI to become unreachable** —
+  not single-node isolation. The flood appears to saturate the shared `192.168.50.0/24` segment
+  itself (switch/link capacity), not just `.14`'s connection handling. Recovery was clean and
+  immediate the instant the flood stopped, both times. **This exceeds the scenario's original
+  scope** — see the note on Scenario 9's real finding below and `Logs/2026-11-23.md`.
+  Script: `Kali/Scripts/s09_synflood.py` (bounded `-c` count, `--dry-run` available).
+- **Note — the real finding here is bigger than "one node offline."** A flood aimed at a single
+  low-value field device collaterally took down the *entire* SCADA visibility layer. That is a
+  stronger, more concrete argument for **M0930 Network Segmentation** than the originally-scoped
+  scenario would have made: on a properly segmented network, this flood would have stayed
+  contained to `.14`'s own segment.
 - **Real-world attack:** **Industroyer SIPROTEC DoS** (ESET-reported, Dragos-disputed) via
   **CVE-2015-5374**; general availability attacks (Ukraine recovery sabotage).
 - **ATT&CK:** **T0814 Denial of Service** · impact T0826 Loss of Availability, T0829 Loss of View
@@ -324,6 +340,34 @@ Nothing run.)*
 - **Runbook:** _to be written_ (`Security_Capture/Kali/Scenario14_IRONGATE_MITM_Runbook.md`) —
   **after** the Nov 9 network check confirms whether position B is reachable.
 
+## Scenario 15 — Multi-target DoS (extra; one attacker, several nodes)
+
+*(Added Nov 18, 2026 — an extension of Scenario 9, not a replacement. Built after a terminology
+check: DoS vs DDoS is about the attacker side, not the target side — "distributed" means many
+independent attacking hosts hitting ONE victim together. One Kali box hitting multiple victims is
+still a DoS, just against several targets at once. No botnet/multi-attacker infrastructure exists
+in this lab, so true DDoS is not reproduced; this scenario demonstrates the distinct, legitimate
+"multi-target DoS" variant instead.)*
+
+- **Goal:** isolate **two different buildings'** nodes at once from a single source, and show
+  every other (untargeted) node keeps answering.
+- **Target:** both PowerBox ESP32s by default — BSH `192.168.50.14` and FH `192.168.50.24` — chosen
+  because both are reliably up in recon and sit in different buildings. Any comma-separated list
+  of live ESP32s works.
+- **Vector:** the same **connection-slot exhaustion** as Scenario 9 (hold more TCP connections than
+  the ESP32's small Modbus-TCP client-slot count), run against **both hosts at once** via threads.
+- **Action:** `s15_multitarget_dos.py` — holds N connections to each target in parallel, probes
+  whether a fresh client still gets through, holds for a timer, then releases all.
+- **Expected:** both targeted nodes' HEARTBEATs freeze and SCADA flags both (`Status` → red,
+  `NodeOffline`); every untargeted node is unaffected — the contrast proves the attacker chose
+  the victims, not a blanket outage.
+- **Real-world attack:** same class as Scenario 9 (Industroyer SIPROTEC DoS, general availability
+  attacks); the multi-target angle mirrors an attacker sweeping multiple substations/devices from one
+  foothold, as opposed to a true distributed (botnet) attack.
+- **ATT&CK:** **T0814 Denial of Service** · impact T0826 Loss of Availability, T0829 Loss of View
+- **CVE:** none — exploits ModbusIP's small client-slot limit, same as Scenario 9.
+- **Capture filter:** `(tcp.flags.reset == 1 || tcp.analysis.retransmission) && (ip.addr == 192.168.50.14 || ip.addr == 192.168.50.24)`
+
 ## Scenario 10 — Red / Blue exercise (composite)
 
 - Runs #3, #4, #5, #7 and #11 in one session on a single timeline for the Blue Team to review
@@ -346,3 +390,4 @@ Nothing run.)*
 | 12 | PLC logic injection | Stuxnet / PIPEDREAM | T0843 · T0889 | **CVE-2026-88020**, **CVE-2026-14480** |
 | 13 | ESP32 bricking (spare board, destructive, last) | Industroyer destructive cleanup | T0857/T0839 · T0826 | — |
 | 14 | IRONGATE combined MITM (false view) *(added Nov 8; gated on Nov 9 net check)* | IRONGATE / Stuxnet / TRITON | T0830 · T0832 · T0856 | — |
+| 15 | Multi-target DoS (extra, one attacker/several nodes, NOT DDoS) *(added Nov 18)* | Industroyer SIPROTEC DoS class | T0814 | — |

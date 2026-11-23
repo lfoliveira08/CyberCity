@@ -4,8 +4,12 @@ Source of truth: [`../Piranga_Workflow_v2.md`](../Piranga_Workflow_v2.md) §11 a
 
 > **Lab use only — closed network.** Capture and attack only the testbed subnet `192.168.50.0/24`. These are demonstrations on hardware the project owns. Do not run them anywhere else.
 
-## Status (Nov 10, 2026)
-**Design and planning done; nothing run against the lab except one reconnaissance capture.** The recon run (`recon_scan.py` from Kali `.40`, captured to `../Security_Capture/Captures/`) confirmed the inventory and surfaced: both FireAlarm ESP32s flapping on weak Wi-Fi, an unidentified ESP32 at `.161`, and a flat OT subnet. No attack scenario has been executed.
+## Status (Nov 23, 2026)
+**Scenarios 3 to 11 have been run against the closed lab and captured** (Luis-reported from script output; the pcaps stay on the lab disk, not in git). S3, S4, S5 and S6 ran on Nov 18; S7, S8, S9, S10 and S11 ran on Nov 23. **Not run yet:** S12, S13, S14 and S15.
+
+**S9 finding:** isolating one node was **not demonstrated** as scoped. A SYN flood aimed at one low-value node took down the whole flat network, not just that node, and recovered the moment the flood stopped. That is a stronger result than planned and needs its own write-up.
+
+Earlier, the Nov 10 reconnaissance capture confirmed the inventory and surfaced: both FireAlarm ESP32s flapping on weak Wi-Fi, an unidentified ESP32 at `.161`, and a flat OT subnet. Full detail: [`../STATUS.md`](../STATUS.md).
 
 ## Scenario list (Workflow §11, plus later additions)
 
@@ -25,6 +29,7 @@ Source of truth: [`../Piranga_Workflow_v2.md`](../Piranga_Workflow_v2.md) §11 a
 | 12 | **PLC logic injection** | via the OpenPLC web UI on port 8080 (engineering channel); ladder logic cannot be changed over Modbus |
 | 13 | **ESP32 bricking** | spare board only, recoverable soft-brick; permanent eFuse brick documented, not performed |
 | 14 | **Combined MITM** | ARP-spoof both links; gated on a Docker/L2 networking check |
+| 15 | **Multi-target DoS** | built, not run; several nodes at once, not a DDoS |
 
 Why Modbus is the target: standard Modbus TCP has **no authentication** — any host on the subnet can read or write points. That is the lesson most scenarios demonstrate.
 
